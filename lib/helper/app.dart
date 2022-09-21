@@ -7,8 +7,17 @@ import 'package:url_launcher/url_launcher.dart';
 
 
 class App {
-  static Color primery = Color(0XFFFD6001);
-  static Color secundry = Color(0XFF191919);
+
+
+
+  static Color primary = Color(0XFFed4c14);
+  static Color grey = Color(0XFF5a5b5e);
+
+  /// dark mode
+  static Color lightGrey = Color(0XFF31373b);
+  static Color darkGrey = Color(0XFF111216);
+  static Color textGrey = Color(0XFFb1b2b3);
+
 
   static textBlod(Color color, double size) {
     return TextStyle(color: color,
@@ -29,7 +38,7 @@ class App {
       CustomSnackBar.success(
         message:
         msg,
-        backgroundColor: primery,
+        backgroundColor: primary,
       ),
     );
   }
@@ -49,7 +58,7 @@ class App {
       CustomSnackBar.info(
         message:
         info,
-        backgroundColor: primery,
+        backgroundColor: primary,
       ),
     );
   }

@@ -39,20 +39,20 @@ class NoInternet extends StatelessWidget{
                   ),
                 ],
               ),
-              RaisedButton(
-                onPressed: (){
+              GestureDetector(
+                onTap: (){
                   Api.check_internet().then((value) {
                     if(value){
                       Get.back();
                     }
                   });
                 },
-                elevation: 2,
-                color: Colors.white,
-                child:Text("reload",style: App.textBlod(App.primery, 16),),
+                // elevation: 2,
+                // color: Colors.white,
+                child:Text("reload",style: App.textBlod(App.primary, 16),),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height*0.2,),
-              SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.2,),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
             ],
           ),
         ),

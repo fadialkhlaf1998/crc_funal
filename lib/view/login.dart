@@ -1,18 +1,27 @@
 import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/controller/login_controller.dart';
-import 'package:crc_version_1/helper/global.dart';
-import 'package:crc_version_1/helper/myTheme.dart';
+import 'package:crc_version_1/controller/signup_controller.dart';
+import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/view/home.dart';
+import 'package:crc_version_1/widget/background_page.dart';
+import 'package:crc_version_1/widget/confirm_dialog.dart';
+import 'package:crc_version_1/widget/custom_button.dart';
+import 'package:crc_version_1/widget/logo_container.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:lottie/lottie.dart';
+import 'package:intl_phone_field/countries.dart';
+
 
 class LogIn extends StatelessWidget {
 
   LoginController loginController = Get.put(LoginController());
+  SignUpController signUpController = Get.put(SignUpController());
   final formGlobalKey = GlobalKey<FormState>();
+  final formGlobalKey2 = GlobalKey<FormState>();
 
 
   @override
@@ -22,122 +31,81 @@ class LogIn extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Obx((){
-          return SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              //height: MediaQuery.of(context).size.height *0.92,
-              child: loginController.loading.value ?
-              Container(
-                child: Lottie.asset('assets/images/Animation.json'),
-              )
-                  : Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _header(context),
-                  AnimatedSwitcher(
-                    transitionBuilder: (Widget child, Animation<double> animation) {
-                      return ScaleTransition(scale: animation, child: child);
-                    },
-                    duration: const Duration(milliseconds: 250),
-                    child: !loginController.sign_up_option.value ? _inputInfo(context) :  _signUpOptions(context),
+          return Stack(
+            children: [
+              BackgroundPage(),
+              SingleChildScrollView(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: loginController.loading.value ?
+                  Container(
+                    child: Lottie.asset('assets/images/Animation.json'),
+                  )
+                      : Container(
+                        height: Get.height - (MediaQuery.of(context).padding.bottom + MediaQuery.of(context).padding.top),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                                height: Get.height * 0.3,
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                    child: LogoContainer(width: 0.9, height: 0.14, logo: 'logo_orange'))),
+                            Container(
+                              // height: Get.height * 0.6,
+                              child: AnimatedSwitcher(
+                                transitionBuilder: (Widget child, Animation<double> animation) {
+                                  return ScaleTransition(scale: animation, child: child);
+                                },
+                                duration: const Duration(milliseconds: 250),
+                                child: !loginController.sign_up_option.value ? _signInSection(context) :  _signUpOptions(context),
+                              ),
+                            ),
+                           Container(
+                             padding: EdgeInsets.only(bottom: 20, top: 10),
+                             child: AnimatedSwitcher(
+                               duration: Duration(milliseconds: 300),
+                               child:  loginController.sign_up_option.value
+                                     ? GestureDetector(
+                                   onTap: (){
+                                     loginController.sign_up_option.value  = false;
+                                   },
+                                   child: Text('Return to login',style: TextStyle(fontSize: 14, color: Colors.white)),
+                                 )
+                                     : Text('Only for Car Rental Company',style: TextStyle(fontSize: 12, color: Colors.white)),
+                             )
+                           )
+                          ],
                   ),
-                  const SizedBox(height: 10,),
-                  _visiAsGuest(context),
-                  _signUpButton(context),
-                ],
+                      )
+                ),
+              ),
+              ConfirmDialog(
+                  width: 0.8,
+                  height: 400,
+                  title: App_Localization.of(context).translate('successfully_register'),
+                  button1Pressed: (){
+                    signUpController.checkOpenDialog.value = false;
+                  },
+                  button1Text: 'Done',
+                  openDialog: signUpController.checkOpenDialog.value
               )
-            ),
+            ],
           );
         }),
       ),
     );
   }
-  _visiAsGuest(BuildContext context){
-    return GestureDetector(
-      onTap: (){
-        Get.offAll(()=>Home());
-      },
-      child: Container(
-          padding: const EdgeInsets.only(bottom:10,top: 15),
-          child: AnimatedSwitcher(
-            duration: const  Duration(milliseconds: 500),
-            child:
-            Text(App_Localization.of(context).translate('visit_as_guest'),style: Theme.of(context).textTheme.bodyText2,)
-          )
-      ),
-    );
-  }
-
-  _header(context){
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            /**Logo*/
-            Global.lang_code == 'en'
-                ? MyTheme.isDarkTheme.value
-                ? Container(
-             // width: MediaQuery.of(context).size.width * 0.4,
-              height: 100,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/logo_dark.png')
-                  )
-              ),
-            )
-                : Container(
-              width: 100,
-              height: 100,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/logo_light.png')
-                  )
-              ),
-            )
-                : Image.asset('assets/images/lines.png'),
-            /**Lines*/
-            Global.lang_code == 'en'
-                ? Image.asset('assets/images/lines.png')
-            : Container(
-              //width: MediaQuery.of(context).size.width * 0.4,
-              height: 100,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/logo_light.png')
-                  )
-              ),
-            )
-          ],
-        ),
-      const SizedBox(height: 0),
-      /**Car image*/
-        Container(
-          width: MediaQuery.of(context).size.width*0.8,
-          height: MediaQuery.of(context).size.height*0.3,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/car.png')
-              )
-          ),
-        ),
-      ],
-    );
-  }
-
-  _inputInfo(context){
+  _signInSection(context){
     return Form(
       key: formGlobalKey,
       child: Container(
-        //height: MediaQuery.of(context).size.height * 0.34,
         child: Column(
           children: [
             Container(
              width: MediaQuery.of(context).size.width * 0.9,
-              //height: 90,
               child: TextFormField(
                 style: Theme.of(context).textTheme.headline3,
                 controller: loginController.username,
@@ -168,7 +136,6 @@ class LogIn extends StatelessWidget {
             const SizedBox(height: 10),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              //height: 90,
               child: TextFormField(
                   style: Theme.of(context).textTheme.headline3,
                   obscureText: !loginController.showPassword.value ? true : false,
@@ -188,23 +155,23 @@ class LogIn extends StatelessWidget {
                     prefixIcon:
                     Icon(Icons.vpn_key, color: Theme.of(context).primaryColor),
                     suffixIcon: !loginController.showPassword.value
-                        ? GestureDetector(
-                      onTap: (){
-                        loginController.showPassword.value = !loginController.showPassword.value;
-                      },
-                        child: Icon(Icons.visibility_outlined, color: Theme.of(context).primaryColor))
-                        : GestureDetector(
-                      onTap: (){
-                        loginController.showPassword.value = !loginController.showPassword.value;
-
-                      },
-                      child:  Icon(Icons.visibility_off_outlined, color: Theme.of(context).primaryColor),
+                            ? GestureDetector(
+                          onTap: (){
+                            loginController.showPassword.value = !loginController.showPassword.value;
+                          },
+                            child: Icon(Icons.visibility_outlined, color: App.grey))
+                            : GestureDetector(
+                             onTap: (){
+                               loginController.showPassword.value = !loginController.showPassword.value;
+                          },
+                               child:  Icon(Icons.visibility_off_outlined, color: App.grey),
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(width: 1, color: Theme.of(context).dividerColor),
+                      borderSide: BorderSide(width: 1, color:Theme.of(context).dividerColor),
                     ),
                     enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Theme.of(context).dividerColor)),
+                        borderSide: BorderSide(width: 1, color:Theme.of(context).dividerColor)
+                    ),
                     labelStyle:Theme.of(context).textTheme.bodyText2,
                     labelText: App_Localization.of(context).translate('password'),
                     hintText: App_Localization.of(context).translate('enter_your_password'),
@@ -213,13 +180,8 @@ class LogIn extends StatelessWidget {
                   keyboardType: TextInputType.visiblePassword),
             ),
             const SizedBox(height: 50),
-            Container(
-              height: 55,
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(5)),
-              child: TextButton(
+            CustomButton(
+                width: 0.9, height: 55, text:  App_Localization.of(context).translate('login'),
                 onPressed: () async {
                   if(formGlobalKey.currentState!.validate()){
                     loginController.submite(context);
@@ -227,14 +189,52 @@ class LogIn extends StatelessWidget {
                     print('false');
                   }
                 },
-                child:  Text(
-                  App_Localization.of(context).translate('login'),
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
+                color: App.grey,
+                borderRadius: 5,
+                borderColor: Colors.white,
+                borderWidth: 1,
+                border: false,
+                textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 15),
+            CustomButton(
+              width: 0.9,
+              height: 55,
+              text: App_Localization.of(context).translate('register'),
+              onPressed: () async {
+                loginController.sign_up_option.value = true;
+              },
+              color: App.primary,
+              borderRadius: 5,
+              borderColor: Colors.white,
+              borderWidth: 1,
+              border: false,
+              textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 15),
+            CustomButton(
+              width: 0.9,
+              height: 55,
+              text: App_Localization.of(context).translate('visit_as_guest'),
+              onPressed: () async {
+                Get.offAll(()=>Home());
+
+              },
+              color: Theme.of(context).dividerColor,
+              borderRadius: 5,
+              borderColor: Colors.white,
+              borderWidth: 1,
+              border: false,
+              textStyle: TextStyle(
+                  color: Theme.of(context).backgroundColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -242,84 +242,197 @@ class LogIn extends StatelessWidget {
     );
   }
 
-  _signUpButton(context){
-    return GestureDetector(
-      onTap: (){
-        loginController.sign_up_option.value = !loginController.sign_up_option.value;
-      },
-      child: Container(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: AnimatedSwitcher(
-          duration: const  Duration(milliseconds: 500),
-          child: !loginController.sign_up_option.value ?
-          Text(App_Localization.of(context).translate('contact_us_to_sign_up'),style: Theme.of(context).textTheme.bodyText2,)
-              : Text(App_Localization.of(context).translate('return_to_login'),style: Theme.of(context).textTheme.bodyText2),
-        )
-      ),
-    );
-  }
-
   _signUpOptions(context){
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.2,
-      child: Column(
-        children: [
-          Bounce(
-            duration: (const Duration(milliseconds: 90)),
-            onPressed: (){
-              loginController.whatsAppButton(context);
-            },
-            child: Container(
-              height: 55,
+    return Form(
+      key: formGlobalKey2,
+      child: Container(
+        // height: MediaQuery.of(context).size.height * 0.2,
+        child: Column(
+          children: [
+            Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(5)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.whatsapp,color: Colors.white,),
-                  SizedBox(width: 10),
-                  Text(
-                    App_Localization.of(context).translate('call_us_whatsapp'),
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+              child: TextFormField(
+                style: Theme.of(context).textTheme.headline3,
+                controller: signUpController.companyName,
+                validator: (email) {
+                  if (email!.isEmpty) {
+                    return App_Localization.of(context).translate('company_name_cannot_be_empty');
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(width: 1, color:Theme.of(context).dividerColor),
                   ),
-                ],
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(width: 1, color:Theme.of(context).dividerColor)
+                  ),
+                  labelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelText: App_Localization.of(context).translate('company_name'),
+                  // hintText: App_Localization.of(context).translate('company_name'),
+                  // hintStyle: Theme.of(context).textTheme.headline4,
+                ),
+                keyboardType: TextInputType.text,
               ),
             ),
-          ),
-          const SizedBox(height: 20,),
-          Bounce(
-            duration: const Duration(milliseconds: 90),
-            onPressed: (){
-              loginController.phoneButton();
-            },
-            child: Container(
-              height: 55,
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(5)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.call,color: Colors.white,),
-                  const SizedBox(width: 10),
-                  Text(
-                    App_Localization.of(context).translate('call_us'),
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+            const SizedBox(height: 25),
+            Container(
+                width: Get.width * 0.9,
+                child: IntlPhoneField(
+                  style: TextStyle(color: Theme.of(context).dividerColor),
+                  controller: signUpController.contactPersonPhone,
+                  cursorColor: Colors.white,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                    hintText: App_Localization.of(context).translate('enter_contact_person_number'),
+                    hintStyle:  TextStyle(
+                        color: App.grey,
+                        fontSize: 14
+                    ),
+
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+                    ),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+                    ),
                   ),
-                ],
+                  initialCountryCode: 'AE',
+                  disableLengthCheck: true,
+                  dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
+                  dropdownTextStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14
+                  ),
+                  flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),
+                  showDropdownIcon: true,
+                  dropdownIconPosition: IconPosition.trailing,
+                  onChanged: (phone) {
+                    int max = countries.firstWhere((element) => element.code == phone.countryISOCode).maxLength;
+                    if(signUpController.contactPersonPhone.text.length > max){
+                      signUpController.contactPersonPhone.text = signUpController.contactPersonPhone.text.substring(0,max);
+                    }
+                    signUpController.contactPhoneCode.value = phone.countryCode;
+                  },
+                ),
+            ),
+            const SizedBox(height: 25),
+            Container(
+              width: Get.width * 0.9,
+              child: IntlPhoneField(
+                style: TextStyle(color: Theme.of(context).dividerColor),
+                controller: signUpController.phoneNumber,
+                cursorColor: Colors.white,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                  hintText: App_Localization.of(context).translate('enter_phone_number'),
+                  hintStyle:  TextStyle(
+                      color: App.grey,
+                      fontSize: 14
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: signUpController.validatePhone.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+                  ),
+                  border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: signUpController.validatePhone.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: signUpController.validatePhone.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+                  ),
+                ),
+                initialCountryCode: 'AE',
+                disableLengthCheck: true,
+                dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
+                dropdownTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14
+                ),
+                flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),
+                showDropdownIcon: true,
+                dropdownIconPosition: IconPosition.trailing,
+                onChanged: (phone) {
+                  int max = countries.firstWhere((element) => element.code == phone.countryISOCode).maxLength;
+                  if(signUpController.phoneNumber.text.length > max){
+                    signUpController.phoneNumber.text = signUpController.phoneNumber.text.substring(0,max);
+                  }
+                  signUpController.phoneCode.value = phone.countryCode;
+                },
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 25),
+            Container(
+              width: Get.width * 0.9,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                  border: Border(
+                    bottom: BorderSide(color: signUpController.pickUpValidate.value && signUpController.pickEmirate.value=="non"? Colors.red : App.grey,)
+                  ),
+
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  dropdownMaxHeight: 200,
+                  isExpanded: true,
+                  iconSize: 23,
+                  dropdownDecoration: BoxDecoration(
+                    color: App.grey,
+                  ),
+                  buttonPadding: const EdgeInsets.symmetric(horizontal: 10),
+                  hint: Text(App_Localization.of(context).translate("emirates"),
+                    style: TextStyle(
+                        color: Theme.of(context).dividerColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal
+                    ),
+                  ),
+                  iconEnabledColor: App.lightGrey,
+                  value: signUpController.pickEmirate.value=="non"? null : signUpController.pickEmirate.value,
+                  items: signUpController.pickUpEmirates.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value,
+                        style: TextStyle(
+                            color: Theme.of(context).dividerColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  underline: Container(),
+                  onChanged: (val) {
+                    signUpController.pickEmirate.value = val.toString();
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            CustomButton(
+                width: 0.9, height: 55,
+                text: App_Localization.of(context).translate('register'),
+              onPressed: () async {
+                if(formGlobalKey2.currentState!.validate()){
+                }else{
+                  print('false');
+                }
+                signUpController.register(context);
+              },
+                color: App.primary,
+                borderRadius: 5, borderColor: Colors.white, borderWidth: 1, border: false,
+              textStyle: TextStyle(
+                  color: Theme.of(context).dividerColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -96,8 +96,17 @@
   "optional" : "optional",
   "enter_the_rent_per_month" : "Enter the rent you went",
   "rent_per_month" : "Monthly rent",
-  "visit_as_guest":"Visit As Guest",
-  "please_login": "PLEASE LOG-IN TO SEE THE RATES"
+  "visit_as_guest":"Continue As Guest",
+  "please_login": "PLEASE LOG-IN TO SEE THE RATES",
+  "register" : "Register",
+  "phone_cannot_be_empty" : "Phone cannot be empty",
+  "enter_contact_person_number" : "Enter contact person's number",
+  "enter_phone_number" : "Enter phone number",
+  "emirates" : "Emirates",
+  "company_name" : "Company's name",
+  "company_name_cannot_be_empty" : "Company name cannot be empty",
+  "successfully_register" : "Your request has been successfully sent\nWe will confirm your account registration as soon as possible"
+
 
 
 }

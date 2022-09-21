@@ -368,7 +368,7 @@ class SearchTextField extends SearchDelegate<String> {
   ThemeData appBarTheme(BuildContext context) {
     return super.appBarTheme(context).copyWith(
       appBarTheme: AppBarTheme(
-        color: App.primery, //new AppBar color
+        color: App.primary, //new AppBar color
         elevation: 0,
       ),
       hintColor: Colors.white,
@@ -389,7 +389,7 @@ class SearchTextField extends SearchDelegate<String> {
     close(context, query);
     return Center(
       child: CircularProgressIndicator(
-        color: App.primery,
+        color: App.primary,
       ),
     );
   }
@@ -400,14 +400,14 @@ class SearchTextField extends SearchDelegate<String> {
       return name.toLowerCase().contains(query.toLowerCase());
     });
     return Container(
-      color: App.primery,
+      color: App.primary,
       child: ListView.builder(
         itemCount: suggestions.length,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             title: Text(
               suggestions.elementAt(index),
-              style: TextStyle(color: App.primery),
+              style: TextStyle(color: App.primary),
             ),
             onTap: () {
               query = suggestions.elementAt(index);

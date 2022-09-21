@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crc_version_1/model/car.dart';
 import 'package:crc_version_1/model/company.dart';
 import 'package:crc_version_1/model/intro.dart';
@@ -62,12 +62,40 @@ class Api {
     http.StreamedResponse response = await request.send();
     print(response.statusCode);
     if (response.statusCode == 200) {
-      var jsondata = await response.stream.bytesToString();
-      var data = jsonDecode(jsondata) as List;
-      return Company.fromMap(data[0]);
+      var jsonData = await response.stream.bytesToString();
+      var data = jsonDecode(jsonData) as List;
+      return Company.fromJson(data[0]);
     }
     else {
-      return Company(id: -1, username: '', password: '', profileImage: '', coverImage: '', title: '');
+      return Company(id: -1, username: '', password: '', profileImage: '', coverImage: '', title: '',customerOrders: Orders(rejected: [], pending: [], accepted: []),myOrders: Orders(rejected: [], pending: [], accepted: []));
+    }
+  }
+
+  static Future register(String companyName, String contactPhone, String contactPhoneCode, String phone, String phoneCode, String emirate) async {
+    var headers= {
+      'Content-Type': 'application/json',
+    };
+    var request = http.Request('POST', Uri.parse(url + 'api/register-request'));
+    request.body = json.encode({
+      "company_name": companyName,
+      "contact_phone": contactPhone,
+      "contact_phone_code": contactPhoneCode,
+      "phone": phone,
+      "phone_code": phoneCode,
+      "emirate": emirate,
+      "area": ""
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+      print(response.reasonPhrase);
+      return false;
     }
   }
 

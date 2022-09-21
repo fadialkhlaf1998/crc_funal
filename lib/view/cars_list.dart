@@ -960,7 +960,7 @@ class _CarsListState extends State<CarsList> {
   _sortInterface(context){
     return AnimatedContainer(
       width: MediaQuery.of(context).size.width,
-      height: carListController.checkSortOpen.value ? MediaQuery.of(context).size.height  * 0.2 : 10,
+      height: carListController.checkSortOpen.value ? MediaQuery.of(context).size.height  * 0.1 + 100 : 10,
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         borderRadius: const BorderRadius.only(

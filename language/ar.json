@@ -97,7 +97,17 @@
   "enter_the_rent_per_month" : "أدخل الآجار الذي تريده",
   "rent_per_month" : "الآجار الشهري",
   "visit_as_guest":"الزيارة كضيف",
-  "please_login": "يرجى تسجيل الدخول لمعرفة الأسعار"
+  "please_login": "يرجى تسجيل الدخول لمعرفة الأسعار",
+  "register" : "اشتراك",
+  "phone_cannot_be_empty" : "حقل الرقم لا يمكن ان يكون فارغاً",
+  "enter_contact_person_number" : "أدخل رقم جهة الاتصال",
+  "enter_phone_number" : "أدخل رقم الهاتف",
+  "emirates" : "الإمارة",
+  "company_name" : "اسم الشركة",
+  "company_name_cannot_be_empty" : "حقل الاسم لا يمكن ان يكون فارغاً",
+  "successfully_register" : "تم ارسال طلبك بنجاح سنأكد لك تسجيل الحساب باقرب وقت"
+
+
 
 
 

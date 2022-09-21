@@ -35,7 +35,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   top_snackbar_flutter: ^1.0.1
-  connectivity: ^3.0.6
+  connectivity_plus: ^2.3.7
   get: ^4.3.8
   shared_preferences: ^2.0.6
   flutter_svg: ^0.23.0+1
@@ -51,6 +51,8 @@ dependencies:
   flutter_image_slideshow: ^0.1.2
   flutter_bounce: ^1.1.0
   flutter_launcher_icons: ^0.9.2
+  intl_phone_field: ^3.1.0
+  dropdown_button2: ^1.0.0
 
 
 
@@ -90,6 +92,8 @@ flutter:
     - assets/images/
     - assets/emirates/
     - assets/icons/
+    - assets/logo/
+    - assets/background/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
