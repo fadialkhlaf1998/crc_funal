@@ -105,7 +105,12 @@
   "emirates" : "الإمارة",
   "company_name" : "اسم الشركة",
   "company_name_cannot_be_empty" : "حقل الاسم لا يمكن ان يكون فارغاً",
-  "successfully_register" : "تم ارسال طلبك بنجاح سنأكد لك تسجيل الحساب باقرب وقت"
+  "successfully_register" : "تم ارسال طلبك بنجاح سنأكد لك تسجيل الحساب باقرب وقت",
+  "phone" : "الهاتف",
+  "whatsapp" : "الواتساب",
+  "reserve" : "حجز",
+  "register_to_see_price" : "التسجيل لمعرفة السعر"
+
 
 
 

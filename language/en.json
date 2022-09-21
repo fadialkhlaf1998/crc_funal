@@ -105,7 +105,11 @@
   "emirates" : "Emirates",
   "company_name" : "Company's name",
   "company_name_cannot_be_empty" : "Company name cannot be empty",
-  "successfully_register" : "Your request has been successfully sent\nWe will confirm your account registration as soon as possible"
+  "successfully_register" : "Your request has been successfully sent\nWe will confirm your account registration as soon as possible",
+  "phone" : "Phone",
+  "whatsapp" : "Whatsapp",
+  "reserve" : "Reservation",
+  "register_to_see_price" : "Register to see price"
 
 
 

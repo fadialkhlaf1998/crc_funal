@@ -2,6 +2,8 @@ import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/controller/home_controller.dart';
 import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
+import 'package:crc_version_1/widget/background_page.dart';
+import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -12,16 +14,16 @@ class Home extends StatelessWidget {
 
   HomeController homeController = Get.put(HomeController());
 
-  _checkVersion(BuildContext context)async{
-    final newVersion = NewVersion(
-      iOSId: "com.Maxart.Crc",
-      androidId: 'com.maxart.crc_version_1',
-    );
-    final state = await newVersion.getVersionStatus();
-    if(state!.canUpdate){
-      newVersion.showUpdateDialog(context: context, versionStatus: state);
-    }
-  }
+  // _checkVersion(BuildContext context)async{
+  //   final newVersion = NewVersion(
+  //     iOSId: "com.Maxart.Crc",
+  //     androidId: 'com.maxart.crc_version_1',
+  //   );
+  //   final state = await newVersion.getVersionStatus();
+  //   if(state!.canUpdate){
+  //     newVersion.showUpdateDialog(context: context, versionStatus: state);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class Home extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-   _checkVersion(context);
+   // _checkVersion(context);
     return WillPopScope(
       onWillPop: ()async{
         if (homeController.modelOption.value){
@@ -44,29 +46,34 @@ class Home extends StatelessWidget {
         return Scaffold(
           backgroundColor: Theme.of(context).backgroundColor,
           body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 30,),
-                  _header(context),
-                  const SizedBox(height: 30,),
-                  _search(context),
-                  const SizedBox(height: 30,),
-                  AnimatedSwitcher(
-                    duration: Duration(milliseconds: 300),
-                    child: !homeController.modelOption.value ?
-                     homeController.tempBrandsList.isEmpty
-                         ? Text(App_Localization.of(context).translate('there_are_no_car_with_this_name'))
-                         : _brandBody(context)
-                         : AnimatedSwitcher(
-                      duration: Duration(milliseconds: 0),
-                      child: homeController.tempModelsList.isEmpty
-                          ? Text(App_Localization.of(context).translate('there_are_no_car_with_this_model_name'))
-                          : _modelsBody(context),
-                    )
+            child: Stack(
+              children: [
+                BackgroundPage(),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 30,),
+                      _header(context),
+                      const SizedBox(height: 30,),
+                      _search(context),
+                      const SizedBox(height: 30,),
+                      AnimatedSwitcher(
+                        duration: Duration(milliseconds: 300),
+                        child: !homeController.modelOption.value ?
+                         homeController.tempBrandsList.isEmpty
+                             ? Text(App_Localization.of(context).translate('there_are_no_car_with_this_name'))
+                             : _brandBody(context)
+                             : AnimatedSwitcher(
+                          duration: Duration(milliseconds: 0),
+                          child: homeController.tempModelsList.isEmpty
+                              ? Text(App_Localization.of(context).translate('there_are_no_car_with_this_model_name'))
+                              : _modelsBody(context),
+                        )
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
@@ -99,11 +106,7 @@ class Home extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.35,
-                height: MediaQuery.of(context).size.height * 0.04,
-                child: MyTheme.isDarkTheme.value ?  Image.asset('assets/images/logo_dark.png',fit: BoxFit.contain,): Image.asset('assets/images/logo_light.png',fit: BoxFit.contain),
-              ),
+              LogoContainer(width: 0.35, height: 0.07, logo: 'logo_orange'),
               SizedBox(height: 7),
               Text(App_Localization.of(context).translate('welcome_to_crc'), style: Theme.of(context).textTheme.headline2),
               !homeController.modelOption.value ?

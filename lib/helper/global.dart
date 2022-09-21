@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Global{
   static String lang_code="en";
-  static int company_id=-1;
+  static int company_id = -1;
   static bool remember_pass=false;
   static LoginInfo? loginInfo;
   static String remember_password="non";

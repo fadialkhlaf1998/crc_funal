@@ -9,6 +9,8 @@ import 'package:crc_version_1/view/add_people.dart';
 import 'package:crc_version_1/view/contact_to_us.dart';
 import 'package:crc_version_1/view/my_car_list.dart';
 import 'package:crc_version_1/view/people_list.dart';
+import 'package:crc_version_1/widget/background_page.dart';
+import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -39,22 +41,26 @@ class Settings extends StatelessWidget {
       ]);
       return  Scaffold(
         floatingActionButton: Global.company_id==-1?Center():_floatButton(context),
-        //floatingActionButtonLocation: Global.lang_code == 'en' ? FloatingActionButtonLocation.endFloat : FloatingActionButtonLocation.startFloat,
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _header(context),
-                  _body(context),
-                  _footer(context),
-                  const SizedBox(height: 1),
-                ],
+          child: Stack(
+            children: [
+              BackgroundPage(),
+              SingleChildScrollView(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _header(context),
+                      _body(context),
+                      _footer(context),
+                      const SizedBox(height: 1),
+                    ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
       );
@@ -140,17 +146,7 @@ class Settings extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width * 0.3,
-              height: 35,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.contain,
-                    image: MyTheme.isDarkTheme.value ? const AssetImage('assets/images/logo_dark.png') : const AssetImage('assets/images/logo_light.png'),
-                  )
-              ),
-
-            ),
+           LogoContainer(width: 0.35, height: 0.07, logo: 'logo_orange'),
             SizedBox(height: 20),
             Global.company_id==-1?Center(): Stack(
               alignment: Alignment.bottomRight,
@@ -171,7 +167,7 @@ class Settings extends StatelessWidget {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                                 fit: BoxFit.contain,
-                                image: NetworkImage(Global.companyImage.value.replaceAll("http://127.0.0.1:3004/", Api.url))
+                                image: NetworkImage(Api.url + 'uploads/' + Global.companyImage.value)
                             )
                         ),
                       ),
@@ -450,12 +446,11 @@ class Settings extends StatelessWidget {
               border: Border.all(width: 1,color: Theme.of(context).dividerColor.withOpacity(0.4)),
             image: DecorationImage(
                 fit: BoxFit.contain,
-              image: NetworkImage(Global.companyImage.value.replaceAll("http://127.0.0.1:3004/", Api.url))
+              image: NetworkImage(Api.url + 'uploads/' + Global.companyImage.value)
             )
           ),
           width: MediaQuery.of(context).size.width * 0.5,
           height: MediaQuery.of(context).size.width * 0.5,
-
         );
       }),
       actionsAlignment: MainAxisAlignment.spaceBetween,

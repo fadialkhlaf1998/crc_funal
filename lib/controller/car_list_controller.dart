@@ -14,6 +14,8 @@ class CarListController extends GetxController{
 
   IntroController introController = Get.find();
   RxList<PersonForCompany> companyContactsList = <PersonForCompany>[].obs;
+  final controllerList = ScrollController();
+
 
 
   var brand="%".obs;
