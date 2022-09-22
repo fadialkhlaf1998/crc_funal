@@ -535,7 +535,7 @@ class _AllOrdersState extends State<AllOrders> {
                                         Row(
                                           children: [
                                             Text(App_Localization.of(context).translate("to")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
-                                            Text(getFormate(list[index].from),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
+                                            Text(getFormate(list[index].to),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
                                           ],
                                         ),
                                       ],
@@ -723,7 +723,7 @@ class _AllOrdersState extends State<AllOrders> {
                                         Row(
                                           children: [
                                             Text(App_Localization.of(context).translate("to")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
-                                            Text(getFormate(list[index].from),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
+                                            Text(getFormate(list[index].to),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
                                           ],
                                         ),
                                       ],

@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 
+import '../widget/background_page.dart';
+
 class MyRangeCalender extends StatelessWidget {
   int car_id;
   int company_id;
@@ -159,7 +161,7 @@ class MyRangeCalender extends StatelessWidget {
           child: Center(
             child: Stack(
               children: [
-
+                BackgroundPage(),
                 Container(width: Get.width,height: Get.height,
 
                   child: Center(

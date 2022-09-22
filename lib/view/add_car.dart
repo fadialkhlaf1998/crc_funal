@@ -844,7 +844,7 @@ class AddCar extends StatelessWidget {
                         borderSide: BorderSide(width: 1, color: Theme.of(context).dividerColor)
                     ),
                     labelStyle: Theme.of(context).textTheme.bodyText2,
-                    labelText: App_Localization.of(context).translate('rent_per_month')+ ' (' + App_Localization.of(context).translate('optional') + ')',
+                    labelText: "* "+App_Localization.of(context).translate('rent_per_month')+ ' (' + App_Localization.of(context).translate('required') + ')',
                     hintText: App_Localization.of(context).translate('enter_the_rent_per_month') ,
                     hintStyle: Theme.of(context).textTheme.headline4,
                     //suffixText: App_Localization.of(context).translate('aed'),

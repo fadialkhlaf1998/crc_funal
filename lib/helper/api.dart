@@ -169,7 +169,8 @@ class Api {
       'color': color,
       'model_id': modelId,
       'year': year,
-      'price_per_month' : price_per_month
+      'price_per_month' : price_per_month,
+      'price_per_hour' : price_per_month
     });
 
     for (int i = 0; i < images.length; i++) {

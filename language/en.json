@@ -95,7 +95,7 @@
   "required" : "required",
   "optional" : "optional",
   "enter_the_rent_per_month" : "Enter the rent you went",
-  "rent_per_month" : "Monthly rent",
+  "rent_per_month" : "Hourly rent",
   "visit_as_guest":"Continue As Guest",
   "please_login": "PLEASE LOG-IN TO SEE THE RATES",
   "register" : "Register",
