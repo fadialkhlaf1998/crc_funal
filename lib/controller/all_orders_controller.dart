@@ -35,6 +35,7 @@ class AllOrdersController extends GetxController{
       if(succ){
         Global.company = await Api.login(Global.company!.username, Global.company!.password);
         // App.sucss_msg(context, App_Localization.of(context).translate('order_state_changes_successfully'));
+        Get.showSnackbar(GetSnackBar(backgroundColor: App.greySettingPage,title: App_Localization.of(context).translate("rent_in"),message: App_Localization.of(context).translate('order_state_changes_successfully'),));
         loading.value = false;
       }else{
         loading.value = false;
