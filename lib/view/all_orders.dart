@@ -74,42 +74,40 @@ class _AllOrdersState extends State<AllOrders> {
   }
 
   _header(context){
-    return Flexible(
-      flex: 1,
-      child: Container(
-        width: Get.width,
-        height: Get.height * 0.25,
-        padding: EdgeInsets.only(top: 10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 80,
-                  child: IconButton(
-                    onPressed: (){
-                      Get.back();
-                    },
-                    icon: Icon(Icons.arrow_back_ios),
-                  ),
+    return Container(
+      width: Get.width,
+      height: Get.height * 0.25 ,
+      // color:Colors.red,
+      padding: EdgeInsets.only(top: 10),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 80,
+                child: IconButton(
+                  onPressed: (){
+                    Get.back();
+                  },
+                  icon: Icon(Icons.arrow_back_ios),
                 ),
-                LogoContainer(width: 0.3, height: 0.05, logo: 'logo_white'),
-                Container(
-                  width: 80,
-                  child: IconButton(
-                    onPressed: (){
-                      Get.back();
-                    },
-                    icon: Icon(Icons.arrow_back_ios,color: Colors.transparent,),
-                  ),
+              ),
+              LogoContainer(width: 0.3, height: 0.05, logo: 'logo_white'),
+              Container(
+                width: 80,
+                child: IconButton(
+                  onPressed: (){
+                    Get.back();
+                  },
+                  icon: Icon(Icons.arrow_back_ios,color: Colors.transparent,),
                 ),
-              ],
-            ),
-            _rentInOut(context),
-            _rentStatus(),
-          ],
-        ),
+              ),
+            ],
+          ),
+          _rentInOut(context),
+          _rentStatus(),
+        ],
       ),
     );
   }
@@ -450,7 +448,7 @@ class _AllOrdersState extends State<AllOrders> {
 
   _carListOut(List<Accepted> list){
     return Flexible(
-      flex: 3,
+      flex: 5,
       child: Container(
         width: Get.width * 0.9,
         padding: EdgeInsets.only(top: 20),
@@ -593,7 +591,7 @@ class _AllOrdersState extends State<AllOrders> {
   }
   _carListIn(List<Accepted> list){
     return Flexible(
-      flex: 3,
+      flex: 7,
       child: Container(
         width: Get.width * 0.9,
         padding: EdgeInsets.only(top: 20),
