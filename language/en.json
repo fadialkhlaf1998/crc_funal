@@ -109,8 +109,19 @@
   "phone" : "Phone",
   "whatsapp" : "Whatsapp",
   "reserve" : "Reservation",
-  "register_to_see_price" : "Register to see price"
-
+  "register_to_see_price" : "Register to see price",
+  "my_order" : "My order",
+  "customers_order" : "Customers order",
+  "add_car" : "Add a car",
+  "add_people" : "Add people",
+  "change_password" : "Change password",
+  "about_b2b" : "About B2B",
+  "rent_in" : "RENT-IN",
+  "rent_out" : "RENT-OUT",
+  "all" : "All",
+  "accepted" : "Accepted",
+  "pending" : "Pending",
+  "rejected" : "Rejected"
 
 
 }

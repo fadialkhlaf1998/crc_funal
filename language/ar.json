@@ -109,8 +109,19 @@
   "phone" : "الهاتف",
   "whatsapp" : "الواتساب",
   "reserve" : "حجز",
-  "register_to_see_price" : "التسجيل لمعرفة السعر"
-
+  "register_to_see_price" : "التسجيل لمعرفة السعر",
+  "my_order" : "طلباتي",
+  "customers_order" : "طلبات الزبائن",
+  "add_car" : "إضافة سيارة",
+  "add_people" : "إضافة شخص",
+  "change_password" : "تغيير كلمة المرور",
+  "about_b2b" : "About B2B",
+  "rent_in" : "RENT-IN",
+  "rent_out" : "RENT-OUT",
+  "all" : "الكل",
+  "accepted" : "مقبول",
+  "pending" : "معلق",
+  "rejected" : "مرفوض"
 
 
 

@@ -4,6 +4,7 @@ import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/helper/store.dart';
+import 'package:crc_version_1/model/company.dart';
 import 'package:crc_version_1/view/home.dart';
 import 'package:crc_version_1/view/no_internet.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +14,13 @@ import 'package:url_launcher/url_launcher.dart';
 class LoginController extends GetxController{
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
+  RxList<Accepted> myOrdersRejected = <Accepted>[].obs;
+  RxList<Accepted> myOrdersPending = <Accepted>[].obs;
+  RxList<Accepted> myOrdersAccepted = <Accepted>[].obs;
+  RxList<Accepted> customerOrdersRejected = <Accepted>[].obs;
+  RxList<Accepted> customersOrdersPending = <Accepted>[].obs;
+  RxList<Accepted> customersOrdersAccepted = <Accepted>[].obs;
+
   var loading = false.obs;
   var submited = false.obs;
   var sign_up_option = false.obs;
@@ -22,12 +30,18 @@ class LoginController extends GetxController{
     loading.value = true;
     Api.check_internet().then((internet) {
       if(internet){
-        if(username.text.isNotEmpty&&password.text.isNotEmpty){
+        if(username.text.isNotEmpty && password.text.isNotEmpty){
           submited.value=true;
           Api.login(username.text, password.text).then((company) {
             if(company.id!=-1){
               Global.loginInfo!.email=username.text;
               Global.loginInfo!.pass=password.text;
+              myOrdersRejected.addAll(company.myOrders.rejected);
+              myOrdersPending.addAll(company.myOrders.pending);
+              myOrdersAccepted.addAll(company.myOrders.accepted);
+              customerOrdersRejected.addAll(company.customerOrders.rejected);
+              customersOrdersPending.addAll(company.customerOrders.pending);
+              customersOrdersAccepted.addAll(company.customerOrders.accepted);
               Store.Save_login();
               Global.company_id=company.id;
               Global.companyImage.value = company.profileImage;

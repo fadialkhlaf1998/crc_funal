@@ -17,6 +17,7 @@ class App {
   static Color lightGrey = Color(0XFF31373b);
   static Color darkGrey = Color(0XFF111216);
   static Color textGrey = Color(0XFFb1b2b3);
+  static Color greySettingPage = Color(0XFF34383b);
 
 
   static textBlod(Color color, double size) {

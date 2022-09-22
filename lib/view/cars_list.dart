@@ -84,7 +84,7 @@ class _CarsListState extends State<CarsList> {
         }
       },
       child: Scaffold(
-        floatingActionButton: Global.company_id==-1?Center():_floatButton(context),
+        // floatingActionButton: Global.company_id==-1?Center():_floatButton(context),
         body:Obx((){
           return  SafeArea(
             child: Stack(
