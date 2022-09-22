@@ -22,6 +22,7 @@ class Store {
 
   static logout()async{
     Global.company_id=-1;
+    Global.company = null;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("email");
     prefs.remove("pass");

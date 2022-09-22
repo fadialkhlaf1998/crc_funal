@@ -121,8 +121,16 @@
   "all" : "الكل",
   "accepted" : "مقبول",
   "pending" : "معلق",
-  "rejected" : "مرفوض"
-
+  "rejected" : "مرفوض",
+  "in_review": "قيد المراجعة",
+  "accept" : "قبول",
+  "reject" : "إلغاء",
+  "from": "من",
+  "to": "إلى",
+  "order_state_changes_successfully": "تم تغيير حالة الطلب",
+  "total": "الإجمالي",
+  "hr_rent": "الحجز الساعي",
+  "your_req_placed_succ": "تم كتابة الطلب بنجاح"
 
 
 

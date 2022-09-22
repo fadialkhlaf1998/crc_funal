@@ -69,7 +69,7 @@ class Car {
       companyId: json["company_id"],
       brandId: json["brand_id"],
       pricPerDay: json["pric_per_day"]== null?0.0:double.parse(json["pric_per_day"].toString()),
-      pricPerHr: json["price_per_hour"]== null?0.0:double.parse(json["price_per_hour"].toString()),
+      pricPerHr: json["price_per_hour"]== null?10.0:double.parse(json["price_per_hour"].toString()),
       doors: json["doors"],
       passengers: json["passengers"],
       location: json["location"],

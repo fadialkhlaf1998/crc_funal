@@ -33,8 +33,8 @@ class AllOrdersController extends GetxController{
     if(internet){
       bool succ = await Api.orderState(state,id);
       if(succ){
-        App.sucss_msg(context, App_Localization.of(context).translate('order_state_changes_successfully'));
         Global.company = await Api.login(Global.company!.username, Global.company!.password);
+        App.sucss_msg(context, App_Localization.of(context).translate('order_state_changes_successfully'));
         loading.value = false;
       }else{
         loading.value = false;

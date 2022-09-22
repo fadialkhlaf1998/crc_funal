@@ -14,7 +14,7 @@ import 'package:crc_version_1/view/calender.dart';
 import 'package:crc_version_1/view/login.dart';
 import 'package:crc_version_1/view/setting.dart';
 import 'package:crc_version_1/widget/background_page.dart';
-import 'package:crc_version_1/widget/calender.dart';
+// import 'package:crc_version_1/widget/calender.dart';
 import 'package:crc_version_1/widget/custom_button.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -452,10 +452,10 @@ class _CarsListState extends State<CarsList> {
                 child: Global.company_id==-1?Text(App_Localization.of(context).translate('daily_rent') + '  ' + "????" + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),)
                     :Text(App_Localization.of(context).translate('daily_rent') + '  ' + carListController.myCars[index].pricPerDay.toString() + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),),
               ),
-              carListController.myCars[index].pricePerMonth == null ||  carListController.myCars[index].pricePerMonth == 0 ?
+              carListController.myCars[index].pricPerHr == null ?
               SizedBox(height: 0,) : Container(
-                child: Global.company_id==-1?Text(App_Localization.of(context).translate('rent_per_month') + '  ' + "????" + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),)
-                    :Text(App_Localization.of(context).translate('rent_per_month') + '  ' + carListController.myCars[index].pricePerMonth.toString() + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),),
+                child: Global.company_id==-1?Text(App_Localization.of(context).translate('hourly_rent') + '  ' + "????" + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),)
+                    :Text(App_Localization.of(context).translate('hr_rent') + '  ' + carListController.myCars[index].pricPerHr.toString() + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),),
               ),
               Container(
                   width: MediaQuery.of(context).size.width  * 0.9,
@@ -547,7 +547,7 @@ class _CarsListState extends State<CarsList> {
             onTap: () {
               if(Global.company!=null){
                 if(carListController.myCars[index].avilable == 1){
-                  Get.to(()=>MyRangeCalender(carListController.myCars[index].id,carListController.myCars[index].pricPerHr, carListController.myCars[index].pricPerDay));
+                  Get.to(()=>MyRangeCalender(carListController.myCars[index].id,carListController.myCars[index].pricPerHr, carListController.myCars[index].pricPerDay,carListController.myCars[index].companyId));
                 }
               }else{
                 Get.to(()=>LogIn());

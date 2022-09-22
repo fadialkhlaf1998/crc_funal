@@ -129,5 +129,6 @@
   "to": "To",
   "order_state_changes_successfully": "Order State Changed Successfully",
   "total": "Total",
-  "hr_rent": "Hourly Rent"
+  "hr_rent": "Hourly Rent",
+  "your_req_placed_succ": "You request placed Successfully"
 }

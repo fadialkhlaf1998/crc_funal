@@ -537,7 +537,7 @@ class Api {
   }
 
 
-  static addOrder(String from,String to, int from_company,int to_company,int car_id,double total)async{
+  static Future<bool> addOrder(DateTime from,DateTime to, int from_company,int to_company,int car_id,double total)async{
     var headers = {
       'Content-Type': 'application/json',
       'Cookie': 'connect.sid=s%3AtbiStyqTq9XZ7-XDXcxL0sULphBSCZUl.mQeHm%2FVsmfYK1J4cYZ4bfnLT%2BbOzYLfIIM0u1VfOkQM'
@@ -545,8 +545,8 @@ class Api {
     //"2020/08/14 4:50"
     var request = http.Request('POST', Uri.parse('https://www.carrentalclub.ae/api/order'));
     request.body = json.encode({
-      "_from": from,
-      "_to": to,
+      "_from": from.toString(),
+      "_to": to.toString(),
       "from_compnay": from_company,
       "to_company": to_company,
       "car_id": car_id,
@@ -558,9 +558,11 @@ class Api {
 
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
+      return true;
     }
     else {
     print(response.reasonPhrase);
+    return false;
     }
 
   }

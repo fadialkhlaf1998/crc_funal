@@ -127,6 +127,7 @@ class _AllOrdersState extends State<AllOrders> {
           GestureDetector(
             onTap: (){
               allOrdersController.rentType.value = 'in';
+              allOrdersController.rentStatus.value = 2;
             },
             child: AnimatedContainer(
               duration: Duration(milliseconds: 500),
@@ -162,6 +163,7 @@ class _AllOrdersState extends State<AllOrders> {
           GestureDetector(
             onTap: (){
               allOrdersController.rentType.value = 'out';
+              allOrdersController.rentStatus.value = 2;
             },
             child: AnimatedContainer(
               duration: Duration(milliseconds: 500),
@@ -664,25 +666,35 @@ class _AllOrdersState extends State<AllOrders> {
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            Column(
-                                              children: [
-                                                CircleAvatar(
-                                                  backgroundColor: Colors.red,
-                                                  radius: 8,
-                                                  child: Icon(Icons.close,color: Colors.white,size: 14,),
-                                                ),
-                                                SizedBox(height: 5,),
-                                                Text(App_Localization.of(context).translate("reject"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                            GestureDetector(
+                                              onTap: (){
+                                                allOrdersController.updateState(context,-1,list[index].id);
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  CircleAvatar(
+                                                    backgroundColor: Colors.red,
+                                                    radius: 8,
+                                                    child: Icon(Icons.close,color: Colors.white,size: 14,),
+                                                  ),
+                                                  SizedBox(height: 5,),
+                                                  Text(App_Localization.of(context).translate("reject"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
 
-                                              ],
+                                                ],
+                                              ),
                                             ),
 
-                                            Column(
-                                              children: [
-                                                Icon(Icons.check_circle,color: Colors.green,size: 18,),
-                                                SizedBox(height: 2.7,),
-                                                Text(App_Localization.of(context).translate("accept"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
-                                              ],
+                                            GestureDetector(
+                                              onTap: (){
+                                                allOrdersController.updateState(context,1,list[index].id);
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  Icon(Icons.check_circle,color: Colors.green,size: 18,),
+                                                  SizedBox(height: 2.7,),
+                                                  Text(App_Localization.of(context).translate("accept"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                                ],
+                                              ),
                                             )
                                           ],
                                         ),

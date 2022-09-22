@@ -1,5 +1,7 @@
 import 'package:crc_version_1/app_localization.dart';
+import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/app.dart';
+import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/widget/custom_button.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +11,13 @@ import 'package:intl/intl.dart';
 
 class MyRangeCalender extends StatelessWidget {
   int car_id;
+  int company_id;
   double hr_price;
   double day_price;
   RxDouble total = 0.0.obs;
+  RxBool loading = false.obs;
 
-  MyRangeCalender(this.car_id, this.hr_price, this.day_price);
+  MyRangeCalender(this.car_id, this.hr_price, this.day_price,this.company_id);
 
   List<String> hrs = [
     "12:00 AM", "12:30 AM",
@@ -41,7 +45,7 @@ class MyRangeCalender extends StatelessWidget {
     "10:00 PM", "10:30 PM",
     "11:00 PM", "11:30 PM",
   ];
-  RxString range = "".obs;
+  RxString range = (DateFormat('dd/MM/yyyy').format(DateTime.now()).toString()+" - "+DateFormat('dd/MM/yyyy').format(DateTime.now()).toString()).obs;
   RxBool pickUpValidate = true.obs;
   Rx<String> pickUp ="12:00 AM".obs;
   RxBool dropOffValidate = true.obs;
@@ -69,12 +73,19 @@ class MyRangeCalender extends StatelessWidget {
     print(comparDays);
     int pickIndex = hrs.indexOf(pickUp.value);
     int dropIndex = hrs.indexOf(dropOff.value);
-
-    if(dropIndex - pickIndex > 4 ){
-      subTotal = (daily * (comparDays+1)).toDouble();
+    print('======');
+    print(pickIndex);
+    print(dropIndex);
+    if(begin.year == end.year && begin.month == end.month && begin.day == end.day){
+      subTotal = (dropIndex - pickIndex).abs() * hr_price / 2;
     }else{
-      subTotal = (daily * comparDays).toDouble();
+      if(dropIndex - pickIndex > 4 ){
+        subTotal = (daily * (comparDays+1)).toDouble();
+      }else{
+        subTotal = (daily * comparDays).toDouble();
+      }
     }
+
     print(subTotal);
     total.value = subTotal;
     return subTotal;
@@ -109,12 +120,30 @@ class MyRangeCalender extends StatelessWidget {
     );
   }
 
-  submit(){
+  submit(BuildContext context)async{
+    if(range.isNotEmpty&&total.value > 0){
+      loading.value = true;
+      DateTime from = getDate(range.value.split("-")[0], pickUp.value);
+      DateTime to = getDate(range.value.split("-")[1], dropOff.value);
+      print('-------');
+      print(from.toString());
+      print(to.toString());
 
+      bool succ = await Api.addOrder(from, to, Global.company!.id, company_id, car_id, total.value);
+      if(succ){
+        Global.company = await Api.login(Global.company!.username, Global.company!.password);
+        Get.back();
+        App.sucss_msg(context, App_Localization.of(context).translate("your_req_placed_succ"));
+      }else{
+        App.error_msg(context, App_Localization.of(context).translate("something_went_wrong"));
+      }
+      loading.value = false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    print(range.value);
     return Scaffold(
       body: Obx(() => SafeArea(
         child: Container(
@@ -173,6 +202,7 @@ class MyRangeCalender extends StatelessWidget {
                                     onSelectionChanged: onSelectionDateChanges,
                                     selectionMode: DateRangePickerSelectionMode.range,
                                     minDate: DateTime.now(),
+                                    initialDisplayDate: DateTime.now(),
                                     view: DateRangePickerView.month,
                                     monthViewSettings: DateRangePickerMonthViewSettings(
                                       viewHeaderStyle: DateRangePickerViewHeaderStyle(
@@ -243,7 +273,7 @@ class MyRangeCalender extends StatelessWidget {
                             SizedBox(height: 20),
                             GestureDetector(
                               onTap: (){
-                                submit();
+                                submit(context);
                               },
                               child: Container(
                                 width: Get.width * 0.8,
@@ -268,6 +298,7 @@ class MyRangeCalender extends StatelessWidget {
                     IconButton(onPressed: (){Get.back();}, icon: Icon(Icons.arrow_back_ios))
                   ],
                 ),
+            !loading.value?Center():Container(color: Colors.white.withOpacity(0.5),width: Get.width,height: Get.height,child: Center(child: CircularProgressIndicator(),),)
               ],
             ),
           ),
@@ -338,6 +369,7 @@ class MyRangeCalender extends StatelessWidget {
                     underline: Container(),
                     onChanged: (val) {
                       pickUp.value= val.toString();
+                      getTotal(day_price, hr_price);
                     },
                   ),
                 ),
@@ -401,6 +433,7 @@ class MyRangeCalender extends StatelessWidget {
                     underline: Container(),
                     onChanged: (val) {
                       dropOff.value= val.toString();
+                      getTotal(day_price, hr_price);
                     },
                   ),
                 ),
