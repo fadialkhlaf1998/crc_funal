@@ -2,7 +2,9 @@ import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
 import 'package:crc_version_1/helper/store.dart';
+import 'package:crc_version_1/model/intro.dart';
 import 'package:crc_version_1/view/intro.dart';
+import 'package:crc_version_1/view/calender.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -81,7 +83,7 @@ class _MyAppState extends State<MyApp> {
           }
           return supportedLocales.first;
         },
-
+        debugShowCheckedModeBanner: false,
         home: IntroView()
     );
   }

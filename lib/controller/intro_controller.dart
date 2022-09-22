@@ -44,6 +44,7 @@ class IntroController extends GetxController{
             Global.company_id = company.id;
             Global.companyImage.value = company.profileImage;
             Global.companyTitle = company.title;
+            Global.company = company;
             Future.delayed(const Duration(milliseconds: 1000)).then((value) {
               Get.offAll(()=>Home());
             });

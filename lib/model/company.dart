@@ -63,6 +63,7 @@ class Orders {
   List<Accepted> rejected;
   List<Accepted> pending;
   List<Accepted> accepted;
+  List<Accepted> all = <Accepted>[];
 
   factory Orders.fromJson(Map<String, dynamic> json) => Orders(
     rejected: List<Accepted>.from(json["rejected"].map((x) => Accepted.fromJson(x))),
@@ -92,6 +93,8 @@ class Accepted {
     required this.image,
     required this.fromCompnayTitle,
     required this.toCompnayTitle,
+    required this.fromCompnayImage,
+    required this.toCompnayImage,
   });
 
   int id;
@@ -102,11 +105,13 @@ class Accepted {
   int toCompany;
   int carId;
   int state;
-  int total;
+  double total;
   String title;
   String image;
   String fromCompnayTitle;
   String toCompnayTitle;
+  String fromCompnayImage;
+  String toCompnayImage;
 
   factory Accepted.fromJson(Map<String, dynamic> json) => Accepted(
     id: json["id"] ?? -1,
@@ -117,9 +122,11 @@ class Accepted {
     toCompany: json["to_company"],
     carId: json["car_id"],
     state: json["state"],
-    total: json["total"],
+    total: double.parse(json["total"].toString()),
     title: json["title"],
     image: json["image"],
+    toCompnayImage: json["from_compnay_image"],
+    fromCompnayImage: json["to_compnay_image"],
     fromCompnayTitle: json["from_compnay_title"],
     toCompnayTitle: json["to_compnay_title"],
   );

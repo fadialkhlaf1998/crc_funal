@@ -83,6 +83,7 @@ class SettingController extends GetxController{
               if(value){
                 Api.login(Global.loginInfo!.email, Global.loginInfo!.pass).then((value){
                   Global.companyImage.value = value.profileImage;
+                  Global.company = value;
                   imageLoading.value = false;
                 });
                 print('Success');

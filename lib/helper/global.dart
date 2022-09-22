@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:crc_version_1/model/company.dart';
 import 'package:crc_version_1/model/login_info.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,7 @@ class Global{
   static RxString companyImage = ''.obs;
   static String companyTitle = '';
   static String vip_phone_number = '+971553451555';
+  static Company? company;
 
   static save_language(String locale){
     SharedPreferences.getInstance().then((prefs){

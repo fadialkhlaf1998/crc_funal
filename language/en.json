@@ -121,7 +121,13 @@
   "all" : "All",
   "accepted" : "Accepted",
   "pending" : "Pending",
-  "rejected" : "Rejected"
-
-
+  "rejected" : "Rejected",
+  "in_review": "In Review",
+  "accept" : "Accept",
+  "reject" : "Reject",
+  "from": "From",
+  "to": "To",
+  "order_state_changes_successfully": "Order State Changed Successfully",
+  "total": "Total",
+  "hr_rent": "Hourly Rent"
 }

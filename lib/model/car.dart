@@ -27,6 +27,7 @@ class Car {
     required this.company,
     required this.companyImage,
     required this.images,
+    required this.pricPerHr,
   });
 
   int id;
@@ -36,7 +37,9 @@ class Car {
   int avilable;
   int companyId;
   int brandId;
-  int pricPerDay;
+  double pricPerDay;
+  double pricPerHr;
+
   int doors;
   int passengers;
   String location;
@@ -65,7 +68,8 @@ class Car {
       avilable: json["avilable"],
       companyId: json["company_id"],
       brandId: json["brand_id"],
-      pricPerDay: json["pric_per_day"],
+      pricPerDay: json["pric_per_day"]== null?0.0:double.parse(json["pric_per_day"].toString()),
+      pricPerHr: json["price_per_hour"]== null?0.0:double.parse(json["price_per_hour"].toString()),
       doors: json["doors"],
       passengers: json["passengers"],
       location: json["location"],

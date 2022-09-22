@@ -10,9 +10,11 @@ import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/view/add_car.dart';
 import 'package:crc_version_1/view/add_people.dart';
+import 'package:crc_version_1/view/calender.dart';
 import 'package:crc_version_1/view/login.dart';
 import 'package:crc_version_1/view/setting.dart';
 import 'package:crc_version_1/widget/background_page.dart';
+import 'package:crc_version_1/widget/calender.dart';
 import 'package:crc_version_1/widget/custom_button.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -437,32 +439,7 @@ class _CarsListState extends State<CarsList> {
                 isLoop: false,
               ),
             ),
-            /*
-            carListController.myCars[index].avilable == 0
-                ? Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width* 0.9,
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      height: MediaQuery.of(context).size.height * 0.17,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/images/notAvailable.png')
-                          )
-                      ),
-                    ),
 
-              ],
-            ) : Text('')
-             */
           ],
         ),
         const SizedBox(height: 10),
@@ -565,9 +542,16 @@ class _CarsListState extends State<CarsList> {
               ),
             ),
           ),
+
           GestureDetector(
             onTap: () {
-
+              if(Global.company!=null){
+                if(carListController.myCars[index].avilable == 1){
+                  Get.to(()=>MyRangeCalender(carListController.myCars[index].id,carListController.myCars[index].pricPerHr, carListController.myCars[index].pricPerDay));
+                }
+              }else{
+                Get.to(()=>LogIn());
+              }
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.3 - 5,

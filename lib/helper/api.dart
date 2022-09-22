@@ -14,6 +14,7 @@ import 'package:path/path.dart';
 class Api {
 
   static String url = "https://www.carrentalclub.ae/";
+  static String imageUrl = "https://www.carrentalclub.ae/uploads/";
 
   static Future<bool> check_internet()async{
     // return false;
@@ -510,4 +511,57 @@ class Api {
 
   }
 
+
+  static Future<bool> orderState(int state , int id)async{
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('PUT', Uri.parse(url+'api/order'));
+    request.body = json.encode({
+      "state": state,
+      "id": id
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+    print(response.reasonPhrase);
+    return false;
+    }
+
+  }
+
+
+  static addOrder(String from,String to, int from_company,int to_company,int car_id,double total)async{
+    var headers = {
+      'Content-Type': 'application/json',
+      'Cookie': 'connect.sid=s%3AtbiStyqTq9XZ7-XDXcxL0sULphBSCZUl.mQeHm%2FVsmfYK1J4cYZ4bfnLT%2BbOzYLfIIM0u1VfOkQM'
+    };
+    //"2020/08/14 4:50"
+    var request = http.Request('POST', Uri.parse('https://www.carrentalclub.ae/api/order'));
+    request.body = json.encode({
+      "_from": from,
+      "_to": to,
+      "from_compnay": from_company,
+      "to_company": to_company,
+      "car_id": car_id,
+      "total": total
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+    print(response.reasonPhrase);
+    }
+
+  }
 }

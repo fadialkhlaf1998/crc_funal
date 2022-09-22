@@ -46,6 +46,7 @@ class LoginController extends GetxController{
               Global.company_id=company.id;
               Global.companyImage.value = company.profileImage;
               Global.companyTitle = company.title;
+              Global.company = company;
               Get.offAll(()=>Home());
             }else if (company.id == -1){
               ///Wrong email pr password
