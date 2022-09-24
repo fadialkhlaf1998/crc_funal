@@ -2,6 +2,7 @@ import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/controller/login_controller.dart';
 import 'package:crc_version_1/controller/signup_controller.dart';
 import 'package:crc_version_1/helper/app.dart';
+import 'package:crc_version_1/helper/myTheme.dart';
 import 'package:crc_version_1/view/home.dart';
 import 'package:crc_version_1/widget/background_page.dart';
 import 'package:crc_version_1/widget/confirm_dialog.dart';
@@ -48,6 +49,7 @@ class LogIn extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            
                             Container(
                                 height: Get.height * 0.3,
                                 child: Align(
@@ -236,6 +238,8 @@ class LogIn extends StatelessWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 15),
+
           ],
         ),
       ),
@@ -430,7 +434,15 @@ class LogIn extends StatelessWidget {
                   color: Theme.of(context).dividerColor,
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 15),
+            GestureDetector(
+              onTap: (){
+                loginController.sign_up_option.value  = false;
+              },
+              child:             Text(App_Localization.of(context).translate("login"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,decoration: TextDecoration.underline),),
             )
+            //
           ],
         ),
       ),

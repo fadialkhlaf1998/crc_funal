@@ -23,14 +23,16 @@ class IntroView extends StatelessWidget {
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height-MediaQuery.of(context).padding.top,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _header(context),
-                _carImage(context),
-                _title(context),
-              ],
-            ),
+            child: Image.asset("assets/images/intro.gif",fit: BoxFit.cover,),
+
+            // child: Column(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     _header(context),
+            //     _carImage(context),
+            //     _title(context),
+            //   ],
+            // ),
           ),
         ),
       ),

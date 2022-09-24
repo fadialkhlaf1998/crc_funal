@@ -5,6 +5,7 @@ import 'package:crc_version_1/controller/my_car_list_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
+import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -122,14 +123,7 @@ class EditCar extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back_ios,size: 20,),
                 )
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.5,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: MyTheme.isDarkTheme.value ? const AssetImage('assets/images/logo_dark.png') : const AssetImage('assets/images/logo_light.png'),
-                  )
-              ),
-            ),
+            LogoContainer(width: 0.35, height: 0.07, logo: 'logo_orange'),
             SizedBox(width: 50,)
           ],
         ),

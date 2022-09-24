@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/controller/add_people_controller.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
+import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -96,22 +97,8 @@ class AddPeople extends StatelessWidget {
                   icon: Icon(Icons.arrow_back_ios),
                 ),
               ),
-              Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.5,
-                height: 30,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.contain,
-                      image: MyTheme.isDarkTheme.value ? const AssetImage(
-                          'assets/images/logo_dark.png') : const AssetImage(
-                          'assets/images/logo_light.png'),
-                    )
-                ),
+              LogoContainer(width: 0.35, height: 0.07, logo: 'logo_orange'),
 
-              ),
               SizedBox(width: 80),
             ],
           ),

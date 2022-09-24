@@ -2,6 +2,7 @@ import 'package:crc_version_1/controller/contact_us_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
+import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,15 +64,7 @@ class ContactToUs extends StatelessWidget {
                 icon: Icon(Icons.arrow_back_ios,size: 20,),
               )
           ),
-          Container(
-            width: 100,
-            height: MediaQuery.of(context).size.height * 0.05,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: MyTheme.isDarkTheme.value ? AssetImage('assets/images/logo_dark.png') :  AssetImage('assets/images/logo_light.png')
-                )
-            ),
-          ),
+          LogoContainer(width: 0.35, height: 0.07, logo: 'logo_orange'),
           const SizedBox(width: 40),
         ],
       ),
@@ -95,7 +88,7 @@ class ContactToUs extends StatelessWidget {
               border: Border.all(width: 1,color: Color(0XFF202428),),
               image:  DecorationImage(
                 fit: BoxFit.contain,
-                image: NetworkImage(Global.companyImage.value.replaceAll("http://127.0.0.1:3004/", Api.url))
+                image: NetworkImage(Api.imageUrl+Global.companyImage.value.replaceAll("http://127.0.0.1:3004/", Api.url))
               )
             ),
           ),

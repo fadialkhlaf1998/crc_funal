@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:crc_version_1/widget/logo_container.dart';
 
 class MyCarList extends StatelessWidget {
 
@@ -253,15 +253,16 @@ class MyCarList extends StatelessWidget {
                 icon: Icon(Icons.arrow_back_ios,size: 20,),
               )
           ),
-          Container(
-            width: 100,
-            height: MediaQuery.of(context).size.height * 0.05,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: MyTheme.isDarkTheme.value ? AssetImage('assets/images/logo_dark.png') :  AssetImage('assets/images/logo_light.png')
-              )
-            ),
-          ),
+          LogoContainer(width: 0.35, height: 0.07, logo: 'logo_orange'),
+          // Container(
+          //   width: 100,
+          //   height: MediaQuery.of(context).size.height * 0.05,
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //       image: MyTheme.isDarkTheme.value ? AssetImage('assets/images/logo_dark.png') :  AssetImage('assets/images/logo_light.png')
+          //     )
+          //   ),
+          // ),
           // Container(
           //   child: GestureDetector(
           //     onTap: (){
