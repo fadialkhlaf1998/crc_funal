@@ -257,13 +257,13 @@ class Settings extends StatelessWidget {
               Get.to(()=>AddPeople());
             },
             text: 'add_people'),
-        Global.company_id==-1
-            ? Center()
-            : SettingButton(
-            onTap: (){
-
-            },
-            text: 'change_password'),
+        // Global.company_id==-1
+        //     ? Center()
+        //     : SettingButton(
+        //     onTap: (){
+        //
+        //     },
+        //     text: 'change_password'),
         GestureDetector(
           onTap: (){
             settingController.openLanguagesList.value = !settingController.openLanguagesList.value;
@@ -383,12 +383,12 @@ class Settings extends StatelessWidget {
             ],
           ),
         ),
-        Divider(thickness: 1, indent: 25,endIndent: 25,color: Theme.of(context).dividerColor.withOpacity(0.3),),
-        SettingButton(
-            onTap: (){
-
-            },
-            text: 'about_b2b'),
+        // Divider(thickness: 1, indent: 25,endIndent: 25,color: Theme.of(context).dividerColor.withOpacity(0.3),),
+        // SettingButton(
+        //     onTap: (){
+        //
+        //     },
+        //     text: 'about_b2b'),
       ],
     );
   }
