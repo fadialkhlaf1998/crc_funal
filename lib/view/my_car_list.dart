@@ -151,74 +151,53 @@ class MyCarList extends StatelessWidget {
       flex: 3,
       child: Container(
         width: MediaQuery.of(context).size.width*0.55,
-        child: Center(
-
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Container(
+          // width: MediaQuery.of(context).size.width*0.53,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              Text(
+                myCarListController.tempCarList[index].brand
+                    + ' - ' + myCarListController.tempCarList[index].model,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              Text(
+                App_Localization.of(context).translate('daily_rent') + ' ' + myCarListController.tempCarList[index].pricPerDay.toString()
+                    + ' ' + App_Localization.of(context).translate('aed'),
+                style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 15 ),
+              ),
+              Divider(thickness: 1,color: MyTheme.isDarkTheme.value?Colors.white.withOpacity(0.5):Colors.black.withOpacity(0.2),height: 1,),
               Container(
-                width: MediaQuery.of(context).size.width*0.53-70,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                color: Colors.transparent,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      myCarListController.tempCarList[index].brand
-                          + ' - ' + myCarListController.tempCarList[index].model,
-                      maxLines: 2,
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                    Text(
-                      App_Localization.of(context).translate('daily_rent') + ' ' + myCarListController.tempCarList[index].pricPerDay.toString()
-                      + ' ' + App_Localization.of(context).translate('aed'),
-                      style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 15 ),
-                    ),
-                    // SizedBox(height: 10,),
-                    // Divider(thickness: 1,color: Theme.of(context).dividerColor.withOpacity(0.1),indent: 1,endIndent: 10,height: 10,),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: [
-                    //     Text(App_Localization.of(context).translate('hid_or_show'),style: TextStyle(color: Theme.of(context).dividerColor, fontSize: 12, fontWeight: FontWeight.bold )),
-                    //
-                    //   ],
-                    // ),
+                    Text(App_Localization.of(context).translate('hid_or_show'),style:  TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontSize: 15, fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      height: 10,
+                      child: Switch(value: myCarListController.tempCarList[index].availableSwitch.value, onChanged: (value){
+                        myCarListController.changeAvailability(index);
+                      },),
+                    )
                   ],
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Obx((){
-                  return  GestureDetector(
-                    onTap: (){
-                          myCarListController.changeAvailability(index);
-                    },
-                    child: Container(
-                      height: 70,
-                      width: 70,
-                      child: Transform.scale(
-                          scale: 0.85,
-                          child: myCarListController.tempCarList[index].availableSwitch.value?Container(
-                            child: Image.asset("assets/images/on.png"),
-                          ):Container(
-                            child: Image.asset("assets/images/off.png"),
-                          )
-                        //
-                        // Switch(
-                        //   activeColor: Theme.of(context).primaryColor,
-                        //   value: myCarListController.tempCarList[index].availableSwitch.value,
-                        //   onChanged: (bool value) {
-                        //     myCarListController.changeAvailability(index);
-                        //   },
-                        // ),
-                      ),
-                    ),
-                  );
-                }),
-              ),
+              )
+
+              // SizedBox(height: 10,),
+              // Divider(thickness: 1,color: Theme.of(context).dividerColor.withOpacity(0.1),indent: 1,endIndent: 10,height: 10,),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Text(App_Localization.of(context).translate('hid_or_show'),style: TextStyle(color: Theme.of(context).dividerColor, fontSize: 12, fontWeight: FontWeight.bold )),
+              //
+              //   ],
+              // ),
             ],
           ),
-        )
+        ),
       ),
     );
   }

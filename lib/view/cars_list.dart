@@ -454,7 +454,7 @@ class _CarsListState extends State<CarsList> {
               ),
               carListController.myCars[index].pricPerHr == null ?
               SizedBox(height: 0,) : Container(
-                child: Global.company_id==-1?Text(App_Localization.of(context).translate('hourly_rent') + '  ' + "????" + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),)
+                child: Global.company_id==-1?Text(App_Localization.of(context).translate('hr_rent') + '  ' + "????" + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),)
                     :Text(App_Localization.of(context).translate('hr_rent') + '  ' + carListController.myCars[index].pricPerHr.toString() + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),),
               ),
               Container(
@@ -1148,51 +1148,83 @@ class _CarsListState extends State<CarsList> {
                               child: Stack(
                                 alignment: Alignment.centerLeft,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Global.lang_code == 'en' ? SizedBox(width:  MediaQuery.of(context).size.width * 0.04) : Text(''),
-                                      Container(
-                                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.17),
-                                        width: MediaQuery.of(context).size.width * 0.60,
-                                        height: 70,
-                                        decoration: BoxDecoration(
-                                            color: Theme.of(context).primaryColor,
-                                            borderRadius: BorderRadius.circular(25)
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment: Global.lang_code == 'en' ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+
+                                  Container(
+                                    width: Get.width*0.7,
+                                    height: 90,
+
+                                    child: Stack(
+                                      children: [
+                                        Row(
                                           children: [
-                                            Text(
-                                              carListController.companyContactsList[index].name.toUpperCase(),
-                                              maxLines: 2,
-                                              // style: Theme.of(context).textTheme.headline3,
-                                              style: TextStyle(color: Colors.white,fontSize: 14),
+                                            Container(
+                                                height: 90,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                  // color: Colors.red,
+                                                  shape: BoxShape.circle
+                                                ),
+                                              child: Center(
+                                                child: Container(
+                                                  height: 85,
+                                                  width: 85,
+                                                  decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image: DecorationImage(
+                                                          image: NetworkImage(Api.url + 'uploads/' + carListController.companyContactsList[index].image),
+                                                          fit: BoxFit.cover
+                                                      )
+                                                  ),
+                                                ),
+                                              )
                                             ),
-                                            Text(
-                                              carListController.companyContactsList[index].languages,
-                                              maxLines: 2,
-                                              style: TextStyle(color: Colors.white,fontSize: 14),
-                                              // style: Theme.of(context).textTheme.headline3,
-                                            )
+                                            Container(
+                                              // padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.17),
+
+                                              height: 70,
+                                              width:  Get.width*0.7-122,
+                                              decoration: BoxDecoration(
+                                                  color: Theme.of(context).primaryColor,
+                                                  borderRadius: BorderRadius.circular(35)
+                                              ),
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    carListController.companyContactsList[index].name.toUpperCase(),
+                                                    maxLines: 2,
+                                                    // style: Theme.of(context).textTheme.headline3,
+                                                    style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    carListController.companyContactsList[index].languages,
+                                                    maxLines: 2,
+                                                    style: TextStyle(color: Colors.white,fontSize: 14),
+                                                    // style: Theme.of(context).textTheme.headline3,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
                                           ],
                                         ),
-                                      ),
-                                      Global.lang_code == 'en' ? Text('') : SizedBox(width:  MediaQuery.of(context).size.width * 0.04),
-                                    ],
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(width: 1,color: Theme.of(context).backgroundColor.withOpacity(0.3)),
-                                        image: DecorationImage(
-                                            image: NetworkImage(Api.url + 'uploads/' + carListController.companyContactsList[index].image),
-                                            fit: BoxFit.cover
-                                        )
+                                      ],
                                     ),
-                                    width: MediaQuery.of(context).size.width * 0.2,
-                                    height: 85,
-                                  ),
+                                  )
+
+
+                                  // Container(
+                                  //   decoration: BoxDecoration(
+                                  //       shape: BoxShape.circle,
+                                  //       border: Border.all(width: 1,color: Theme.of(context).backgroundColor.withOpacity(0.3)),
+                                  //       image: DecorationImage(
+                                  //           image: NetworkImage(Api.url + 'uploads/' + carListController.companyContactsList[index].image),
+                                  //           fit: BoxFit.cover
+                                  //       )
+                                  //   ),
+                                  //   width: MediaQuery.of(context).size.width * 0.2,
+                                  //   height: 85,
+                                  // ),
                                 ],
                               )
                           ),

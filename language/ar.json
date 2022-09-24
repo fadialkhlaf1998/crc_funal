@@ -1,7 +1,7 @@
 {
   "test": "test",
   "next" : "التالي",
-  "welcome_to_crc" : "أهلاً بك في CRC",
+  "welcome_to_crc" : "أهلاً بك في B2B",
   "please_select_car_brand" : "الرجاء تحديد ماركة السيارة",
   "search_here" : "ابحث هنا",
   "username_cannot_be_empty" : "اسم المستخدم لا يمكن أن يكون فارغاً",
@@ -100,7 +100,7 @@
   "please_login": "يرجى تسجيل الدخول لمعرفة الأسعار",
   "register" : "اشتراك",
   "phone_cannot_be_empty" : "حقل الرقم لا يمكن ان يكون فارغاً",
-  "enter_contact_person_number" : "أدخل رقم جهة الاتصال",
+  "enter_contact_person_number" : "أدخل الاسم",
   "enter_phone_number" : "أدخل رقم الهاتف",
   "emirates" : "الإمارة",
   "company_name" : "اسم الشركة",
@@ -130,9 +130,10 @@
   "order_state_changes_successfully": "تم تغيير حالة الطلب",
   "total": "الإجمالي",
   "hr_rent": "الحجز الساعي",
-  "your_req_placed_succ": "تم كتابة الطلب بنجاح"
+  "your_req_placed_succ": "تم كتابة الطلب بنجاح",
+  "please_select": "الرجاء الإختيار لحساب السعر",
 
-
-
-
+  "submit": "تأكيد الحجز",
+  "pick_up": "الاستلام",
+  "drop_off": "التسليم"
 }

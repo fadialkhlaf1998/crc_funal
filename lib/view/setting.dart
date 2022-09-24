@@ -9,6 +9,7 @@ import 'package:crc_version_1/view/add_car.dart';
 import 'package:crc_version_1/view/add_people.dart';
 import 'package:crc_version_1/view/all_orders.dart';
 import 'package:crc_version_1/view/contact_to_us.dart';
+import 'package:crc_version_1/view/login.dart';
 import 'package:crc_version_1/view/my_car_list.dart';
 import 'package:crc_version_1/view/people_list.dart';
 import 'package:crc_version_1/widget/background_page.dart';
@@ -397,7 +398,21 @@ class Settings extends StatelessWidget {
 
 
   _footer(context){
-    return Global.company_id==-1?Center():GestureDetector(
+    return Global.company_id==-1?GestureDetector(
+      onTap: (){
+        Get.offAll(()=>LogIn());
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 25),
+        width: MediaQuery.of(context).size.width * 0.5,
+        height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).primaryColor,
+        ),
+        child: Center(child: Text(App_Localization.of(context).translate('login'), style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold ,fontSize: 22))),
+      ),
+    ):GestureDetector(
       onTap: (){
         settingController.logout();
       },

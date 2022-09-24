@@ -183,8 +183,8 @@ class MyRangeCalender extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     total.value>0
-                                        ?Text(App_Localization.of(context).translate("total")+": "+total.value.toStringAsFixed(2),style: TextStyle(fontWeight: FontWeight.bold),)
-                                        :Text("Please select date to calc price",style: TextStyle(fontWeight: FontWeight.bold),)
+                                        ?Text("",style: TextStyle(fontWeight: FontWeight.bold),)
+                                        :Text(App_Localization.of(context).translate("please_select"),style: TextStyle(fontWeight: FontWeight.bold),)
                                   ],
                                 ),
                               ),
@@ -285,7 +285,17 @@ class MyRangeCalender extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10)
                                 ),
                                 child: Center(
-                                  child: Text("Submit",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),),
+                                  child: total.value>0?
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text( App_Localization.of(context).translate("total")+": "+total.value.toStringAsFixed(2),style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),),
+                                          SizedBox(width: 10,),
+                                          Icon(Icons.arrow_forward,color: Colors.white,)
+                                        ],
+                                      )
+
+                                      :Text(App_Localization.of(context).translate("submit"),style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),),
                                 ),
                               ),
                             ),
@@ -319,7 +329,7 @@ class MyRangeCalender extends StatelessWidget {
             children: [
               Container(
                 child: Center(
-                  child: Text("Pick Up",
+                  child: Text(App_Localization.of(context).translate("pick_up"),
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -347,7 +357,7 @@ class MyRangeCalender extends StatelessWidget {
                       color: App.grey,
                     ),
                     buttonPadding: const EdgeInsets.symmetric(horizontal: 10),
-                    hint: Text("Pick Up",
+                    hint: Text(App_Localization.of(context).translate("pick_up"),
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -383,7 +393,7 @@ class MyRangeCalender extends StatelessWidget {
             children: [
               Container(
                 child: Center(
-                  child: Text("Drop Off",
+                  child: Text(App_Localization.of(context).translate("drop_off"),
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -411,7 +421,7 @@ class MyRangeCalender extends StatelessWidget {
                       color: App.grey,
                     ),
                     buttonPadding: const EdgeInsets.symmetric(horizontal: 10),
-                    hint: Text("Drop Off",
+                    hint: Text(App_Localization.of(context).translate("drop_off"),
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,

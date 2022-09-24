@@ -65,20 +65,20 @@ class LogIn extends StatelessWidget {
                                 child: !loginController.sign_up_option.value ? _signInSection(context) :  _signUpOptions(context),
                               ),
                             ),
-                           Container(
-                             padding: EdgeInsets.only(bottom: 20, top: 10),
-                             child: AnimatedSwitcher(
-                               duration: Duration(milliseconds: 300),
-                               child:  loginController.sign_up_option.value
-                                     ? GestureDetector(
-                                   onTap: (){
-                                     loginController.sign_up_option.value  = false;
-                                   },
-                                   child: Text('Return to login',style: TextStyle(fontSize: 14, color: Colors.white)),
-                                 )
-                                     : Text('Only for Car Rental Company',style: TextStyle(fontSize: 12, color: Colors.white)),
-                             )
-                           )
+                           // Container(
+                           //   padding: EdgeInsets.only(bottom: 20, top: 10),
+                           //   child: AnimatedSwitcher(
+                           //     duration: Duration(milliseconds: 300),
+                           //     child:  loginController.sign_up_option.value
+                           //           ? GestureDetector(
+                           //         onTap: (){
+                           //           loginController.sign_up_option.value  = false;
+                           //         },
+                           //         child: Text('Return to login',style: TextStyle(fontSize: 14, color: Colors.white)),
+                           //       )
+                           //           : Text('Only for Car Rental Company',style: TextStyle(fontSize: 12, color: Colors.white)),
+                           //   )
+                           // )
                           ],
                   ),
                       )
@@ -260,7 +260,8 @@ class LogIn extends StatelessWidget {
                 controller: signUpController.companyName,
                 validator: (email) {
                   if (email!.isEmpty) {
-                    return App_Localization.of(context).translate('company_name_cannot_be_empty');
+                    // return App_Localization.of(context).translate('company_name_cannot_be_empty');
+                    return "";
                   }
                   return null;
                 },
@@ -282,49 +283,76 @@ class LogIn extends StatelessWidget {
             ),
             const SizedBox(height: 25),
             Container(
-                width: Get.width * 0.9,
-                child: IntlPhoneField(
-                  style: TextStyle(color: Theme.of(context).dividerColor),
-                  controller: signUpController.contactPersonPhone,
-                  cursorColor: Colors.white,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
-                    hintText: App_Localization.of(context).translate('enter_contact_person_number'),
-                    hintStyle:  TextStyle(
-                        color: App.grey,
-                        fontSize: 14
-                    ),
-
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
-                    ),
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
-                    ),
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: TextFormField(
+                style: Theme.of(context).textTheme.headline3,
+                controller: signUpController.contactPersonPhone,
+                validator: (contactPersonPhone) {
+                  if (contactPersonPhone!.isEmpty) {
+                    return "";
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(width: 1, color:Theme.of(context).dividerColor),
                   ),
-                  initialCountryCode: 'AE',
-                  disableLengthCheck: true,
-                  dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
-                  dropdownTextStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(width: 1, color:Theme.of(context).dividerColor)
                   ),
-                  flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),
-                  showDropdownIcon: true,
-                  dropdownIconPosition: IconPosition.trailing,
-                  onChanged: (phone) {
-                    int max = countries.firstWhere((element) => element.code == phone.countryISOCode).maxLength;
-                    if(signUpController.contactPersonPhone.text.length > max){
-                      signUpController.contactPersonPhone.text = signUpController.contactPersonPhone.text.substring(0,max);
-                    }
-                    signUpController.contactPhoneCode.value = phone.countryCode;
-                  },
+                  labelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelText: App_Localization.of(context).translate('enter_contact_person_number'),
+                  // hintText: App_Localization.of(context).translate('company_name'),
+                  // hintStyle: Theme.of(context).textTheme.headline4,
                 ),
+                keyboardType: TextInputType.text,
+              ),
             ),
+            // Container(
+            //     width: Get.width * 0.9,
+            //     child: IntlPhoneField(
+            //       style: TextStyle(color: Theme.of(context).dividerColor),
+            //       controller: signUpController.contactPersonPhone,
+            //       cursorColor: Colors.white,
+            //       keyboardType: TextInputType.number,
+            //       decoration: InputDecoration(
+            //         errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+            //         hintText: App_Localization.of(context).translate('enter_contact_person_number'),
+            //         hintStyle:  TextStyle(
+            //             color: App.grey,
+            //             fontSize: 14
+            //         ),
+            //
+            //         focusedBorder: UnderlineInputBorder(
+            //           borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+            //         ),
+            //         border: UnderlineInputBorder(
+            //             borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+            //         ),
+            //         enabledBorder: UnderlineInputBorder(
+            //             borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+            //         ),
+            //       ),
+            //       initialCountryCode: 'AE',
+            //       disableLengthCheck: true,
+            //       dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
+            //       dropdownTextStyle: TextStyle(
+            //           color: Colors.white,
+            //           fontSize: 14
+            //       ),
+            //       flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),
+            //       showDropdownIcon: true,
+            //       dropdownIconPosition: IconPosition.trailing,
+            //       onChanged: (phone) {
+            //         int max = countries.firstWhere((element) => element.code == phone.countryISOCode).maxLength;
+            //         if(signUpController.contactPersonPhone.text.length > max){
+            //           signUpController.contactPersonPhone.text = signUpController.contactPersonPhone.text.substring(0,max);
+            //         }
+            //         signUpController.contactPhoneCode.value = phone.countryCode;
+            //       },
+            //     ),
+            // ),
             const SizedBox(height: 25),
             Container(
               width: Get.width * 0.9,
