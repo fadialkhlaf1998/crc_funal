@@ -1164,14 +1164,16 @@ class _CarsListState extends State<CarsList> {
                                           crossAxisAlignment: Global.lang_code == 'en' ? CrossAxisAlignment.start : CrossAxisAlignment.end,
                                           children: [
                                             Text(
-                                              carListController.companyContactsList[index].name,
+                                              carListController.companyContactsList[index].name.toUpperCase(),
                                               maxLines: 2,
-                                              style: Theme.of(context).textTheme.headline3,
+                                              // style: Theme.of(context).textTheme.headline3,
+                                              style: TextStyle(color: Colors.white,fontSize: 14),
                                             ),
                                             Text(
                                               carListController.companyContactsList[index].languages,
                                               maxLines: 2,
-                                              style: Theme.of(context).textTheme.headline3,
+                                              style: TextStyle(color: Colors.white,fontSize: 14),
+                                              // style: Theme.of(context).textTheme.headline3,
                                             )
                                           ],
                                         ),

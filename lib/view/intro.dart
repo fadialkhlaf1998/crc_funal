@@ -17,6 +17,7 @@ class IntroView extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Center(
           // physics: NeverScrollableScrollPhysics(),

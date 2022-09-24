@@ -76,7 +76,7 @@ class _AllOrdersState extends State<AllOrders> {
   _header(context){
     return Container(
       width: Get.width,
-      height: Get.height * 0.25 ,
+      height: Get.height * 0.05+50+50+55 ,
       // color:Colors.red,
       padding: EdgeInsets.only(top: 10),
       child: Column(
