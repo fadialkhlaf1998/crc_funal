@@ -152,7 +152,7 @@ class _AllOrdersState extends State<AllOrders> {
                   children: [
                     Icon(Icons.car_crash),
                     const SizedBox(width: 5),
-                    Text(App_Localization.of(context).translate('rent_in'),style: TextStyle(color:  MyTheme.isDarkTheme.value?Colors.white:Colors.black),)
+                    Text(App_Localization.of(context).translate('customers_order'),style: TextStyle(color:  MyTheme.isDarkTheme.value?Colors.white:Colors.black),)
                   ],
                 ),
               )
@@ -188,7 +188,7 @@ class _AllOrdersState extends State<AllOrders> {
                     children: [
                       Icon(Icons.car_crash),
                       const SizedBox(width: 5),
-                      Text(App_Localization.of(context).translate('rent_out'),style: TextStyle(color:  MyTheme.isDarkTheme.value?Colors.white:Colors.black))
+                      Text(App_Localization.of(context).translate('my_order'),style: TextStyle(color:  MyTheme.isDarkTheme.value?Colors.white:Colors.black))
                     ],
                   ),
                 )
@@ -660,38 +660,57 @@ class _AllOrdersState extends State<AllOrders> {
                                     ),
                                     child:Center(
                                       child:  Container(
-                                        height: 40,
+                                        // height: 40,
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            GestureDetector(
-                                              onTap: (){
-                                                allOrdersController.updateState(context,-1,list[index].id);
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  CircleAvatar(
-                                                    backgroundColor: Colors.red,
-                                                    radius: 8,
-                                                    child: Icon(Icons.close,color: Colors.white,size: 14,),
-                                                  ),
-                                                  SizedBox(height: 5,),
-                                                  Text(App_Localization.of(context).translate("reject"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                            Expanded(
+                                              child: GestureDetector(
+                                                onTap: (){
+                                                  allOrdersController.updateState(context,-1,list[index].id);
+                                                },
+                                                child: Container(
+                                                  decoration: BoxDecoration(
 
-                                                ],
+                                                    color: Colors.red.withOpacity(0.4),
+                                                    borderRadius: Global.lang_code == "en"?
+                                                    BorderRadius.only(bottomLeft: Radius.circular(10),topLeft: Radius.circular(10))
+                                                        :BorderRadius.only(topRight: Radius.circular(10),bottomRight: Radius.circular(10))
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      CircleAvatar(
+                                                      backgroundColor: Colors.red,
+                                                      radius: 8,
+                                                      child: Icon(Icons.close,color: Colors.white,size: 14,),
+                                                    ),
+                                                      SizedBox(height: 5,),
+                                                      Text(App_Localization.of(context).translate("reject"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+
+
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
                                             ),
 
-                                            GestureDetector(
-                                              onTap: (){
-                                                allOrdersController.updateState(context,1,list[index].id);
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  Icon(Icons.check_circle,color: Colors.green,size: 18,),
-                                                  SizedBox(height: 2.7,),
-                                                  Text(App_Localization.of(context).translate("accept"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
-                                                ],
+                                            Expanded(
+                                              child: GestureDetector(
+                                                onTap: (){
+                                                  allOrdersController.updateState(context,1,list[index].id);
+                                                },
+                                                child: Container(
+                                                  color: Colors.green.withOpacity(0.4),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Icon(Icons.check_circle,color: Colors.green,size: 18,),
+                                                      SizedBox(height: 2.7,),
+                                                      Text(App_Localization.of(context).translate("accept"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
                                             )
                                           ],

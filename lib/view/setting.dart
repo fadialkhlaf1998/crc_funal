@@ -219,17 +219,17 @@ class Settings extends StatelessWidget {
             : SettingButton(
             onTap: (){
               // allOrdersController.rentType.value = 'out';
-              Get.to(()=>AllOrders('out'));
-            },
-            text: 'my_order'),
-        Global.company_id==-1
-            ? Center()
-            : SettingButton(
-            onTap: (){
-              // allOrdersController.rentType.value = 'in';
               Get.to(()=>AllOrders('in'));
             },
-            text: 'customers_order'),
+            text: 'orders'),
+        // Global.company_id==-1
+        //     ? Center()
+        //     : SettingButton(
+        //     onTap: (){
+        //       // allOrdersController.rentType.value = 'in';
+        //       Get.to(()=>AllOrders('in'));
+        //     },
+        //     text: 'customers_order'),
         Global.company_id==-1
             ? Center()
             : SettingButton(

@@ -117,13 +117,14 @@ class Home extends StatelessWidget {
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 1000),
             child:  !homeController.modelOption.value ? SizedBox(
-              width: 50,
+              width: 70,
               child: GestureDetector(
                 onTap: (){
                   FocusManager.instance.primaryFocus?.unfocus();
                   homeController.getAll();
+                  // homeController.getAll();
                 },
-                child: Text(App_Localization.of(context).translate('skip'),style: Theme.of(context).textTheme.headline3,)
+                child: Text(App_Localization.of(context).translate('all_car'),style: Theme.of(context).textTheme.headline3,)
               ),
             ) : SizedBox(width: 50),
           ),
@@ -145,7 +146,7 @@ class Home extends StatelessWidget {
         controller: homeController.editingController,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(bottom: 0),
-            labelText: App_Localization.of(context).translate('search'),
+            labelText: App_Localization.of(context).translate('search_for_car_rent'),
             labelStyle: TextStyle(color: Theme.of(context).dividerColor,fontSize: 14),
             prefixIcon: Icon(Icons.search,color: Theme.of(context).dividerColor,),
             prefixIconColor: Theme.of(context).primaryColor,
@@ -204,69 +205,37 @@ class Home extends StatelessWidget {
   _brandBody(context){
     return Obx((){
      return Container(
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery.of(context).size.width*0.9,
         height: MediaQuery.of(context).size.height * 0.68,
-        child: SingleChildScrollView(
-          physics: const ScrollPhysics(),
-          child: Column(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.86,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: (){
-                        homeController.getAll();
-                      },
-                      child: Container(
-                        color: Colors.transparent,
-                        width: MediaQuery.of(context).size.width * 0.85,
-                        child:Text(App_Localization.of(context).translate('all_car'), style: Theme.of(context).textTheme.headline3),
-                      ),
-                    ),
-                    Divider(color: Theme.of(context).dividerColor.withOpacity(0.2),thickness: 1)
-                  ],
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.86,
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: homeController.tempBrandsList.length,
-                  itemBuilder: (context, index){
-                    return Obx((){
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              homeController.chooseBrand(index);
-                            },
-                            child: Container(
-                              color: Colors.transparent,
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              height: MediaQuery.of(context).size.height * 0.04,
-                              child:Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(homeController.tempBrandsList[index].title, style: homeController.tempBrandsList[index].selected.value ? TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold) : Theme.of(context).textTheme.headline3),
-                                 // homeController.tempBrandsList[index].selected.value ? Icon(Icons.check,size: 25, color: Theme.of(context).primaryColor) : Text(''),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Divider(color: Theme.of(context).dividerColor.withOpacity(0.3),thickness: 1,)
-                        ],
-                      );
-                    });
-                  },
-                ),
-              ),
-              SizedBox(height: 30)
-            ],
+        child: GridView.builder(
+          shrinkWrap: true,
+          padding: EdgeInsets.only(bottom: 30),
+          itemCount: homeController.tempBrandsList.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 1,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
           ),
+          itemBuilder: (context,index){
+            return Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: MyTheme.isDarkTheme.value ?Colors.white :Colors.black)
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(homeController.tempBrandsList[index].image)
+                      )
+                  ),
+                ),
+              ),
+            );
+          },
+
         ),
       );
     });

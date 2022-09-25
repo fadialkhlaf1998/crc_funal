@@ -8,6 +8,7 @@ import 'package:crc_version_1/controller/intro_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/global.dart';
+import 'package:crc_version_1/helper/myTheme.dart';
 import 'package:crc_version_1/view/add_car.dart';
 import 'package:crc_version_1/view/add_people.dart';
 import 'package:crc_version_1/view/calender.dart';
@@ -183,18 +184,51 @@ class _CarsListState extends State<CarsList> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-              padding: const EdgeInsets.only(right: 5,left: 5),
-              child: IconButton(
-                onPressed: (){
-                  homeController.
-                  carListController.openContactList.value = false;
-                  carListController.checkSortOpen.value = false;
-                  carListController.checkFilterOpen.value = false;
-                  Get.back();
-                },
-                icon: const Icon(Icons.arrow_back_ios,size: 20,),
-              )
+          // Padding(
+          //     padding: const EdgeInsets.only(right: 5,left: 5),
+          //     child: IconButton(
+          //       onPressed: (){
+          //         homeController.
+          //         carListController.openContactList.value = false;
+          //         carListController.checkSortOpen.value = false;
+          //         carListController.checkFilterOpen.value = false;
+          //         Get.back();
+          //       },
+          //       icon: const Icon(Icons.search,size: 20,),
+          //     )
+          // ),
+          SizedBox(width: 5,),
+          GestureDetector(
+            onTap: (){
+              Get.back();
+            },
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: Icon(Icons.search)
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    App_Localization.of(context).translate('search'),
+                    style: TextStyle(
+                        color: Theme.of(context).dividerColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          VerticalDivider(
+            indent: 20,
+            endIndent: 20,
+            thickness: 1,
+            color: Theme.of(context).dividerColor,
           ),
           GestureDetector(
             onTap: (){
@@ -452,11 +486,11 @@ class _CarsListState extends State<CarsList> {
                 child: Global.company_id==-1?Text(App_Localization.of(context).translate('daily_rent') + '  ' + "????" + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),)
                     :Text(App_Localization.of(context).translate('daily_rent') + '  ' + carListController.myCars[index].pricPerDay.toString() + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),),
               ),
-              carListController.myCars[index].pricPerHr == null ?
-              SizedBox(height: 0,) : Container(
-                child: Global.company_id==-1?Text(App_Localization.of(context).translate('hr_rent') + '  ' + "????" + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),)
-                    :Text(App_Localization.of(context).translate('hr_rent') + '  ' + carListController.myCars[index].pricPerHr.toString() + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),),
-              ),
+              // carListController.myCars[index].pricPerHr == null ?
+              // SizedBox(height: 0,) : Container(
+              //   child: Global.company_id==-1?Text(App_Localization.of(context).translate('hr_rent') + '  ' + "????" + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),)
+              //       :Text(App_Localization.of(context).translate('hr_rent') + '  ' + carListController.myCars[index].pricPerHr.toString() + ' ' + App_Localization.of(context).translate('aed'),style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontWeight: FontWeight.bold),),
+              // ),
               Container(
                   width: MediaQuery.of(context).size.width  * 0.9,
                   child: Column(
@@ -581,7 +615,7 @@ class _CarsListState extends State<CarsList> {
   _filterInterface(context){
     return AnimatedContainer(
       width: MediaQuery.of(context).size.width,
-      height: carListController.checkFilterOpen.value ? MediaQuery.of(context).size.height  * 0.6 : 10,
+      height: carListController.checkFilterOpen.value ? MediaQuery.of(context).size.height  * 0.58+10 : 10,
       decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
         borderRadius: const BorderRadius.only(
@@ -614,8 +648,8 @@ class _CarsListState extends State<CarsList> {
                           : Text('')
                     ),
                     _colorFilterMenu(context),
-                    const SizedBox(height: 10,),
-                    _priceFilterMenu(context),
+                    // const SizedBox(height: 10,),
+                    // _priceFilterMenu(context),
                   ],
                 ),
               ),
@@ -651,7 +685,7 @@ class _CarsListState extends State<CarsList> {
                           },
                           child: Container(
                             margin: EdgeInsets.symmetric(horizontal: 20),
-                            width: MediaQuery.of(context).size.width * 0.2,
+                            width: MediaQuery.of(context).size.width * 0.5,
                             height: MediaQuery.of(context).size.height * 0.04,
                             decoration: BoxDecoration(
                               color: Theme.of(context).primaryColor,
@@ -659,7 +693,7 @@ class _CarsListState extends State<CarsList> {
                             ),
                             child: Center(
                               child: Text(
-                                App_Localization.of(context).translate('done'),
+                                App_Localization.of(context).translate('submit'),
                                 style: TextStyle(
                                     color: Theme.of(context).backgroundColor,
                                     fontWeight: FontWeight.bold,
@@ -669,13 +703,18 @@ class _CarsListState extends State<CarsList> {
                             ),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          child: IconButton(
-                            onPressed: (){
-                              carListController.clearFilterValue();
-                            },
-                            icon: Icon(Icons.delete_outline),
+                        GestureDetector(
+                          onTap: (){
+                            carListController.clearFilterValue();
+                          },
+                          child: Row(
+                            children: [
+                              Text(App_Localization.of(context).translate("clear_filter"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,),),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                child: Icon(Icons.delete_outline)
+                              ),
+                            ],
                           ),
                         ),
                       ],

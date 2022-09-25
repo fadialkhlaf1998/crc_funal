@@ -24,8 +24,8 @@
   "daily_rent" : "Daily rent",
   "aed" : "AED",
   "year" : "Year",
-  "car_list" : "Cars List",
-  "people_list" : "People List",
+  "car_list" : "My Cars",
+  "people_list" : "My Staff",
   "language": "Language",
   "connect_to_us" : "Contact To Us",
   "about" : "About",
@@ -110,8 +110,8 @@
   "whatsapp" : "Whatsapp",
   "reserve" : "Reservation",
   "register_to_see_price" : "Register to see price",
-  "my_order" : "My Order",
-  "customers_order" : "Customers Order",
+  "my_order" : "My Orders",
+  "customers_order" : "Customers Orders",
   "add_car" : "Add a Car",
   "add_people" : "Add People",
   "change_password" : "Change Password",
@@ -134,5 +134,11 @@
   "please_select": "Please select date to calc price",
   "submit": "Submit",
   "pick_up": "Pick Up",
-  "drop_off": "Drop Off"
+  "drop_off": "Drop Off",
+
+  "search_for_car_rent": "Search For Car Rental In UAE",
+  "clear_filter": "Clear Filter",
+  "rent_in_out": "Rent In/Out",
+  "orders": "Orders",
+  "available_to_rent_or_no": "Available For Rent?"
 }

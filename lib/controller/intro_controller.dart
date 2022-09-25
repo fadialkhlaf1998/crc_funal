@@ -35,12 +35,14 @@ class IntroController extends GetxController{
 
   get_page(){
       Store.Load_login().then((value) {
-        if(Global.loginInfo!.email=="non"){
+        print(value.email);
+      if(Global.loginInfo!.email=="non"){
           Future.delayed(Duration(milliseconds: 2000)).then((value) {
             Get.offAll(() => LogIn());
           });
         }else{
           Api.login(Global.loginInfo!.email, Global.loginInfo!.pass).then((company) {
+
             Global.company_id = company.id;
             Global.companyImage.value = company.profileImage;
             Global.companyTitle = company.title;

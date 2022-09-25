@@ -30,10 +30,17 @@ class AllOrdersController extends GetxController{
   updateState(BuildContext context,int state,int id)async{
     loading.value = true;
     bool internet = await Api.check_internet();
+    print('internet');
+    print(internet);
     if(internet){
       bool succ = await Api.orderState(state,id);
+      print("succ");
+      print(succ);
       if(succ){
+
         Global.company = await Api.login(Global.company!.username, Global.company!.password);
+        print("Global.company!.id");
+        print(Global.company!.id);
         // App.sucss_msg(context, App_Localization.of(context).translate('order_state_changes_successfully'));
         // Get.showSnackbar(GetSnackBar(backgroundColor: App.greySettingPage,title: App_Localization.of(context).translate("rent_in"),message: App_Localization.of(context).translate('order_state_changes_successfully'),));
         loading.value = false;

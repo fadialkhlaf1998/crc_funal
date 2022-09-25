@@ -39,6 +39,7 @@ class Api {
 
     if (response.statusCode == 200) {
       var jsondata = await response.stream.bytesToString();
+      print(jsondata);
       return Intro.fromJson(jsonDecode(jsondata));
     }
     else {

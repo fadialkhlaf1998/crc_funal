@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class MyCarList extends StatelessWidget {
 
@@ -174,13 +175,35 @@ class MyCarList extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(App_Localization.of(context).translate('hid_or_show'),style:  TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontSize: 15, fontWeight: FontWeight.bold)),
-                    SizedBox(
-                      height: 10,
-                      child: Switch(value: myCarListController.tempCarList[index].availableSwitch.value, onChanged: (value){
-                        myCarListController.changeAvailability(index);
-                      },),
-                    )
+                    Text(App_Localization.of(context).translate('available_to_rent_or_no'),style:  TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontSize: 10, fontWeight: FontWeight.bold)),
+                    Obx(() => SizedBox(
+                      height: 20,
+                      // width: 62,
+                      child: ToggleSwitch(
+                        initialLabelIndex: myCarListController.tempCarList[index].availableSwitch.value?0:1,
+                        totalSwitches: 2,
+                        labels: [
+                          'Yes',
+                          'No',
+                        ],
+                        fontSize: 10,
+                        // minWidth: 61,
+                        customWidths: [40,40],
+                        // activeBgColor: [
+                        //   Colors.green,
+                        //   Colors.red
+                        // ],
+                        // activeFgColor:Colors.green,
+                        animate: true,
+                        inactiveBgColor: Colors.grey,
+                        activeBgColors: [[Colors.green],[Colors.red]],
+                        onToggle: (realIndex) {
+                          print('switched to: $index');
+                          myCarListController.changeAvailability(index);
+                        },
+                      ),
+                    )),
+
                   ],
                 ),
               )
