@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "623451608137",
+    "project_id": "maxb2b-ea961",
+    "storage_bucket": "maxb2b-ea961.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623451608137:android:1bddd99bdf1a81d69e9b98",
+        "android_client_info": {
+          "package_name": "com.maxart.crc_version_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "623451608137-k70ebm2395o8pjhnag3te5a7hgs06nrg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeK89Asfn50AHs8HijL_iHpcpeSh2clZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "623451608137-k70ebm2395o8pjhnag3te5a7hgs06nrg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

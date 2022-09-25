@@ -55,6 +55,7 @@ dependencies:
   dropdown_button2: ^1.0.0
   alphabet_list_scroll_view: ^2.0.0
   syncfusion_flutter_datepicker: ^20.2.50
+  firebase_core: ^1.23.0
 
 
 
