@@ -186,6 +186,7 @@ class MyCarList extends StatelessWidget {
                           'Yes',
                           'No',
                         ],
+                        animationDuration: 200,
                         fontSize: 10,
                         // minWidth: 61,
                         customWidths: [40,40],
