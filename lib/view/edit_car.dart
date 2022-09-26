@@ -3,6 +3,7 @@ import 'package:crc_version_1/controller/edit_car_controller.dart';
 import 'package:crc_version_1/controller/intro_controller.dart';
 import 'package:crc_version_1/controller/my_car_list_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
+import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
@@ -61,6 +62,7 @@ class EditCar extends StatelessWidget {
                   ),
                 ],
               ),
+              editCarController.showChoose.value?_chooseImage(context):Center(),
               editCarController.loading.value == false
                   ? Text('')
                   :  WillPopScope(
@@ -88,7 +90,71 @@ class EditCar extends StatelessWidget {
     });
   }
 
+  _chooseImage(BuildContext context){
+    return SafeArea(
 
+      child: GestureDetector(
+        onTap: (){
+          //todo
+          editCarController.showChoose.value = false;
+        },
+        child: Container(
+          color: Colors.black.withOpacity(0.5),
+          child: Center(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 180,
+                child: Center(
+                  child: Container(
+                      width: 150,
+                      height: 65,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: ()async{
+                                //todo camera
+                                editCarController.addCamera(context);
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.camera_alt,size: 35,color: App.primary,),
+                                  Text(App_Localization.of(context).translate("camera"),style: TextStyle(color: App.primary,fontSize: 11,fontWeight: FontWeight.bold),)
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: ()async{
+                                //todo gallery
+                                editCarController.addImage(context);
+                              },
+                              child:Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.photo,size: 35,color: App.primary,),
+                                  Text(App_Localization.of(context).translate("gallery"),style: TextStyle(color: App.primary,fontSize: 11,fontWeight: FontWeight.bold),)
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
   _appBar(context){
     return Container(
         width: MediaQuery.of(context).size.width,
@@ -194,7 +260,7 @@ class EditCar extends StatelessWidget {
             child: Center(
               child: Text(
                 App_Localization.of(context).translate('save'),
-                style: TextStyle(color: Theme.of(context).backgroundColor,fontSize: 20,fontWeight: FontWeight.bold),
+                style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -716,17 +782,25 @@ class EditCar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: (){
-              editCarController.addImage(context);
+              // editCarController.addImage(context);
+              editCarController.showChoose.value = true;
             },
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.12,
+              width: MediaQuery.of(context).size.width * 0.45,
               height: MediaQuery.of(context).size.width * 0.12,
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(10)
               ),
               child: Center(
-                child: Icon(Icons.add,color: Theme.of(context).backgroundColor,),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(Icons.add,color: Colors.white,size: 35),
+                    Text(App_Localization.of(context).translate("add_image"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                    Icon(Icons.add,color: Colors.transparent,size: 35),
+                  ],
+                )
               ),
             ),
           ),

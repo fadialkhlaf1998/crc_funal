@@ -1,6 +1,7 @@
 import 'package:crc_version_1/controller/car_list_controller.dart';
 import 'package:crc_version_1/controller/intro_controller.dart';
 import 'package:crc_version_1/model/intro.dart';
+import 'package:crc_version_1/model/search_suggestion.dart';
 import 'package:crc_version_1/view/cars_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,7 @@ class HomeController extends GetxController{
   RxList<Colors> colors = <Colors>[].obs;
   RxList<Brands> tempBrandsList = <Brands>[].obs;
   RxList<Models> tempModelsList = <Models>[].obs;
+  RxList<SearchSuggestion> searchSuggestion = <SearchSuggestion>[].obs;
 
   RxBool modelOption = false.obs;
   RxInt modelsLength = 0.obs;
@@ -34,6 +36,7 @@ class HomeController extends GetxController{
     brands=introController.brands.obs;
     tempBrandsList.addAll(brands);
     colors=introController.colors.obs;
+    searchSuggestion=introController.searchSuggestion.obs;
   }
 
   chooseBrand(index){
@@ -70,8 +73,9 @@ class HomeController extends GetxController{
     }
     carListController.brandListOpen.value = false;
     carListController.myValue!.value = 5000;
-    Get.to(()=>CarsList());
+    Get.to(()=>CarsList(false));
   }
+
 
   getAllModels(){
     FocusManager.instance.primaryFocus?.unfocus();
@@ -82,7 +86,7 @@ class HomeController extends GetxController{
       carListController.modelListCheck![i] = false;
     }
     carListController.myValue!.value = 5000;
-    Get.to(()=>CarsList());
+    Get.to(()=>CarsList(false));
   }
 
   goToBrandMenu(){
@@ -103,7 +107,7 @@ class HomeController extends GetxController{
     carListController.modelListCheck![index] = true;
     carListController.modelFilter.value = brands[brandIndex.value].models[index].title;
     carListController.myValue!.value = 5000;
-    Get.to(()=>CarsList());
+    Get.to(()=>CarsList(false));
   }
 
   filterSearchResults(String query) {
@@ -151,13 +155,5 @@ class HomeController extends GetxController{
     }
 
   }
-
-
-
-
-
-
-
-
 
 }

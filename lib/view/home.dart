@@ -2,6 +2,9 @@ import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/controller/home_controller.dart';
 import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
+import 'package:crc_version_1/model/search_suggestion.dart';
+import 'package:crc_version_1/view/searchDelgate.dart';
+// import 'package:crc_version_1/view/search_delegate.dart';
 import 'package:crc_version_1/widget/background_page.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/material.dart';
@@ -135,34 +138,62 @@ class Home extends StatelessWidget {
   }
 
   _search(context){
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: 40,
-      child: TextField(
-        onChanged: (value){
-          homeController.filterSearchResults(value);
-        },
-        style: Theme.of(context).textTheme.bodyText2,
-        controller: homeController.editingController,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.only(bottom: 0),
-            labelText: App_Localization.of(context).translate('search_for_car_rent'),
-            labelStyle: TextStyle(color: Theme.of(context).dividerColor,fontSize: 14),
-            prefixIcon: Icon(Icons.search,color: Theme.of(context).dividerColor,),
-            prefixIconColor: Theme.of(context).primaryColor,
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(width: 1,color: Theme.of(context).primaryColor),
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(width: 1,color: Theme.of(context).dividerColor.withOpacity(0.5)),
-              borderRadius: BorderRadius.circular(10),),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.3)),
-            borderRadius: BorderRadius.circular(10),
-          ),
+    return GestureDetector(
+      onTap: (){
+        showSearch(
+          context: context,
+          delegate: SearchDeligate(searchSuggestion: homeController.searchSuggestion.value),
+        );
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: 40,
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).dividerColor,),
+          borderRadius: BorderRadius.circular(10)
         ),
-
+        child: Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SizedBox(width: 10,),
+            Icon(Icons.search,color: Theme.of(context).dividerColor,),
+            SizedBox(width: 10,),
+            Text(App_Localization.of(context).translate('search_for_car_rent'),style:TextStyle(color: Theme.of(context).dividerColor,fontSize: 14),)
+          ],
+        )
+        // TextField(
+        //   onChanged: (value){
+        //     homeController.filterSearchResults(value);
+        //   },
+        //   onTap: (){
+        //     showSearch(
+        //       context: context,
+        //       delegate: SearchDeligate(searchSuggestion: homeController.searchSuggestion.value),
+        //     );
+        //
+        //   },
+        //   style: Theme.of(context).textTheme.bodyText2,
+        //   controller: homeController.editingController,
+        //   decoration: InputDecoration(
+        //     contentPadding: const EdgeInsets.only(bottom: 0),
+        //       labelText: App_Localization.of(context).translate('search_for_car_rent'),
+        //       labelStyle: TextStyle(color: Theme.of(context).dividerColor,fontSize: 14),
+        //       prefixIcon: Icon(Icons.search,color: Theme.of(context).dividerColor,),
+        //       prefixIconColor: Theme.of(context).primaryColor,
+        //       focusedBorder: OutlineInputBorder(
+        //         borderRadius: BorderRadius.circular(10),
+        //         borderSide: BorderSide(width: 1,color: Theme.of(context).primaryColor),
+        //       ),
+        //       border: OutlineInputBorder(
+        //         borderSide: BorderSide(width: 1,color: Theme.of(context).dividerColor.withOpacity(0.5)),
+        //         borderRadius: BorderRadius.circular(10),),
+        //     enabledBorder: OutlineInputBorder(
+        //       borderSide: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.3)),
+        //       borderRadius: BorderRadius.circular(10),
+        //     ),
+        //   ),
+        //
+        // ),
       ),
     );
   }
@@ -178,7 +209,7 @@ class Home extends StatelessWidget {
         width: MediaQuery.of(context).size.width  * 0.9,
         height: 35,
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.3),
+          color: App.grey.withOpacity(0.3),
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.only(right: 5),
@@ -213,25 +244,49 @@ class Home extends StatelessWidget {
           itemCount: homeController.tempBrandsList.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
-            childAspectRatio: 1,
+            childAspectRatio: 0.9,
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
           ),
           itemBuilder: (context,index){
             return Container(
+              width: MediaQuery.of(context).size.width / 4 ,
+              height: MediaQuery.of(context).size.width / 4 ,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: MyTheme.isDarkTheme.value ?Colors.white :Colors.black)
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(homeController.tempBrandsList[index].image)
-                      )
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      homeController.chooseBrand(index);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 6 ,
+                      height: MediaQuery.of(context).size.width / 6 ,
+
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+
+                          decoration: BoxDecoration(
+                              // color: Colors.red,
+                              image: DecorationImage(
+                                  image: NetworkImage(homeController.tempBrandsList[index].image),
+                                // fit: BoxFit.fitHeight
+                              )
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  // SizedBox(height: 5,),
+                  Text(homeController.tempBrandsList[index].title.toString(),style: TextStyle(color: MyTheme.isDarkTheme.value ?Colors.white :Colors.black,fontWeight: FontWeight.bold),),
+                  Text(homeController.tempBrandsList[index].count.toString()+" Cars",style: TextStyle(color: MyTheme.isDarkTheme.value ?Colors.white.withOpacity(0.5) :Colors.black.withOpacity(0.5)),),
+
+                ],
               ),
             );
           },
@@ -309,10 +364,10 @@ class Home extends StatelessWidget {
 class SearchTextField extends SearchDelegate<String> {
   final List<String> suggestion_list;
   String? result;
-  HomeController homeController;
+  // HomeController homeController;
 
   SearchTextField(
-      {required this.suggestion_list, required this.homeController});
+      {required this.suggestion_list});
 
   @override
   List<Widget> buildActions(BuildContext context) {

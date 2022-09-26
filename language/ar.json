@@ -113,7 +113,7 @@
   "my_order" : "طلباتي",
   "customers_order" : "طلبات الزبائن",
   "add_car" : "إضافة سيارة",
-  "add_people" : "إضافة شخص",
+  "add_people" : "إضافة موظف",
   "change_password" : "تغيير كلمة المرور",
   "about_b2b" : "About B2B",
   "rent_in" : "RENT-IN",
@@ -135,5 +135,15 @@
 
   "submit": "تأكيد الحجز",
   "pick_up": "الاستلام",
-  "drop_off": "التسليم"
+  "drop_off": "التسليم",
+
+  "search_for_car_rent": "البحث لحجز السيارات في دبي",
+  "clear_filter": "مسح الفلتر",
+  "rent_in_out": "Rent In/Out",
+  "orders": "الطلبات",
+  "available_to_rent_or_no": "متاح للإجار؟",
+  "my_account": "حسابي",
+  "add_image": "إضافة صورة",
+  "camera": "كاميرا",
+  "gallery": "الألبوم"
 }

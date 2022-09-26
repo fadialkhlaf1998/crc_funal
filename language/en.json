@@ -112,8 +112,8 @@
   "register_to_see_price" : "Register to see price",
   "my_order" : "My Orders",
   "customers_order" : "Customers Orders",
-  "add_car" : "Add a Car",
-  "add_people" : "Add People",
+  "add_car" : "Add a New Car",
+  "add_people" : "Add New Staff",
   "change_password" : "Change Password",
   "about_b2b" : "About B2B",
   "rent_in" : "RENT-IN",
@@ -140,5 +140,14 @@
   "clear_filter": "Clear Filter",
   "rent_in_out": "Rent In/Out",
   "orders": "Orders",
-  "available_to_rent_or_no": "Available For Rent?"
+  "available_to_rent_or_no": "Available For Rent?",
+  "my_account": "My Account",
+  "add_image": "Add Image",
+  "camera": "Camera",
+  "gallery": "Gallery",
+
+  "no_results_matched": "No Result Matched",
+  "staff_name": "Staff Name",
+  "select_languages": "Choose Languages",
+  "available": "Available?"
 }

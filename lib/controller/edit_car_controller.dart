@@ -31,6 +31,7 @@ class EditCarController extends GetxController{
   int companyId = -1;
   RxBool imagePage = false.obs;
   RxBool loading = false.obs;
+  RxBool showChoose = false.obs;
 
   RxList<File> imageList = <File>[].obs;
   RxList<File> newImageList = <File>[].obs;
@@ -130,6 +131,7 @@ class EditCarController extends GetxController{
 
   Future addImage(context)async{
       _picker.pickMultiImage().then((value){
+        showChoose.value=false;
        if (value!.length > 8){
           App.info_msg(context, 'You can\'t upload more than 8 photos');
         }else if ((value.length + imageList.length + newImageList.length) > 8){
@@ -141,7 +143,16 @@ class EditCarController extends GetxController{
         }
       });
     }
-
+  Future addCamera(context)async{
+    _picker.pickImage(source: ImageSource.camera).then((value){
+      showChoose.value=false;
+      if (value==null){
+        App.info_msg(context, 'some thing went wrong');
+      }else{
+        newImageList.add(File(value.path));
+      }
+    });
+  }
   saveInfo(context){
      if(imagePage.value == true){
        imagePage.value = false;

@@ -16,10 +16,9 @@ class AddPeopleController extends GetxController{
 
   RxInt currentStep = 0.obs;
 
-  RxList language = ['English', 'Arabic','French'].obs;
-  RxList languageArabic = ['الانكليزية', 'العربية','الفرنسية'].obs;
+  RxList language = ['English', 'Arabic','French','Urdu','Russian'].obs;
 
-  RxList select = [false, false, false].obs;
+  RxList select = [false, false, false,false , false].obs;
   String selectLanguages = '';
   final ImagePicker _picker = ImagePicker();
   TextEditingController username = TextEditingController();
@@ -39,7 +38,44 @@ class AddPeopleController extends GetxController{
   selectLanguage(index) {
     select[index] = !select[index];
   }
+  var selectedLangValidate = false.obs;
+  var usernameValidate = false.obs;
+  var phoneValidate = false.obs;
+  save(context)async{
+    selectedLangValidate.value = false;
+    usernameValidate.value = false;
+    phoneValidate.value = false;
+    // bool can_add = true;
+    if(selectLanguages == ''){
+      selectedLangValidate.value = true;
+      // App.info_msg(context, App_Localization.of(context).translate('you_should_select_language'));
+      // return ;
+    }
+    if( username.text.isEmpty){
+      // App.info_msg(context, App_Localization.of(context).translate('name_cant_be_empty'));
+      // return ;
+      usernameValidate.value = true;
+    }
+    if(mobileNumber.text.isEmpty){
+      // App.info_msg(context, 'Mobile number is necessary');
+      // return ;
+      phoneValidate.value = true;
+    }
+    if(!phoneValidate.value&&!usernameValidate.value&&selectedLangValidate.value){
+      if(userImage.isEmpty){
+        final byteData = await rootBundle.load('assets/images/profile_picture.png');
+        final file = File('${(await getTemporaryDirectory()).path}/profile_picture.png');
+        await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+        userImage.add(file);
+      }
+      loadingUpload.value = true;
+      Api.addPerson(username.text, userImage.first, mobileNumber.text, selectLanguages, companyID!).then((value){
+        loadingUpload.value = false;
+        Get.off(()=>PeopleList());
+      });
+    }
 
+  }
   forwardStep(context)async{
     if(currentStep.value >= 3){
       selectLanguages = '';

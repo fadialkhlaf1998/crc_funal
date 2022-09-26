@@ -53,6 +53,7 @@ class Car {
   String companyImage;
   List<myImage> images;
   RxBool bookOption = false.obs;
+  RxBool editLoading = false.obs;
 
   factory Car.fromJson(String str) => Car.fromMap(json.decode(str));
 

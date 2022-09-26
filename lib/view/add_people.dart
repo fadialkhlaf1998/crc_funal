@@ -23,15 +23,63 @@ class AddPeople extends StatelessWidget {
     return Obx(() {
       return Scaffold(
         body: SafeArea(
-          child: SingleChildScrollView(
+          child: Center(
             child: Stack(
               children: [
-                Column(
-                  children: [
-                    _header(context),
-                    _body(context),
-                  ],
+                SafeArea(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _personPhoto(context) ,
+                        SizedBox(height: 20,),
+                        _personName(context) ,
+                        _personMobile(context) ,
+                        _personLanguage(context),
+                        SizedBox(height: 60,),
+                      ],
+                    ),
+                  ),
                 ),
+                Container(width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,),
+                Obx(() => MediaQuery.of(context).viewInsets.bottom>0?Center():Positioned(
+                    child:  Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).backgroundColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).dividerColor.withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 7,
+                            offset: const Offset(0, -2), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextButton(
+                            onPressed: () async {
+                              addPeopleController.save(context);
+                            },
+                            child: Text(
+                              addPeopleController.currentStep.value < 3 ? App_Localization.of(context).translate('save') : App_Localization.of(context).translate('save') ,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),bottom: 0),),
+                _header(context),
                 addPeopleController.loadingUpload.value
                     ? WillPopScope(
                     onWillPop: ()async => false,
@@ -62,7 +110,7 @@ class AddPeople extends StatelessWidget {
   _header(context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.22,
+      height: MediaQuery.of(context).size.height * 0.08,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -102,7 +150,7 @@ class AddPeople extends StatelessWidget {
               SizedBox(width: 80),
             ],
           ),
-          _stepper(context),
+          // _stepper(context),
         ],
       ),
     );
@@ -150,75 +198,24 @@ class AddPeople extends StatelessWidget {
       ),
     );
   }
-
-  _body(context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.75,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 6,
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              child: addPeopleController.currentStep.value == 0 ?
-              _personName(context) : addPeopleController.currentStep.value == 1 ?
-              _personPhoto(context) : addPeopleController.currentStep.value == 2 ?
-              _personMobile(context) : _personLanguage(context),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).backgroundColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).dividerColor.withOpacity(0.2),
-                    spreadRadius: 1,
-                    blurRadius: 7,
-                    offset: const Offset(0, -2), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: TextButton(
-                    onPressed: () async {
-                      addPeopleController.forwardStep(context);
-                    },
-                    child: Text(
-                      addPeopleController.currentStep.value < 3 ? App_Localization.of(context).translate('next') : App_Localization.of(context).translate('save') ,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  //
+  // _body(context) {
+  //   return Container(
+  //     height: MediaQuery.of(context).size.height*0.9 - MediaQuery.of(context).padding.top ,
+  //     child:
+  //   );
+  // }
 
   _personName(context) {
     return Container(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 0),
       child: Form(
-        key: formGlobalKey,
+        // key: formGlobalKey,
         child: Column(
           children: [
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              height: 80,
+              height: 40,
               child: TextFormField(
                 style: Theme.of(context).textTheme.headline3,
                 controller: addPeopleController.username,
@@ -232,24 +229,22 @@ class AddPeople extends StatelessWidget {
                 decoration: InputDecoration(
                   errorStyle: const TextStyle(
                       color: Colors.red, fontWeight: FontWeight.bold),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Theme
-                        .of(context)
-                        .dividerColor),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 1,
+                        color: addPeopleController.usernameValidate.value ? Colors.red : Theme.of(context).dividerColor),
                   ),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(width: 1, color: Theme
-                          .of(context)
-                          .dividerColor)
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1,
+                          color: addPeopleController.usernameValidate.value ? Colors.red : Theme.of(context).dividerColor)
                   ),
                   labelStyle: Theme
                       .of(context)
                       .textTheme
                       .bodyText2,
                   labelText: App_Localization.of(context).translate(
-                      'username'),
-                  hintText: App_Localization.of(context).translate(
-                      'enter_your_username'),
+                      'staff_name'),
+                  // hintText: App_Localization.of(context).translate(
+                  //     'enter_your_username'),
                   hintStyle: Theme
                       .of(context)
                       .textTheme
@@ -273,7 +268,7 @@ class AddPeople extends StatelessWidget {
           children: [
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              height: 80,
+              height: 40,
               child: TextFormField(
                 style: Theme.of(context).textTheme.headline3,
                 controller: addPeopleController.mobileNumber,
@@ -287,15 +282,17 @@ class AddPeople extends StatelessWidget {
                 decoration: InputDecoration(
                   errorStyle: const TextStyle(
                       color: Colors.red, fontWeight: FontWeight.bold),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Theme.of(context).dividerColor),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 1,
+                        color: addPeopleController.phoneValidate.value ? Colors.red : Theme.of(context).dividerColor),
                   ),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(width: 1, color: Theme.of(context).dividerColor)
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1,
+                          color: addPeopleController.phoneValidate.value ? Colors.red : Theme.of(context).dividerColor)
                   ),
                   labelStyle: Theme.of(context).textTheme.bodyText2,
                   labelText: App_Localization.of(context).translate('mobile_number'),
-                  hintText: App_Localization.of(context).translate('enter_your_mobile_number'),
+                  // hintText: App_Localization.of(context).translate('enter_your_mobile_number'),
                   hintStyle: Theme.of(context).textTheme.headline4,
                 ),
                 keyboardType: TextInputType.number,
@@ -305,7 +302,6 @@ class AddPeople extends StatelessWidget {
         ),
       ),
     );
-
   }
 
   _personPhoto(context){
@@ -315,7 +311,6 @@ class AddPeople extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 100),
-              Text(App_Localization.of(context).translate('add_photo'), style: Theme.of(context).textTheme.headline1),
               const SizedBox(height: 10),
               GestureDetector(
                 onTap: (){
@@ -325,34 +320,64 @@ class AddPeople extends StatelessWidget {
                   duration: const Duration(milliseconds: 1000),
                   child: addPeopleController.userImage.length == 0  ?
                   Container(
-                    width: 150,
-                    height: 150,
+                    width: 100,
+                    height: 100,
                     decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.person_add_alt_1, size: 60,color: Theme.of(context).backgroundColor,),
-                  )
-                      : Container(
-                    width: 150,
-                    height: 150,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: FileImage(addPeopleController.userImage.first),
-                        )
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.add, size: 40,color: Theme.of(context).backgroundColor,),
+                          ],
+                        ),
+                        Text(App_Localization.of(context).translate('add_photo'), style: TextStyle(color: Theme.of(context).backgroundColor,fontSize: 13,fontWeight: FontWeight.bold)),
+                      ],
                     ),
-                  ),
+                  )
+                      : Stack(
+                        children: [
+                          Container(
+                            height: 120,
+                            width: 120,
+                            child: Stack(
+                              alignment: Alignment.topCenter,
+                              children: [
+                                Center(
+                                  child: Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: FileImage(addPeopleController.userImage.first),
+                                        )
+                                    ),
+                                  ),
+                                ),
+                                addPeopleController.userImage.isNotEmpty ?
+
+                                Positioned(
+                                    right: 10,
+                                    bottom: 0,
+                                    child: GestureDetector(onTap: (){addPeopleController.userImage.clear();},child: Icon(Icons.delete, color: Theme.of(context).dividerColor))) : Text(''),
+                                
+                              ],
+                            )
+                          ),
+
+                        ],
+                      ),
                 ),
               ),
-              IconButton(
-                onPressed: (){
-                  addPeopleController.userImage.clear();
-                },
-                icon: addPeopleController.userImage.isNotEmpty ? Icon(Icons.delete, color: Theme.of(context).dividerColor) : Text(''),
-              ),
+
             ],
           ),
         ),
@@ -363,42 +388,57 @@ class AddPeople extends StatelessWidget {
   _personLanguage(context){
     return Container(
       padding: const EdgeInsets.only(top: 20),
-      child: ListView.builder(
-        // shrinkWrap: true,
-        // physics: const NeverScrollableScrollPhysics(),
-        itemCount: addPeopleController.language.length,
-        itemBuilder: (context, index){
-          return GestureDetector(
-            onTap: (){
-              addPeopleController.selectLanguage(index);
-            },
-            child: Container(
-              color: Colors.transparent,
-              height: MediaQuery.of(context).size.height * 0.08,
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      // height: 50,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width*0.9,
+            child: Row(
+              children: [
+                Text(App_Localization.of(context).translate("select_languages")+" :",style: Theme.of(context).textTheme.bodyText1,),
+              ],
+            ),
+          ),
+          SizedBox(height: 20,),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: addPeopleController.language.length,
+            itemBuilder: (context, index){
+              return GestureDetector(
+                onTap: (){
+                  addPeopleController.selectLanguage(index);
+                },
+                child: Container(
+                  color: Colors.transparent,
+                  // height: 45,
+                  child: Column(
                     children: [
-                      Container(
-                        padding: EdgeInsets.only(right: 20, left: 20),
-                        child: Text(addPeopleController.language[index].toString(), style: Theme.of(context).textTheme.bodyText1,),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(right: 20, left: 20),
+                            child: Text(addPeopleController.language[index].toString(), style: Theme.of(context).textTheme.bodyText1,),
+                          ),
+                         Obx((){
+                           return  Padding(
+                             padding:EdgeInsets.only(right: 20, left: 20),
+                             child: addPeopleController.select[index] ? Icon(Icons.check, color: Theme.of(context).primaryColor,) : Text(''),
+                           );
+                         }),
+                        ],
                       ),
-                     Obx((){
-                       return  Padding(
-                         padding:EdgeInsets.only(right: 20, left: 20),
-                         child: addPeopleController.select[index] ? Icon(Icons.check, color: Theme.of(context).primaryColor,) : Text(''),
-                       );
-                     }),
+                      Divider(thickness: 1, color: addPeopleController.selectedLangValidate.value ? Colors.red : Theme.of(context).dividerColor.withOpacity(0.2),indent: 22,endIndent: 22,),
                     ],
                   ),
-                  Divider(thickness: 1, color: Theme.of(context).dividerColor.withOpacity(0.2),indent: 22,endIndent: 22,),
-                ],
-              ),
-            ),
-          );
-        },
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

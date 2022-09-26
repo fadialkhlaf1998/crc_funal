@@ -34,6 +34,7 @@ class AddCarController extends GetxController{
   RxList<File> imageList = <File>[].obs;
   RxBool loadingUpload = false.obs;
   RxBool choosePhotoCheck = false.obs;
+  RxBool showChoose = false.obs;
 
   /// Search Lists
   RxList<Brands> tempBrandsList = <Brands>[].obs;
@@ -139,6 +140,17 @@ class AddCarController extends GetxController{
     });
   }
 
+  Future addCamera(context)async{
+    _picker.pickImage(source: ImageSource.camera).then((value){
+      showChoose.value=false;
+      if (value==null){
+        App.info_msg(context, 'some thing went wrong');
+      }else{
+        imageList.add(File(value.path));
+      }
+    });
+  }
+
   deleteImageFromList(index){
     imageList.removeAt(index);
   }
@@ -207,10 +219,8 @@ class AddCarController extends GetxController{
           FocusManager.instance.primaryFocus?.unfocus();
           loadingUpload.value = true;
           Api.addCar(brand!.value,brandId.toString(), model!.value, modelId.toString(), yearModelSelect!,colorSelect!,emiratesSelect!,imageList,carPrice.text,companyId!, carPricePerMonth.text).then((value){
-            Future.delayed(Duration(milliseconds: 500)).then((value){
-              loadingUpload.value = false;
-              Get.off(()=>MyCarList());
-            });
+            loadingUpload.value = false;
+            Get.off(()=>MyCarList());
           });
         }
       }

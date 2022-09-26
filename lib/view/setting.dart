@@ -244,20 +244,20 @@ class Settings extends StatelessWidget {
               Get.to(()=>PeopleList());
             },
             text: 'people_list'),
-        Global.company_id==-1
-            ? Center()
-            : SettingButton(
-            onTap: (){
-              Get.to(()=>AddCar());
-            },
-            text: 'add_car'),
-        Global.company_id==-1
-            ? Center()
-            : SettingButton(
-            onTap: (){
-              Get.to(()=>AddPeople());
-            },
-            text: 'add_people'),
+        // Global.company_id==-1
+        //     ? Center()
+        //     : SettingButton(
+        //     onTap: (){
+        //       Get.to(()=>AddCar());
+        //     },
+        //     text: 'add_car'),
+        // Global.company_id==-1
+        //     ? Center()
+        //     : SettingButton(
+        //     onTap: (){
+        //       Get.to(()=>AddPeople());
+        //     },
+        //     text: 'add_people'),
         // Global.company_id==-1
         //     ? Center()
         //     : SettingButton(

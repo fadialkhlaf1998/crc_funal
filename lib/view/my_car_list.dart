@@ -1,7 +1,9 @@
 import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/controller/my_car_list_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
+import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
+import 'package:crc_version_1/view/add_car.dart';
 import 'package:crc_version_1/view/edit_car.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +51,8 @@ class MyCarList extends StatelessWidget {
           children: [
             SizedBox( height: MediaQuery.of(context).size.height * 0.02),
             _search(context),
+            SizedBox(height: 5,),
+            _addBtn(context),
             SizedBox( height: MediaQuery.of(context).size.height * 0.02),
             myCarListController.loading.value ? Container(
                 width: MediaQuery.of(context).size.width,
@@ -76,10 +80,94 @@ class MyCarList extends StatelessWidget {
                             _carImage(context, index),
                             SizedBox(width: 5),
                             _carDetails(context,index),
+
                           ],
                         ),
                       ),
-                      Divider(thickness: 1, indent: 25,endIndent: 25,color: Theme.of(context).dividerColor.withOpacity(0.2),height: 40,),
+                      Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                // color: Colors.green,
+                                child: Center(
+                                  child: Obx(() => myCarListController.tempCarList[index].editLoading.value
+                                      ?LinearProgressIndicator():Container(
+                                    // color: Colors.red,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        GestureDetector(
+                                            onTap: (){
+                                              // print(myCarListController);
+                                              myCarListController.goToEditCarPage(index);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.edit, color:  MyTheme.isDarkTheme.value?Colors.white:Colors.black,size: 22),
+                                                SizedBox(width: 3),
+                                                Text(App_Localization.of(context).translate('edit'), style: TextStyle(color:  MyTheme.isDarkTheme.value?Colors.white:Colors.black, fontSize: 13, fontWeight: FontWeight.bold)),
+                                              ],
+                                            )
+                                        ),
+                                        GestureDetector(
+                                            onTap: (){
+                                              myCarListController.deleteCarFromMyList(index);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.delete, color:  MyTheme.isDarkTheme.value?Colors.white:Colors.black,size: 22),
+                                                SizedBox(width: 3),
+                                                Text(App_Localization.of(context).translate('delete'), style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black, fontSize: 13, fontWeight: FontWeight.bold)),
+                                              ],
+                                            )
+                                        ),
+                                      ],
+                                    ),
+                                  ),)
+                                ),
+                              ),),
+                            Expanded(
+                              flex: 3,
+                              child: Center(
+                                child: Obx(() => SizedBox(
+                                  height: 25,
+                                  // width: 62,
+                                  child: ToggleSwitch(
+                                    initialLabelIndex: myCarListController.tempCarList[index].availableSwitch.value?0:1,
+                                    totalSwitches: 2,
+                                    labels: [
+                                      'Yes',
+                                      'No',
+                                    ],
+                                    animationDuration: 200,
+                                    fontSize: 15,
+                                    // minWidth: 61,
+                                    customWidths: [60,60],
+                                    // activeBgColor: [
+                                    //   Colors.green,
+                                    //   Colors.red
+                                    // ],
+                                    // activeFgColor:Colors.green,
+                                    animate: true,
+                                    inactiveBgColor: Colors.grey,
+                                    activeBgColors: [[Colors.green],[Colors.red]],
+                                    onToggle: (realIndex) {
+                                      print('switched to: $index');
+                                      myCarListController.changeAvailability(index);
+                                    },
+                                  ),
+                                )),
+                              ),)
+                          ],
+                        ),
+                      ),
+                      Divider(thickness: 1, indent: 25,endIndent: 25,color: Theme.of(context).dividerColor.withOpacity(0.2),height: 20,),
                     ],
                   );
                 }
@@ -103,45 +191,14 @@ class MyCarList extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(Api.url + 'uploads/' + myCarListController.tempCarList[index].image),
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.4),
-                    BlendMode.darken,
-                  ),
+                  // colorFilter: ColorFilter.mode(
+                  //   Colors.black.withOpacity(0.4),
+                  //   BlendMode.darken,
+                  // ),
                 )
               ),
             ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                      // print(myCarListController);
-                        myCarListController.goToEditCarPage(index);
-                      },
-                    child: Row(
-                      children: [
-                        Icon(Icons.edit, color: Colors.white,size: 22),
-                        SizedBox(width: 3),
-                        Text(App_Localization.of(context).translate('edit'), style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                      ],
-                    )
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      myCarListController.deleteCarFromMyList(index);
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.delete, color: Colors.white,size: 22),
-                        SizedBox(width: 3),
-                        Text(App_Localization.of(context).translate('delete'), style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                      ],
-                    )
-                  ),
-                ],
-              ),
-            ),
+
           ],
         ),
       ),
@@ -162,8 +219,9 @@ class MyCarList extends StatelessWidget {
                 myCarListController.tempCarList[index].brand
                     + ' - ' + myCarListController.tempCarList[index].model,
                 maxLines: 1,
-                style: Theme.of(context).textTheme.headline3,
+                style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,fontSize: 16),
               ),
+
               Text(
                 App_Localization.of(context).translate('daily_rent') + ' ' + myCarListController.tempCarList[index].pricPerDay.toString()
                     + ' ' + App_Localization.of(context).translate('aed'),
@@ -171,39 +229,12 @@ class MyCarList extends StatelessWidget {
               ),
               Divider(thickness: 1,color: MyTheme.isDarkTheme.value?Colors.white.withOpacity(0.5):Colors.black.withOpacity(0.2),height: 1,),
               Container(
-                color: Colors.transparent,
+                // color: Colors.red,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(App_Localization.of(context).translate('available_to_rent_or_no'),style:  TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontSize: 10, fontWeight: FontWeight.bold)),
-                    Obx(() => SizedBox(
-                      height: 20,
-                      // width: 62,
-                      child: ToggleSwitch(
-                        initialLabelIndex: myCarListController.tempCarList[index].availableSwitch.value?0:1,
-                        totalSwitches: 2,
-                        labels: [
-                          'Yes',
-                          'No',
-                        ],
-                        animationDuration: 200,
-                        fontSize: 10,
-                        // minWidth: 61,
-                        customWidths: [40,40],
-                        // activeBgColor: [
-                        //   Colors.green,
-                        //   Colors.red
-                        // ],
-                        // activeFgColor:Colors.green,
-                        animate: true,
-                        inactiveBgColor: Colors.grey,
-                        activeBgColors: [[Colors.green],[Colors.red]],
-                        onToggle: (realIndex) {
-                          print('switched to: $index');
-                          myCarListController.changeAvailability(index);
-                        },
-                      ),
-                    )),
+                    Text(App_Localization.of(context).translate('available_to_rent_or_no'),style:  TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontSize: 15, fontWeight: FontWeight.normal)),
+
 
                   ],
                 ),
@@ -362,7 +393,30 @@ class MyCarList extends StatelessWidget {
       ),
     );
   }
+  _addBtn(context){
+    return GestureDetector(
+      onTap: (){
+        Get.to(()=>AddCar());
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: 45,
+        decoration: BoxDecoration(
+          color: App.primary,
+          borderRadius: BorderRadius.circular(10)
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
 
+            // Icon(Icons.add,color: Colors.white,),
+            Text(App_Localization.of(context).translate("add_car"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15)),
+            // Icon(Icons.add,color: Colors.transparent,),
+          ],
+        )
+      ),
+    );
+  }
 
   // _filterInterface(context){
   //   return AnimatedContainer(

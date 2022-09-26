@@ -54,11 +54,12 @@ class EditPersonController extends GetxController{
     editingNameController = TextEditingController(text: name!.value);
     editingNumberController = TextEditingController(text: phone!.value);
     staticLanguages = addPeopleController.language;
-    if(Global.lang_code == 'en'){
-      allLanguages = addPeopleController.language;
-    }else{
-      allLanguages = addPeopleController.languageArabic;
-    }
+    allLanguages = addPeopleController.language;
+    // if(Global.lang_code == 'en'){
+    //
+    // }else{
+    //   allLanguages = addPeopleController.languageArabic;
+    // }
     languageCheck = List.filled(allLanguages.length, false).obs;
    // myLanguage.value = peopleListController.myPeopleList[personIndex.value].languages.split(' / ');
     for(int i = 0; i < staticLanguages.length; i++){

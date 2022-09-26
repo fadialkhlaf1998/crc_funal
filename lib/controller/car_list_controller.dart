@@ -110,23 +110,42 @@ class CarListController extends GetxController{
       year --;
     }
   }
+  search(String q){
+    loading.value = true;
+    Api.check_internet().then((value) async{
+      if(value){
+        myCars.clear();
+        loading.value = true;
+        await Api.search(q).then((value){
+          myCars.addAll(value);
+        });
+        loading.value = false;
+      }else{
 
+      }
+    });
+  }
   getCarsList(String year, String brand,String model, String color, String price, String sort) async{
-    Future.delayed(const Duration(milliseconds: 500),(){
+    // Future.delayed(const Duration(milliseconds: 500),(){
       loading.value = true;
       Api.check_internet().then((value) async{
         if(value){
           myCars.clear();
           loading.value = true;
           await Api.filter(year, brand, model, color, price, sort).then((value){
+
             myCars.addAll(value);
+            // print(myCars.length);
+            // print(brand);
+            // print(model);
+            // print(myCars.first.model);
           });
           loading.value = false;
         }else{
 
         }
       });
-    });
+    // });
   }
 
   update_data(){

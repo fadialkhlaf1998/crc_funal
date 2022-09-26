@@ -6,6 +6,7 @@ import 'package:crc_version_1/model/company.dart';
 import 'package:crc_version_1/model/intro.dart';
 import 'package:crc_version_1/model/my_car.dart';
 import 'package:crc_version_1/model/person_for_company.dart';
+import 'package:crc_version_1/model/search_suggestion.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -45,7 +46,7 @@ class Api {
     else {
       print('-*********************-');
       print(response.reasonPhrase);
-    return Intro(brands: <Brands>[], colors: <Colors>[]);
+    return Intro(brands: <Brands>[], colors: <Colors>[],searchSuggestions: <SearchSuggestion>[]);
     }
 
   }
@@ -100,7 +101,33 @@ class Api {
       return false;
     }
   }
+  static Future<List<Car>> search(String q)async{
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var request = http.Request('POST', Uri.parse(url+'api/car/search'));
+    request.body = json.encode({
+      "query": q
+    });
+    request.headers.addAll(headers);
 
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      String jsondata = await response.stream.bytesToString();
+      var list = jsonDecode(jsondata) as List;
+      List<Car> cars = <Car>[];
+      for(var c in list){
+        cars.add(Car.fromMap(c));
+      }
+      return cars;
+    }
+    else {
+    print(response.reasonPhrase);
+    return <Car>[];
+    }
+
+  }
   static Future<List<Car>> filter(String year,String brand, String model, String color, String price, String sort ) async{
     var headers = {
       'Content-Type': 'application/json',

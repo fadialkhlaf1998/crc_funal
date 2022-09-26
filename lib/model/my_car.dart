@@ -53,6 +53,7 @@ class MyCar {
   String brand;
   String model;
   RxBool availableSwitch = false.obs;
+  RxBool editLoading = false.obs;
 
   factory MyCar.fromJson(String str) => MyCar.fromMap(json.decode(str));
 

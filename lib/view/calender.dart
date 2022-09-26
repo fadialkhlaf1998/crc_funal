@@ -68,19 +68,20 @@ class MyRangeCalender extends StatelessWidget {
 
   double getTotal(double daily,double hourly){
     double subTotal = 0.0;
+    print(pickUp.value);
+    print(dropOff.value);
     DateTime begin = getDate(range.value.split("-")[0], pickUp.value);
     DateTime end = getDate(range.value.split("-")[1], dropOff.value);
-    int comparDays=end.difference(begin).inDays;
-    comparDays=comparDays+1;
-    print(comparDays);
+    // int comparDays=end.difference(begin).inHours.abs();
+    int comparHr=end.difference(begin).inHours.abs();
+
     int pickIndex = hrs.indexOf(pickUp.value);
     int dropIndex = hrs.indexOf(dropOff.value);
-    print('======');
-    print(pickIndex);
-    print(dropIndex);
+    int comparDays=(comparHr / 24).toInt();
     if(begin.year == end.year && begin.month == end.month && begin.day == end.day){
-      subTotal = (dropIndex - pickIndex).abs() * hr_price / 2;
+      subTotal = daily;
     }else{
+
       if(dropIndex - pickIndex > 4 ){
         subTotal = (daily * (comparDays+1)).toDouble();
       }else{
@@ -88,31 +89,18 @@ class MyRangeCalender extends StatelessWidget {
       }
     }
 
-    print(subTotal);
     total.value = subTotal;
     return subTotal;
-    // if(selectRentalModel.value == 0){
-    //   //daily
-    //
-    //
-    // }else{
-    //   int counter = dropIndex - pickIndex ;
-    //   if(counter.isOdd) {
-    //     subTotal.value = (counter + 1) * car!.hourlyPrice / 2;
-    //   }else{
-    //     subTotal.value = counter * car!.hourlyPrice / 2;
-    //   }
-    // }
-
-    // vat.value = subTotal * 5 /100;
-    // total.value = subTotal.value + vat.value;
   }
   getDate(String date,String hr){
     int hour = int .parse(hr.split(":")[0]);
     int min = int .parse(hr.split(":")[1].split(" ")[0]);
     String amPm = hr.split(":")[1].split(" ")[1].toLowerCase();
-    if(amPm == "pm"){
+    if(amPm.toLowerCase() == "pm"){
       hour = hour + 12 ;
+    }
+    if(hour == 12 && amPm.toLowerCase() == "am"){
+      hour = 0;
     }
     return DateTime(int.parse(date.split("/")[2]),
         int.parse(date.split("/")[1]),

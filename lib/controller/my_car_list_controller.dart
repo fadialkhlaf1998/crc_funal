@@ -143,7 +143,9 @@ class MyCarListController extends GetxController{
   }
 
   goToEditCarPage(index){
+    tempCarList[index].editLoading.value = true;
     Api.getCarInfo(tempCarList[index].id).then((value) {
+      tempCarList[index].editLoading.value = false;
       if(value != null){
         brand = tempCarList[index].brand.obs;
         model = tempCarList[index].model.obs;
