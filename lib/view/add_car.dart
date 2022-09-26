@@ -28,39 +28,51 @@ class AddCar extends StatelessWidget {
     ]);
     return Obx((){
       return Scaffold(
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: _header(context),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: _body(context),
-                  ),
-                ],
-              ),
-              addCarController.loadingUpload.value
-                  ? WillPopScope(
-                onWillPop: ()async => false,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              color: Theme.of(context).dividerColor.withOpacity(0.9),
-                              child: _loading(context),
-                            ),
-                            Text(App_Localization.of(context).translate('saving_your_car_information'),
-                                style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Theme.of(context).backgroundColor)),
-                          ],
-                        )
-                  ) : Text(''),
-            ],
+        body: GestureDetector(
+          onTap: (){
+            
+          },
+          child: SafeArea(
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: _header(context),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child:GestureDetector(
+                        onTap: (){
+                          print('***********');
+                          FocusScope.of(context).unfocus();
+                        },
+                        child: _body(context),
+                      )
+
+                    ),
+                  ],
+                ),
+                addCarController.loadingUpload.value
+                    ? WillPopScope(
+                  onWillPop: ()async => false,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                color: Theme.of(context).dividerColor.withOpacity(0.9),
+                                child: _loading(context),
+                              ),
+                              Text(App_Localization.of(context).translate('saving_your_car_information'),
+                                  style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Theme.of(context).backgroundColor)),
+                            ],
+                          )
+                    ) : Text(''),
+              ],
+            ),
           ),
         ),
       );
@@ -240,7 +252,43 @@ class AddCar extends StatelessWidget {
                 ),
               ),
             )
-                : Text(''),
+                : Expanded(
+              flex: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).backgroundColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).dividerColor.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, -1), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child:  Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: TextButton(
+                      onPressed: () async {
+                        addCarController.forwardStep(context);
+                      },
+                      child: Text(
+                        addCarController.currentStep.value >= 6 ? App_Localization.of(context).translate('save') : App_Localization.of(context).translate('next') ,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
         ],
       ),
     );

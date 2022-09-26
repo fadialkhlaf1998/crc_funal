@@ -15,7 +15,8 @@ import 'package:path/path.dart';
 class Api {
 
   static String url = "https://www.carrentalclub.ae/";
-  static String imageUrl = "https://www.carrentalclub.ae/uploads/";
+  // static String url = "http://10.0.2.2:3000/";
+  static String imageUrl = url+"uploads/";
 
   static Future<bool> check_internet()async{
     // return false;
@@ -197,8 +198,8 @@ class Api {
       'color': color,
       'model_id': modelId,
       'year': year,
-      'price_per_month' : price_per_month,
-      'price_per_hour' : price_per_month
+      'price_per_month' : "0",
+      'price_per_hour' : "0"
     });
 
     for (int i = 0; i < images.length; i++) {

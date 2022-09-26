@@ -13,6 +13,8 @@ import 'package:lottie/lottie.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
+import '../helper/global.dart';
+
 class MyCarList extends StatelessWidget {
 
   MyCarListController myCarListController = Get.put(MyCarListController());
@@ -396,7 +398,9 @@ class MyCarList extends StatelessWidget {
   _addBtn(context){
     return GestureDetector(
       onTap: (){
-        Get.to(()=>AddCar());
+        Get.to(()=>AddCar())!.then((value) {
+          myCarListController.getCarList(Global.company_id);
+        });
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,

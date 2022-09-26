@@ -3,6 +3,7 @@ import 'package:crc_version_1/controller/edit_person_controller.dart';
 import 'package:crc_version_1/controller/people_list_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/app.dart';
+import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
 import 'package:crc_version_1/view/add_people.dart';
 import 'package:crc_version_1/view/edit_person.dart';
@@ -91,7 +92,9 @@ class PeopleList extends StatelessWidget {
               SizedBox(height: 10,),
               GestureDetector(
                 onTap: (){
-                  Get.to(()=>AddPeople());
+                  Get.to(()=>AddPeople())!..then((value) {
+                    peopleListController.getInfo(Global.company_id);
+                  });
                 },
                 child: Container(
                     width: MediaQuery.of(context).size.width * 0.9,
