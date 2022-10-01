@@ -92,7 +92,6 @@ class EditCar extends StatelessWidget {
 
   _chooseImage(BuildContext context){
     return SafeArea(
-
       child: GestureDetector(
         onTap: (){
           //todo
@@ -783,7 +782,7 @@ class EditCar extends StatelessWidget {
           GestureDetector(
             onTap: (){
               // editCarController.addImage(context);
-              editCarController.showChoose.value = true;
+             editCarController.showChoose.value = true;
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.45,
@@ -797,7 +796,7 @@ class EditCar extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Icon(Icons.add,color: Colors.white,size: 35),
-                    Text(App_Localization.of(context).translate("add_image"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                    Text(App_Localization.of(context).translate("add_image"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, color: Colors.white),),
                     Icon(Icons.add,color: Colors.transparent,size: 35),
                   ],
                 )

@@ -41,27 +41,37 @@ class AddPeopleController extends GetxController{
   var selectedLangValidate = false.obs;
   var usernameValidate = false.obs;
   var phoneValidate = false.obs;
+
   save(context)async{
     selectedLangValidate.value = false;
     usernameValidate.value = false;
     phoneValidate.value = false;
     // bool can_add = true;
+
+    for(int i = 0; i < select.length; i++) {
+      if (select[i] == true && selectLanguages != '') {
+        selectLanguages += ' / ' + language[i];
+      } else if (select[i] == true) {
+        selectLanguages += language[i];
+      }
+    }
+    print(selectLanguages);
     if(selectLanguages == ''){
-      selectedLangValidate.value = true;
-      // App.info_msg(context, App_Localization.of(context).translate('you_should_select_language'));
+      // selectedLangValidate.value = true;
+      App.info_msg(context, App_Localization.of(context).translate('you_should_select_language'));
       // return ;
     }
     if( username.text.isEmpty){
-      // App.info_msg(context, App_Localization.of(context).translate('name_cant_be_empty'));
+      App.info_msg(context, App_Localization.of(context).translate('name_cant_be_empty'));
       // return ;
       usernameValidate.value = true;
     }
     if(mobileNumber.text.isEmpty){
-      // App.info_msg(context, 'Mobile number is necessary');
+      App.info_msg(context, App_Localization.of(context).translate('phone_cannot_be_empty'));
       // return ;
       phoneValidate.value = true;
     }
-    if(!phoneValidate.value&&!usernameValidate.value&&selectedLangValidate.value){
+    if(!phoneValidate.value && !usernameValidate.value && !selectedLangValidate.value){
       if(userImage.isEmpty){
         final byteData = await rootBundle.load('assets/images/profile_picture.png');
         final file = File('${(await getTemporaryDirectory()).path}/profile_picture.png');

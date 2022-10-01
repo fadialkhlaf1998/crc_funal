@@ -149,5 +149,8 @@
   "no_results_matched": "No Result Matched",
   "staff_name": "Staff Name",
   "select_languages": "Choose Languages",
-  "available": "Available?"
+  "available": "Available?",
+  "contact_name_cannot_be_empty" : "contact person name cannot be empty",
+  "cannot_save_car" : "You cannot save the car with less than three photos"
+
 }

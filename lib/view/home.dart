@@ -95,7 +95,7 @@ class Home extends StatelessWidget {
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 1000),
             child:  homeController.modelOption.value ? SizedBox(
-              width: 50,
+              width: 90,
               child: GestureDetector(
                 onTap: (){
                   FocusManager.instance.primaryFocus?.unfocus();
@@ -103,7 +103,7 @@ class Home extends StatelessWidget {
                 },
                 child: Icon(Icons.arrow_back_ios, color: Theme.of(context).dividerColor,),
               ),
-            ) : SizedBox(width: 50),
+            ) : SizedBox(width: 90),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,16 +120,18 @@ class Home extends StatelessWidget {
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 1000),
             child:  !homeController.modelOption.value ? SizedBox(
-              width: 70,
+              width: 90,
               child: GestureDetector(
                 onTap: (){
                   FocusManager.instance.primaryFocus?.unfocus();
                   homeController.getAll();
                   // homeController.getAll();
                 },
-                child: Text(App_Localization.of(context).translate('all_car'),style: Theme.of(context).textTheme.headline3,)
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                    child: Text(App_Localization.of(context).translate('all_car'),style: Theme.of(context).textTheme.headline3,))
               ),
-            ) : SizedBox(width: 50),
+            ) : SizedBox(width: 90),
           ),
           //SizedBox(width: 50,)
         ],
@@ -249,21 +251,21 @@ class Home extends StatelessWidget {
             crossAxisSpacing: 20,
           ),
           itemBuilder: (context,index){
-            return Container(
-              width: MediaQuery.of(context).size.width / 4 ,
-              height: MediaQuery.of(context).size.width / 4 ,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: MyTheme.isDarkTheme.value ?Colors.white :Colors.black)
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                      homeController.chooseBrand(index);
-                    },
-                    child: Container(
+            return GestureDetector(
+              onTap: (){
+                homeController.chooseBrand(index);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width / 4 ,
+                height: MediaQuery.of(context).size.width / 4 ,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: MyTheme.isDarkTheme.value ?Colors.white :Colors.black)
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
                       width: MediaQuery.of(context).size.width / 6 ,
                       height: MediaQuery.of(context).size.width / 6 ,
 
@@ -272,21 +274,20 @@ class Home extends StatelessWidget {
                         child: Container(
 
                           decoration: BoxDecoration(
-                              // color: Colors.red,
+                            // color: Colors.red,
                               image: DecorationImage(
-                                  image: NetworkImage(homeController.tempBrandsList[index].image),
+                                image: NetworkImage(homeController.tempBrandsList[index].image),
                                 // fit: BoxFit.fitHeight
                               )
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  // SizedBox(height: 5,),
-                  Text(homeController.tempBrandsList[index].title.toString(),style: TextStyle(color: MyTheme.isDarkTheme.value ?Colors.white :Colors.black,fontWeight: FontWeight.bold),),
-                  Text(homeController.tempBrandsList[index].count.toString()+" Cars",style: TextStyle(color: MyTheme.isDarkTheme.value ?Colors.white.withOpacity(0.5) :Colors.black.withOpacity(0.5)),),
+                    Text(homeController.tempBrandsList[index].title.toString(),style: TextStyle(color: MyTheme.isDarkTheme.value ?Colors.white :Colors.black,fontWeight: FontWeight.bold),),
+                    Text(homeController.tempBrandsList[index].count.toString()+" Cars",style: TextStyle(color: MyTheme.isDarkTheme.value ?Colors.white.withOpacity(0.5) :Colors.black.withOpacity(0.5)),),
 
-                ],
+                  ],
+                ),
               ),
             );
           },

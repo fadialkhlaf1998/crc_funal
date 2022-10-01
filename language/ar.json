@@ -145,5 +145,12 @@
   "my_account": "حسابي",
   "add_image": "إضافة صورة",
   "camera": "كاميرا",
-  "gallery": "الألبوم"
+  "gallery": "الألبوم",
+  "no_results_matched": "لا يوجد نتائج متطابقة",
+  "staff_name": "اسم العامل",
+  "select_languages": "اختر لغة",
+  "available": "متاح؟",
+  "contact_name_cannot_be_empty" : "لا يمكن أن يكون اسم جهة الاتصال فارغًا",
+  "cannot_save_car" : "لا يمكنك حفظ السيارة بأقل من ثلاث صور"
+
 }

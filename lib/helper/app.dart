@@ -59,7 +59,7 @@ class App {
       CustomSnackBar.info(
         message:
         info,
-        backgroundColor: primary,
+        backgroundColor: Colors.red,
       ),
     );
   }

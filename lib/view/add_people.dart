@@ -272,6 +272,7 @@ class AddPeople extends StatelessWidget {
               child: TextFormField(
                 style: Theme.of(context).textTheme.headline3,
                 controller: addPeopleController.mobileNumber,
+                maxLength: 10,
                 validator: (mobile) {
                   if (mobile!.isEmpty) {
                     return App_Localization.of(context).translate(
@@ -280,6 +281,7 @@ class AddPeople extends StatelessWidget {
                   return null;
                 },
                 decoration: InputDecoration(
+                  counterText: "",
                   errorStyle: const TextStyle(
                       color: Colors.red, fontWeight: FontWeight.bold),
                   focusedBorder: OutlineInputBorder(

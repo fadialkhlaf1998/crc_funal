@@ -155,7 +155,12 @@ class EditCarController extends GetxController{
   }
   saveInfo(context){
      if(imagePage.value == true){
-       imagePage.value = false;
+       if((imageList.length + newImageList.length) < 3){
+         App.info_msg(context, App_Localization.of(context).translate('cannot_save_car'));
+       }else{
+         imagePage.value = false;
+       }
+
      }else{
        loading.value = true;
        Api.updateCarInfo(

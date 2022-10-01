@@ -521,7 +521,7 @@ class EditPerson extends StatelessWidget {
             child: Center(
               child: Text(
                 App_Localization.of(context).translate('save'),
-                style: TextStyle(color: Theme.of(context).backgroundColor,fontSize: 20,fontWeight: FontWeight.bold),
+                style: TextStyle(color: Theme.of(context).dividerColor,fontSize: 20,fontWeight: FontWeight.bold),
               ),
             ),
           ),

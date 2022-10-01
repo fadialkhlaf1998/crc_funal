@@ -228,8 +228,12 @@ class AddCarController extends GetxController{
 
   backwardStep(){
     if(currentStep.value == 0){
-      tempBrandsList[brandIndex.value].selected.value = false;
-      Get.back();
+      if(tempBrandsList.isEmpty){
+        Get.back();
+      }else{
+        tempBrandsList[brandIndex.value].selected.value = false;
+        Get.back();
+      }
       if(model != null){
         tempModelsList[modelIndex.value].selected.value = false;
         model = null;

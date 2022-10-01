@@ -312,7 +312,7 @@ class AddCar extends StatelessWidget {
                 autofocus: false,
                 style:  TextStyle(color: Theme.of(context).dividerColor),
                 decoration: InputDecoration(
-                  hintText: 'search',
+                  hintText: App_Localization.of(context).translate('search'),
                   prefixIcon: Icon(Icons.search,color: Theme.of(context).dividerColor),
                   contentPadding: const EdgeInsets.all(5),
                   hintStyle: TextStyle(color: Theme.of(context).dividerColor,fontSize: 14),
@@ -333,7 +333,9 @@ class AddCar extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            ListView.builder(
+            addCarController.tempBrandsList.isEmpty 
+            ? Text(App_Localization.of(context).translate('no_results_matched'))
+             : ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: addCarController.tempBrandsList.length,// introController.brands.length,
@@ -399,7 +401,7 @@ class AddCar extends StatelessWidget {
                 autofocus: false,
                 style: TextStyle(color: Theme.of(context).dividerColor),
                 decoration: InputDecoration(
-                  hintText: 'search',
+                  hintText: App_Localization.of(context).translate('search'),
                   prefixIcon: Icon(Icons.search,color: Theme.of(context).dividerColor),
                   contentPadding: EdgeInsets.all(5),
                   hintStyle: TextStyle(fontSize: 14,color: Theme.of(context).dividerColor),

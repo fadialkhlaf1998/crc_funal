@@ -53,10 +53,10 @@ class ConfirmDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     child: Text(
                       title,
-                      maxLines: 3,
+                      maxLines: 4,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 15,
@@ -65,11 +65,22 @@ class ConfirmDialog extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Container(
+                    width: Get.width * 0.6,
+                    height: 200,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: AssetImage('assets/icons/check-mark.png')
+                      )
+                    ),
+                  ),
                   GestureDetector(
                     onTap: button1Pressed,
                     child: Container(
                       width: Get.width * 0.35,
                       height: 40,
+                      margin: EdgeInsets.only(bottom: 10),
                       color: Colors.transparent,
                       child: Center(
                         child: Text(

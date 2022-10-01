@@ -1,10 +1,8 @@
 import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/controller/car_list_controller.dart';
-import 'package:crc_version_1/controller/home_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
-// import 'package:crc_version_1/model/intro.dart';
 import 'package:crc_version_1/model/search_suggestion.dart';
 import 'package:crc_version_1/view/cars_list.dart';
 import 'package:crc_version_1/widget/background_page.dart';
@@ -106,7 +104,9 @@ class SearchDeligate extends SearchDelegate<String> {
             height: Get.height,
             width: Get.width,
             // color: App.grey,
-            child: query.isEmpty?Center():ListView.builder(
+            child: query.isEmpty
+                ? Center()
+                : ListView.builder(
               itemCount: suggestions.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
@@ -134,8 +134,8 @@ class SearchDeligate extends SearchDelegate<String> {
                           +suggestions.elementAt(index).model,
                         maxLines: 2,
                         style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
                             color: MyTheme.isDarkTheme.value?Colors.white:App.darkGrey,
                             overflow: TextOverflow.ellipsis
                         ),
@@ -187,7 +187,9 @@ class SearchDeligate extends SearchDelegate<String> {
     Stack(
       children: [
         BackgroundPage(),
-        query.isEmpty?Center():Container(
+        query.isEmpty
+            ? Center()
+            : Container(
             height: Get.height,
             width: Get.width,
             // color: App.grey,
@@ -219,8 +221,8 @@ class SearchDeligate extends SearchDelegate<String> {
                         +suggestions.elementAt(index).model,
                       maxLines: 2,
                       style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
                           color: MyTheme.isDarkTheme.value?Colors.white:App.darkGrey,
                           overflow: TextOverflow.ellipsis
                       ),

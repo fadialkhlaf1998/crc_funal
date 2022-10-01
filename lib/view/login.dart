@@ -40,6 +40,7 @@ class LogIn extends StatelessWidget {
               SingleChildScrollView(
                 child: Container(
                   width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
                   child: loginController.loading.value ?
                   Container(
                     child: Lottie.asset('assets/images/Animation.json'),
@@ -100,6 +101,7 @@ class LogIn extends StatelessWidget {
       ),
     );
   }
+
   _signInSection(context){
     return Form(
       key: formGlobalKey,
@@ -156,7 +158,7 @@ class LogIn extends StatelessWidget {
                     errorStyle: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
                     prefixIcon:
                     Icon(Icons.vpn_key, color: Theme.of(context).primaryColor),
-                    suffixIcon: !loginController.showPassword.value
+                    suffixIcon: loginController.showPassword.value
                             ? GestureDetector(
                           onTap: (){
                             loginController.showPassword.value = !loginController.showPassword.value;
@@ -238,8 +240,7 @@ class LogIn extends StatelessWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 15),
-
+            const SizedBox(height: 50),
           ],
         ),
       ),
@@ -260,8 +261,8 @@ class LogIn extends StatelessWidget {
                 controller: signUpController.companyName,
                 validator: (email) {
                   if (email!.isEmpty) {
-                    // return App_Localization.of(context).translate('company_name_cannot_be_empty');
-                    return "";
+                    return App_Localization.of(context).translate('company_name_cannot_be_empty');
+                    // return "";
                   }
                   return null;
                 },
@@ -281,7 +282,7 @@ class LogIn extends StatelessWidget {
                 keyboardType: TextInputType.text,
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 15),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
               child: TextFormField(
@@ -289,7 +290,7 @@ class LogIn extends StatelessWidget {
                 controller: signUpController.contactPersonPhone,
                 validator: (contactPersonPhone) {
                   if (contactPersonPhone!.isEmpty) {
-                    return "";
+                    return App_Localization.of(context).translate('contact_name_cannot_be_empty');
                   }
                   return null;
                 },
@@ -309,65 +310,24 @@ class LogIn extends StatelessWidget {
                 keyboardType: TextInputType.text,
               ),
             ),
-            // Container(
-            //     width: Get.width * 0.9,
-            //     child: IntlPhoneField(
-            //       style: TextStyle(color: Theme.of(context).dividerColor),
-            //       controller: signUpController.contactPersonPhone,
-            //       cursorColor: Colors.white,
-            //       keyboardType: TextInputType.number,
-            //       decoration: InputDecoration(
-            //         errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
-            //         hintText: App_Localization.of(context).translate('enter_contact_person_number'),
-            //         hintStyle:  TextStyle(
-            //             color: App.grey,
-            //             fontSize: 14
-            //         ),
-            //
-            //         focusedBorder: UnderlineInputBorder(
-            //           borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
-            //         ),
-            //         border: UnderlineInputBorder(
-            //             borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
-            //         ),
-            //         enabledBorder: UnderlineInputBorder(
-            //             borderSide: BorderSide(color: signUpController.validateContactNumber.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
-            //         ),
-            //       ),
-            //       initialCountryCode: 'AE',
-            //       disableLengthCheck: true,
-            //       dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
-            //       dropdownTextStyle: TextStyle(
-            //           color: Colors.white,
-            //           fontSize: 14
-            //       ),
-            //       flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),
-            //       showDropdownIcon: true,
-            //       dropdownIconPosition: IconPosition.trailing,
-            //       onChanged: (phone) {
-            //         int max = countries.firstWhere((element) => element.code == phone.countryISOCode).maxLength;
-            //         if(signUpController.contactPersonPhone.text.length > max){
-            //           signUpController.contactPersonPhone.text = signUpController.contactPersonPhone.text.substring(0,max);
-            //         }
-            //         signUpController.contactPhoneCode.value = phone.countryCode;
-            //       },
-            //     ),
-            // ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 15),
             Container(
               width: Get.width * 0.9,
               child: IntlPhoneField(
+                textAlign: TextAlign.start,
                 style: TextStyle(color: Theme.of(context).dividerColor),
                 controller: signUpController.phoneNumber,
                 cursorColor: Colors.white,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                  errorText: signUpController.validatePhone.value  ? App_Localization.of(context).translate('phone_cannot_be_empty') : null,
                   hintText: App_Localization.of(context).translate('enter_phone_number'),
                   hintStyle:  TextStyle(
                       color: App.grey,
-                      fontSize: 14
+                      fontSize: 14,
                   ),
+
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: signUpController.validatePhone.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
                   ),
@@ -397,53 +357,69 @@ class LogIn extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 25),
-            Container(
-              width: Get.width * 0.9,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                  border: Border(
-                    bottom: BorderSide(color: signUpController.pickUpValidate.value && signUpController.pickEmirate.value=="non"? Colors.red : App.grey,)
-                  ),
+            const SizedBox(height: 15),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: Get.width * 0.9,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                      border: Border(
+                        bottom: BorderSide(color: signUpController.pickUpValidate.value && signUpController.pickEmirate.value=="non"? Colors.red : App.grey,)
+                      ),
 
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  dropdownMaxHeight: 200,
-                  isExpanded: true,
-                  iconSize: 23,
-                  dropdownDecoration: BoxDecoration(
-                    color: App.grey,
                   ),
-                  buttonPadding: const EdgeInsets.symmetric(horizontal: 10),
-                  hint: Text(App_Localization.of(context).translate("emirates"),
-                    style: TextStyle(
-                        color: Theme.of(context).dividerColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal
-                    ),
-                  ),
-                  iconEnabledColor: App.lightGrey,
-                  value: signUpController.pickEmirate.value=="non"? null : signUpController.pickEmirate.value,
-                  items: signUpController.pickUpEmirates.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value,
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                      dropdownMaxHeight: 200,
+                      isExpanded: true,
+                      iconSize: 23,
+                      dropdownDecoration: BoxDecoration(
+                        color: Theme.of(context).backgroundColor,
+                      ),
+                      buttonPadding: const EdgeInsets.symmetric(horizontal: 10),
+                      hint: Text(App_Localization.of(context).translate("emirates"),
                         style: TextStyle(
                             color: Theme.of(context).dividerColor,
                             fontSize: 14,
                             fontWeight: FontWeight.normal
                         ),
                       ),
-                    );
-                  }).toList(),
-                  underline: Container(),
-                  onChanged: (val) {
-                    signUpController.pickEmirate.value = val.toString();
-                  },
+                      iconEnabledColor: App.lightGrey,
+                      value: signUpController.pickEmirate.value=="non"? null : signUpController.pickEmirate.value,
+                      items: signUpController.pickUpEmirates.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value,
+                            style: TextStyle(
+                                color: Theme.of(context).dividerColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      underline: Container(),
+                      onChanged: (val) {
+                        signUpController.pickEmirate.value = val.toString();
+                      },
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 4),
+                signUpController.pickUpValidate.value && signUpController.pickEmirate.value=="non"
+                    ? Text(
+                    App_Localization.of(context).translate('you_should_select_emirates'),
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold
+                  ),
+                )
+                    : Text('')
+              ],
             ),
             const SizedBox(height: 30),
             CustomButton(
@@ -468,8 +444,10 @@ class LogIn extends StatelessWidget {
               onTap: (){
                 loginController.sign_up_option.value  = false;
               },
-              child:             Text(App_Localization.of(context).translate("login"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,decoration: TextDecoration.underline),),
-            )
+              child: Text(App_Localization.of(context).translate("login"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,decoration: TextDecoration.underline),),
+            ),
+            const SizedBox(height: 40),
+
             //
           ],
         ),
