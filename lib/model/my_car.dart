@@ -67,7 +67,7 @@ class MyCar {
     avilable: json["avilable"],
     companyId: json["company_id"],
     brandId: json["brand_id"],
-    pricPerDay: json["pric_per_day"],
+    pricPerDay: int.parse(json["pric_per_day"].toString()),
     doors: json["doors"],
     passengers: json["passengers"],
     location: json["location"],

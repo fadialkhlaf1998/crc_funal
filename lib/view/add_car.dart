@@ -831,6 +831,7 @@ class AddCar extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.9,
               height: 80,
               child: TextFormField(
+                maxLength: 9,
                 style: Theme.of(context).textTheme.headline3,
                 controller: addCarController.carPrice,
                 validator: (price) {

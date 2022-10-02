@@ -223,7 +223,8 @@ class AddCarController extends GetxController{
           loadingUpload.value = true;
           Api.addCar(brand!.value,brandId.toString(), model!.value, modelId.toString(), yearModelSelect!,colorSelect!,'Dubai',imageList,carPrice.text,companyId!, carPricePerMonth.text).then((value){
             loadingUpload.value = false;
-            Get.off(()=>MyCarList());
+            Get.back();
+            // Get.off(()=>MyCarList());
           });
         }
       }
