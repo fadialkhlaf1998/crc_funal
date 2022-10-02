@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:crc_version_1/app_localization.dart';
+import 'package:crc_version_1/controller/home_controller.dart';
 import 'package:crc_version_1/controller/intro_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/app.dart';
@@ -194,31 +195,33 @@ class AddCarController extends GetxController{
           currentStep.value +=1;
         }
       }
+      // else if(currentStep.value == 4){
+      //   if(emiratesSelect == null){
+      //     App.info_msg(context, App_Localization.of(context).translate('you_should_select_emirates'));
+      //   }else{
+      //     currentStep.value += 1;
+      //   }
+      // }
       else if(currentStep.value == 4){
-        if(emiratesSelect == null){
-          App.info_msg(context, App_Localization.of(context).translate('you_should_select_emirates'));
-        }else{
-          currentStep.value += 1;
-        }
-      }
-      else if(currentStep.value == 5){
         if(imageList.length < 3){
           App.info_msg(context, App_Localization.of(context).translate('you_should_upload_three_photos'));
         }else{
           currentStep.value += 1;
         }
       }
-      else if(currentStep.value == 6){
+      else if(currentStep.value == 5){
         if(carPrice.text.isEmpty){
           App.info_msg(context, App_Localization.of(context).translate('you_must_enter_the_price'));
         }else{
           /** Upload Information*/
           currentStep.value += 1;
-          tempBrandsList[brandIndex.value].selected.value = false;
+          print(brandIndex.value);
+          print('--------------------');
+        // introController.brands[brandIndex.value].selected.value = false;
         //  tempModelsList[modelIndex.value].selected.value = false;
           FocusManager.instance.primaryFocus?.unfocus();
           loadingUpload.value = true;
-          Api.addCar(brand!.value,brandId.toString(), model!.value, modelId.toString(), yearModelSelect!,colorSelect!,emiratesSelect!,imageList,carPrice.text,companyId!, carPricePerMonth.text).then((value){
+          Api.addCar(brand!.value,brandId.toString(), model!.value, modelId.toString(), yearModelSelect!,colorSelect!,'Dubai',imageList,carPrice.text,companyId!, carPricePerMonth.text).then((value){
             loadingUpload.value = false;
             Get.off(()=>MyCarList());
           });

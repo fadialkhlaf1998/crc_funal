@@ -40,7 +40,7 @@ class LogIn extends StatelessWidget {
               SingleChildScrollView(
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
+                  height: MediaQuery.of(context).size.height - (MediaQuery.of(context).padding.bottom + MediaQuery.of(context).padding.top),
                   child: loginController.loading.value ?
                   Container(
                     child: Lottie.asset('assets/images/Animation.json'),
@@ -50,14 +50,12 @@ class LogIn extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            
                             Container(
-                                height: Get.height * 0.3,
+                                height: Get.height * 0.25,
                                 child: Align(
                                   alignment: Alignment.bottomCenter,
                                     child: LogoContainer(width: 0.9, height: 0.14, logo: 'logo_orange'))),
                             Container(
-                              // height: Get.height * 0.6,
                               child: AnimatedSwitcher(
                                 transitionBuilder: (Widget child, Animation<double> animation) {
                                   return ScaleTransition(scale: animation, child: child);
@@ -92,7 +90,7 @@ class LogIn extends StatelessWidget {
                   button1Pressed: (){
                     signUpController.checkOpenDialog.value = false;
                   },
-                  button1Text: 'Done',
+                  button1Text: App_Localization.of(context).translate('done'),
                   openDialog: signUpController.checkOpenDialog.value
               )
             ],
@@ -106,6 +104,7 @@ class LogIn extends StatelessWidget {
     return Form(
       key: formGlobalKey,
       child: Container(
+        height: Get.height * 0.6,
         child: Column(
           children: [
             Container(
@@ -252,6 +251,7 @@ class LogIn extends StatelessWidget {
       key: formGlobalKey2,
       child: Container(
         // height: MediaQuery.of(context).size.height * 0.2,
+        height: Get.height * 0.67,
         child: Column(
           children: [
             Container(
@@ -435,16 +435,29 @@ class LogIn extends StatelessWidget {
                 color: App.primary,
                 borderRadius: 5, borderColor: Colors.white, borderWidth: 1, border: false,
               textStyle: TextStyle(
-                  color: Theme.of(context).dividerColor,
+                  color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 15),
-            GestureDetector(
-              onTap: (){
-                loginController.sign_up_option.value  = false;
-              },
-              child: Text(App_Localization.of(context).translate("login"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,decoration: TextDecoration.underline),),
+            const SizedBox(height: 10),
+            CustomButton(
+                width: 0.9,
+                height: 55,
+                text: App_Localization.of(context).translate("login"),
+                onPressed: (){
+                  loginController.sign_up_option.value  = false;
+                  signUpController.validatePhone.value = false;
+                  signUpController.pickUpValidate.value = false;
+                },
+                color: App.grey,
+                borderRadius: 5,
+                borderColor: Colors.white,
+                borderWidth: 1,
+                border: false,
+                textStyle:TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 40),
 

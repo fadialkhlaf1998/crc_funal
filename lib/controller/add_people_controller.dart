@@ -48,6 +48,7 @@ class AddPeopleController extends GetxController{
     phoneValidate.value = false;
     // bool can_add = true;
 
+    selectLanguages = '';
     for(int i = 0; i < select.length; i++) {
       if (select[i] == true && selectLanguages != '') {
         selectLanguages += ' / ' + language[i];
@@ -57,7 +58,7 @@ class AddPeopleController extends GetxController{
     }
     print(selectLanguages);
     if(selectLanguages == ''){
-      // selectedLangValidate.value = true;
+      selectedLangValidate.value = true;
       App.info_msg(context, App_Localization.of(context).translate('you_should_select_language'));
       // return ;
     }
@@ -81,59 +82,61 @@ class AddPeopleController extends GetxController{
       loadingUpload.value = true;
       Api.addPerson(username.text, userImage.first, mobileNumber.text, selectLanguages, companyID!).then((value){
         loadingUpload.value = false;
-        Get.off(()=>PeopleList());
+        //Get.off(()=>PeopleList());
+        Get.back();
       });
     }
 
   }
-  forwardStep(context)async{
-    if(currentStep.value >= 3){
-      selectLanguages = '';
-      for(int i = 0; i < select.length; i++) {
-        if (select[i] == true && selectLanguages != '') {
-          selectLanguages += ' / ' + language[i];
-        } else if (select[i] == true) {
-          selectLanguages += language[i];
-        }
-      }
-      if(selectLanguages == ''){
-          App.info_msg(context, App_Localization.of(context).translate('you_should_select_language'));
-      }else{
-        currentStep.value += 1;
-        loadingUpload.value = true;
-        if(userImage.isEmpty){
-          final byteData = await rootBundle.load('assets/images/profile_picture.png');
-          final file = File('${(await getTemporaryDirectory()).path}/profile_picture.png');
-          await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-          userImage.add(file);
-        }
-        Api.addPerson(username.text, userImage.first, mobileNumber.text, selectLanguages, companyID!).then((value){
-          Future.delayed(Duration(milliseconds: 500)).then((value){
-            loadingUpload.value = false;
-            Get.off(()=>PeopleList());
-          });
-        });
-        }
-    }
-    else if(currentStep.value == 0){
-      if( username.text.isEmpty){
-        App.info_msg(context, App_Localization.of(context).translate('name_cant_be_empty'));
-      }else{
-        currentStep.value +=1;
-      }
-    }
-    else if (currentStep.value == 1){
-
-      currentStep.value +=1;
-    }
-    else if(currentStep.value == 2){
-      if(mobileNumber.text.isEmpty){
-        App.info_msg(context, 'Mobile number is necessary');
-      }else{
-        currentStep.value +=1;
-      }
-    }
-  }
+  // forwardStep(context)async{
+  //   if(currentStep.value >= 3){
+  //     selectLanguages = '';
+  //     for(int i = 0; i < select.length; i++) {
+  //       if (select[i] == true && selectLanguages != '') {
+  //         selectLanguages += ' / ' + language[i];
+  //       } else if (select[i] == true) {
+  //         selectLanguages += language[i];
+  //       }
+  //     }
+  //     if(selectLanguages == ''){
+  //         App.info_msg(context, App_Localization.of(context).translate('you_should_select_language'));
+  //     }else{
+  //       currentStep.value += 1;
+  //       loadingUpload.value = true;
+  //       if(userImage.isEmpty){
+  //         final byteData = await rootBundle.load('assets/images/profile_picture.png');
+  //         final file = File('${(await getTemporaryDirectory()).path}/profile_picture.png');
+  //         await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+  //         userImage.add(file);
+  //       }
+  //       Api.addPerson(username.text, userImage.first, mobileNumber.text, selectLanguages, companyID!).then((value){
+  //         Future.delayed(Duration(milliseconds: 500)).then((value){
+  //           loadingUpload.value = false;
+  //           //Get.off(()=>PeopleList());
+  //           Get.back();
+  //         });
+  //       });
+  //       }
+  //   }
+  //   else if(currentStep.value == 0){
+  //     if( username.text.isEmpty){
+  //       App.info_msg(context, App_Localization.of(context).translate('name_cant_be_empty'));
+  //     }else{
+  //       currentStep.value +=1;
+  //     }
+  //   }
+  //   else if (currentStep.value == 1){
+  //
+  //     currentStep.value +=1;
+  //   }
+  //   else if(currentStep.value == 2){
+  //     if(mobileNumber.text.isEmpty){
+  //       App.info_msg(context, 'Mobile number is necessary');
+  //     }else{
+  //       currentStep.value +=1;
+  //     }
+  //   }
+  // }
 
   backwardStep(){
     if(currentStep.value <= 0){

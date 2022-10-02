@@ -5,7 +5,6 @@ import 'package:crc_version_1/controller/my_car_list_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/global.dart';
-import 'package:crc_version_1/helper/myTheme.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -281,7 +280,7 @@ class EditCar extends StatelessWidget {
             _color(context),
             _price(context),
             _rentMonth(context),
-            _location(context),
+           // _location(context),
             _image(context)
           ],
         ),
@@ -780,29 +779,153 @@ class EditCar extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: (){
-              // editCarController.addImage(context);
-             editCarController.showChoose.value = true;
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.45,
-              height: MediaQuery.of(context).size.width * 0.12,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(10)
-              ),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              onTap: () async{
+               editCarController.chooseOption();
+              },
+              child: Container(
+                width: 180,
+                child: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    Icon(Icons.add,color: Colors.white,size: 35),
-                    Text(App_Localization.of(context).translate("add_image"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, color: Colors.white),),
-                    Icon(Icons.add,color: Colors.transparent,size: 35),
+                    AnimatedContainer(
+                        duration: Duration(milliseconds: 350),
+                        width:  50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: editCarController.choosePhotoCheck.value
+                              ? BorderRadiusDirectional.circular(0)
+                              :  BorderRadiusDirectional.circular(10),
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child:  AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 500),
+                          child: editCarController.choosePhotoCheck.value ?  Icon(Icons.close, color: Colors.white,) : Icon(Icons.add, color: Colors.white,),
+                        )
+                    ),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 350),
+                      child: editCarController.choosePhotoCheck.value
+                          ?  Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Global.lang_code == 'en'
+                              ? GestureDetector(
+                            onTap: (){
+                              if((editCarController.imageList.length + editCarController.newImageList.length) == 8){
+                                App.info_msg(context, App_Localization.of(context).translate('you_can_upload_just_eight_photos'));
+                              }else {
+                                editCarController.selectPhotosFromCamera();
+                              }
+                            },
+                            child: Container(
+                              width:  60,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(25),
+                                    topLeft: Radius.circular(25)
+                                ),
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              child:const Icon(Icons.camera, color: Colors.white,),
+                            ),
+                          )
+                              : GestureDetector(
+                            onTap: (){
+                              if((editCarController.imageList.length + editCarController.newImageList.length) == 8){
+                                App.info_msg(context, App_Localization.of(context).translate('you_can_upload_just_eight_photos'));
+                              }else{
+                                editCarController.selectImage(context);
+                              }
+                            },
+                            child: Container(
+                              width: 60,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(25),
+                                    topRight: Radius.circular(25)
+                                ),
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              child:  Icon(Icons.photo, color: Colors.white,),
+                            ),
+                          ),
+                          Global.lang_code == 'en'
+                              ? GestureDetector(
+                            onTap: (){
+                              if((editCarController.imageList.length + editCarController.newImageList.length) == 8){
+                                App.info_msg(context, App_Localization.of(context).translate('you_can_upload_just_eight_photos'));
+                              }else{
+                                editCarController.selectImage(context);
+                              }
+                            },
+                            child: Container(
+                              width: 60,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(25),
+                                    topRight: Radius.circular(25)
+                                ),
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              child:  Icon(Icons.photo, color: Colors.white,),
+                            ),
+                          )
+                              : GestureDetector(
+                            onTap: (){
+                              if((editCarController.imageList.length + editCarController.newImageList.length) == 8){
+                                App.info_msg(context, App_Localization.of(context).translate('you_can_upload_just_eight_photos'));
+                              }else {
+                                editCarController.selectPhotosFromCamera();
+                              }
+                            },
+                            child: Container(
+                              width:  60,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(25),
+                                    topLeft: Radius.circular(25)
+                                ),
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              child:const Icon(Icons.camera, color: Colors.white,),
+                            ),
+                          )
+                        ],
+                      )
+                          : Text(''),
+                    ),
                   ],
-                )
-              ),
-            ),
+                ),
+              )
           ),
+          // GestureDetector(
+          //   onTap: (){
+          //     // editCarController.addImage(context);
+          //    editCarController.showChoose.value = true;
+          //   },
+          //   child: Container(
+          //     width: MediaQuery.of(context).size.width * 0.45,
+          //     height: MediaQuery.of(context).size.width * 0.12,
+          //     decoration: BoxDecoration(
+          //       color: Theme.of(context).primaryColor,
+          //       borderRadius: BorderRadius.circular(10)
+          //     ),
+          //     child: Center(
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //         children: [
+          //           Icon(Icons.add,color: Colors.white,size: 35),
+          //           Text(App_Localization.of(context).translate("add_image"),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, color: Colors.white),),
+          //           Icon(Icons.add,color: Colors.transparent,size: 35),
+          //         ],
+          //       )
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

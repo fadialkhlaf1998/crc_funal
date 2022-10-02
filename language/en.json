@@ -151,6 +151,7 @@
   "select_languages": "Choose Languages",
   "available": "Available?",
   "contact_name_cannot_be_empty" : "contact person name cannot be empty",
-  "cannot_save_car" : "You cannot save the car with less than three photos"
+  "cannot_save_car" : "You cannot save the car with less than three photos",
+  "cannot_reservation" : "You can't reservation from your cars"
 
 }

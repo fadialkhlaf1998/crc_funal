@@ -1,10 +1,12 @@
 import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/controller/all_orders_controller.dart';
 import 'package:crc_version_1/helper/app.dart';
+import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/widget/background_page.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class AllOrders extends StatefulWidget {
@@ -111,9 +113,14 @@ class _AllOrdersState extends State<AllOrders> {
               height: 50,
               decoration: BoxDecoration(
                 color: allOrdersController.rentType.value == 'in' ? App.primary : App.greySettingPage,
-                borderRadius: BorderRadius.only(
+                borderRadius: Global.lang_code == 'en'
+                    ? BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                   topLeft: Radius.circular(15),
+                )
+                :  BorderRadius.only(
+                  bottomRight: Radius.circular(15),
+                  topRight: Radius.circular(15),
                 ),
                   boxShadow: [
                     BoxShadow(
@@ -128,9 +135,10 @@ class _AllOrdersState extends State<AllOrders> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.car_crash),
+                    // Icon(Icons.car_crash,color: Colors.white),
+                    SvgPicture.asset('assets/icons/rent-in.svg'),
                     const SizedBox(width: 5),
-                    Text(App_Localization.of(context).translate('rent_in'))
+                    Text(App_Localization.of(context).translate('rent_in'),style: TextStyle(color: Colors.white),)
                   ],
                 ),
               )
@@ -147,10 +155,15 @@ class _AllOrdersState extends State<AllOrders> {
               height: 50,
               decoration: BoxDecoration(
                 color: allOrdersController.rentType.value == 'out' ? App.primary : App.greySettingPage,
-                borderRadius: BorderRadius.only(
+                borderRadius: Global.lang_code == 'en'
+                ? BorderRadius.only(
                   bottomRight: Radius.circular(15),
                   topRight: Radius.circular(15),
-                ),
+                )
+                : BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  topLeft: Radius.circular(15),
+                  ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.2),
@@ -164,9 +177,10 @@ class _AllOrdersState extends State<AllOrders> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.car_crash),
+                      // Icon(Icons.car_crash),
+                      SvgPicture.asset('assets/icons/rent-out.svg'),
                       const SizedBox(width: 5),
-                      Text(App_Localization.of(context).translate('rent_out'))
+                      Text(App_Localization.of(context).translate('rent_out'),style: TextStyle(color: Colors.white),)
                     ],
                   ),
                 )

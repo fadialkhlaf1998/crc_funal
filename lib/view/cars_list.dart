@@ -125,7 +125,7 @@ class _CarsListState extends State<CarsList> {
                               ),
                               width: 50,
                               height: 50,
-                              child: Icon(Icons.arrow_upward, size: 30,),
+                              child: Icon(Icons.arrow_upward, size: 30,color: Colors.white,),
                             ),
                           )
                         ],
@@ -615,7 +615,11 @@ class _CarsListState extends State<CarsList> {
             onTap: () {
               if(Global.company!=null){
                 if(carListController.myCars[index].avilable == 1){
-                  Get.to(()=>MyRangeCalender(carListController.myCars[index].id,carListController.myCars[index].pricPerHr, carListController.myCars[index].pricPerDay,carListController.myCars[index].companyId));
+                  if(carListController.myCars[index].companyId != Global.company!.id){
+                    Get.to(()=>MyRangeCalender(carListController.myCars[index].id,carListController.myCars[index].pricPerHr, carListController.myCars[index].pricPerDay,carListController.myCars[index].companyId));
+                  }else{
+                    App.error_msg(context, App_Localization.of(context).translate('cannot_reservation'));
+                  }
                 }
               }else{
                 Get.to(()=>LogIn());
@@ -1273,7 +1277,8 @@ class _CarsListState extends State<CarsList> {
                                                   Text(
                                                     carListController.companyContactsList[index].languages,
                                                     maxLines: 2,
-                                                    style: TextStyle(color: Colors.white,fontSize: 14),
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(color: Colors.white,fontSize: 13),
                                                     // style: Theme.of(context).textTheme.headline3,
                                                   )
                                                 ],

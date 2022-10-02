@@ -32,6 +32,8 @@ class EditCarController extends GetxController{
   RxBool imagePage = false.obs;
   RxBool loading = false.obs;
   RxBool showChoose = false.obs;
+  RxBool choosePhotoCheck = false.obs;
+
 
   RxList<File> imageList = <File>[].obs;
   RxList<File> newImageList = <File>[].obs;
@@ -203,6 +205,36 @@ class EditCarController extends GetxController{
       Get.back();
     }
   }
+
+  chooseOption(){
+    choosePhotoCheck.value = !choosePhotoCheck.value;
+  }
+  selectPhotosFromCamera()async{
+    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    imageList.add(File(photo!.path));
+  }
+
+  Future selectImage(context)async{
+    _picker.pickMultiImage().then((value){
+      if ((value!.length + imageList.length + newImageList.length) > 8 && value.isNotEmpty){
+        App.info_msg(context, App_Localization.of(context).translate('you_can_not_upload_more_than_eight_photos'));
+        int listLength = imageList.length + newImageList.length;
+        for(int i = 0; i < (8 - listLength); i++){
+          print(i);
+          imageList.add(File(value[i].path));
+        }
+      } else if (value.length > 8){
+        App.info_msg(context, App_Localization.of(context).translate('you_can_not_upload_more_than_eight_photos'));        for(int i = 0; i < 8; i++){
+          imageList.add(File(value[i].path));
+        }
+      }else{
+        for(int i=0;i<value.length;i++){
+          imageList.add(File(value[i].path));
+        }
+      }
+    });
+  }
+
 
 
 }

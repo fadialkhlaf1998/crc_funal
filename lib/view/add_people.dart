@@ -45,7 +45,7 @@ class AddPeople extends StatelessWidget {
                 Obx(() => MediaQuery.of(context).viewInsets.bottom>0?Center():Positioned(
                     child:  Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 60,
+                      height: 70,
                       decoration: BoxDecoration(
                         color: Theme.of(context).backgroundColor,
                         boxShadow: [

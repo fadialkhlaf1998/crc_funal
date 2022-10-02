@@ -151,6 +151,7 @@
   "select_languages": "اختر لغة",
   "available": "متاح؟",
   "contact_name_cannot_be_empty" : "لا يمكن أن يكون اسم جهة الاتصال فارغًا",
-  "cannot_save_car" : "لا يمكنك حفظ السيارة بأقل من ثلاث صور"
+  "cannot_save_car" : "لا يمكنك حفظ السيارة بأقل من ثلاث صور",
+  "cannot_reservation" : "لا يمكنك الحجز من سياراتك"
 
 }

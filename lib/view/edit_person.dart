@@ -56,7 +56,7 @@ class EditPerson extends StatelessWidget {
               editPersonController.loading.value == false
                   ? Text('')
                   :  WillPopScope(
-                  onWillPop: ()async => false,
+                  onWillPop: () async => false,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
@@ -345,6 +345,7 @@ class EditPerson extends StatelessWidget {
                 SizedBox(
                   height: 45,
                   child: TextField(
+                    maxLength: 10,
                     onChanged: (value){
                       editPersonController.getNewPhone(value);
                     },
@@ -352,6 +353,7 @@ class EditPerson extends StatelessWidget {
                     controller: editPersonController.editingNumberController,
                     style:  TextStyle(color: Theme.of(context).dividerColor),
                     decoration: InputDecoration(
+                        counterText: "",
                         labelText: App_Localization.of(context).translate('enter_new_mobile_number'),
                         labelStyle: TextStyle(color: Theme.of(context).dividerColor),
                         suffixIcon: GestureDetector(
@@ -521,7 +523,7 @@ class EditPerson extends StatelessWidget {
             child: Center(
               child: Text(
                 App_Localization.of(context).translate('save'),
-                style: TextStyle(color: Theme.of(context).dividerColor,fontSize: 20,fontWeight: FontWeight.bold),
+                style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),
               ),
             ),
           ),

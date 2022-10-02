@@ -111,7 +111,8 @@ class MyRangeCalender extends StatelessWidget {
   }
 
   submit(BuildContext context)async{
-    if(range.isNotEmpty&&total.value > 0&&company_id!=Global.company!.id){
+
+    if(range.isNotEmpty &&total.value > 0 && company_id != Global.company!.id){
       loading.value = true;
       DateTime from = getDate(range.value.split("-")[0], pickUp.value);
       DateTime to = getDate(range.value.split("-")[1], dropOff.value);
@@ -263,7 +264,8 @@ class MyRangeCalender extends StatelessWidget {
                             SizedBox(height: 20),
                             GestureDetector(
                               onTap: (){
-                                submit(context);
+                                print(';;;;;;;');
+                                    submit(context);
                               },
                               child: Container(
                                 width: Get.width * 0.8,

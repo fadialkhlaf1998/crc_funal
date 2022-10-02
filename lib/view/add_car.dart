@@ -19,6 +19,9 @@ class AddCar extends StatelessWidget {
   IntroController introController = Get.find();
   ScrollController _scrollController = ScrollController();
 
+  AddCar(){
+    addCarController.tempBrandsList[addCarController.brandIndex.value ].selected.value = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,16 +165,16 @@ class AddCar extends StatelessWidget {
             backgroundColor: addCarController.currentStep.value < 3 ? Theme.of(context).dividerColor : Theme.of(context).primaryColor,
             child: SvgPicture.asset('assets/icons/add_color.svg',color: Theme.of(context).backgroundColor,width: 35,height: 35,),
           ),
-          Expanded(child: Divider(
-              color: addCarController.currentStep.value < 4 ? Theme
-                  .of(context)
-                  .dividerColor : Theme
-                  .of(context)
-                  .primaryColor, indent: 1, endIndent: 1, thickness: 1),),
-          CircleAvatar(
-            backgroundColor: addCarController.currentStep.value < 4 ? Theme.of(context).dividerColor : Theme.of(context).primaryColor,
-            child: SvgPicture.asset('assets/icons/add_location.svg',color: Theme.of(context).backgroundColor,width: 40,height: 40,),
-          ),
+          // Expanded(child: Divider(
+          //     color: addCarController.currentStep.value < 4 ? Theme
+          //         .of(context)
+          //         .dividerColor : Theme
+          //         .of(context)
+          //         .primaryColor, indent: 1, endIndent: 1, thickness: 1),),
+          // CircleAvatar(
+          //   backgroundColor: addCarController.currentStep.value < 4 ? Theme.of(context).dividerColor : Theme.of(context).primaryColor,
+          //   child: SvgPicture.asset('assets/icons/add_location.svg',color: Theme.of(context).backgroundColor,width: 40,height: 40,),
+          // ),
           Expanded(child: Divider(
               color: addCarController.currentStep.value < 5 ? Theme
                   .of(context)
@@ -179,7 +182,7 @@ class AddCar extends StatelessWidget {
                   .of(context)
                   .primaryColor, indent: 1, endIndent: 1, thickness: 1),),
           CircleAvatar(
-            backgroundColor: addCarController.currentStep.value < 5 ? Theme.of(context).dividerColor : Theme.of(context).primaryColor,
+            backgroundColor: addCarController.currentStep.value < 4 ? Theme.of(context).dividerColor : Theme.of(context).primaryColor,
             child: SvgPicture.asset('assets/icons/add_photo.svg',color: Theme.of(context).backgroundColor,width: 30,height: 30,),
           ),
           Expanded(child: Divider(
@@ -189,7 +192,7 @@ class AddCar extends StatelessWidget {
                   .of(context)
                   .primaryColor, indent: 1, endIndent: 1, thickness: 1),),
           CircleAvatar(
-            backgroundColor: addCarController.currentStep.value < 6 ? Theme.of(context).dividerColor : Theme.of(context).primaryColor,
+            backgroundColor: addCarController.currentStep.value < 5 ? Theme.of(context).dividerColor : Theme.of(context).primaryColor,
             child: SvgPicture.asset('assets/icons/add_price.svg',color: Theme.of(context).backgroundColor,width: 35,height: 35,),
           ),
           SizedBox(width: 20),
@@ -210,12 +213,50 @@ class AddCar extends StatelessWidget {
                 : addCarController.currentStep.value == 1 ? _modelList(context)
                 : addCarController.currentStep.value == 2 ? _yearModel(context)
                 : addCarController.currentStep.value == 3 ?  _color(context)
-                : addCarController.currentStep.value == 4 ? _location(context) 
-                : addCarController.currentStep.value == 5 ? _carImage(context)
+                : addCarController.currentStep.value == 4 ?  _carImage(context)
                 : _carPrice(context)
           ),
-            MediaQuery.of(context).viewInsets.bottom == 0
-                ? Expanded(
+            // MediaQuery.of(context).viewInsets.bottom == 0
+            //     ? Expanded(
+            //   flex: 1,
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       color: Theme.of(context).backgroundColor,
+            //       boxShadow: [
+            //         BoxShadow(
+            //           color: Theme.of(context).dividerColor.withOpacity(0.1),
+            //           spreadRadius: 1,
+            //           blurRadius: 5,
+            //           offset: Offset(0, -1), // changes position of shadow
+            //         ),
+            //       ],
+            //     ),
+            //     child: Center(
+            //       child:  Container(
+            //         height: 50,
+            //         width: MediaQuery.of(context).size.width * 0.6,
+            //         decoration: BoxDecoration(
+            //             color: Theme.of(context).primaryColor,
+            //             borderRadius: BorderRadius.circular(5)),
+            //         child: TextButton(
+            //           onPressed: () async {
+            //             addCarController.forwardStep(context);
+            //           },
+            //           child: Text(
+            //             addCarController.currentStep.value >= 6 ? App_Localization.of(context).translate('save') : App_Localization.of(context).translate('next') ,
+            //             style: const TextStyle(
+            //                 color: Colors.white,
+            //                 fontSize: 25,
+            //                 fontWeight: FontWeight.bold),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // )
+            //     :
+          addCarController.currentStep.value > 3
+              ? Expanded(
               flex: 1,
               child: Container(
                 decoration: BoxDecoration(
@@ -241,7 +282,7 @@ class AddCar extends StatelessWidget {
                         addCarController.forwardStep(context);
                       },
                       child: Text(
-                        addCarController.currentStep.value >= 6 ? App_Localization.of(context).translate('save') : App_Localization.of(context).translate('next') ,
+                        addCarController.currentStep.value >= 5 ? App_Localization.of(context).translate('save') : App_Localization.of(context).translate('next') ,
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 25,
@@ -252,43 +293,7 @@ class AddCar extends StatelessWidget {
                 ),
               ),
             )
-                : Expanded(
-              flex: 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).backgroundColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).dividerColor.withOpacity(0.1),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, -1), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child:  Container(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: TextButton(
-                      onPressed: () async {
-                        addCarController.forwardStep(context);
-                      },
-                      child: Text(
-                        addCarController.currentStep.value >= 6 ? App_Localization.of(context).translate('save') : App_Localization.of(context).translate('next') ,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            )
+              : Text('')
         ],
       ),
     );
@@ -423,7 +428,9 @@ class AddCar extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            ListView.builder(
+            addCarController.tempModelsList.isEmpty
+                ? Text(App_Localization.of(context).translate('no_results_matched'))
+            : ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount:  addCarController.tempModelsList.length,
@@ -804,7 +811,8 @@ class AddCar extends StatelessWidget {
                     ],
                   ),
                 )
-            )
+            ),
+            SizedBox(height: 20)
           ],
         ),
       ),
