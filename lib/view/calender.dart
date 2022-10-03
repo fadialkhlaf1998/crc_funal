@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/app.dart';
@@ -115,13 +117,14 @@ class MyRangeCalender extends StatelessWidget {
     if(range.isNotEmpty &&total.value > 0 && company_id != Global.company!.id){
       DateTime from = getDate(range.value.split("-")[0], pickUp.value);
       DateTime to = getDate(range.value.split("-")[1], dropOff.value);
-      print('-------');
-      print(from.toString());
-      print(to.toString());
-      if(from.difference(to).inMilliseconds == 0 && pickUp.value == dropOff.value){
+      DateTime fromCompar = getDate(range.value.split("-")[0], "00:00 AM");
+      DateTime toCompar = getDate(range.value.split("-")[1], "00:00 AM");
+
+      if(fromCompar.difference(toCompar).inMilliseconds == 0 && (pickUp.value == dropOff.value || hrs.indexOf(dropOff.value)<=hrs.indexOf(pickUp.value))){
         App.error_msg(context, "please select difference time");
         return ;
       }
+      // return ;
       loading.value = true;
       bool succ = await Api.addOrder(from, to, Global.company!.id, company_id, car_id, total.value);
       if(succ){
