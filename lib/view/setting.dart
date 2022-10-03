@@ -1,5 +1,4 @@
 import 'package:crc_version_1/app_localization.dart';
-import 'package:crc_version_1/controller/all_orders_controller.dart';
 import 'package:crc_version_1/controller/setting_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
 import 'package:crc_version_1/helper/global.dart';
@@ -51,6 +50,15 @@ class Settings extends StatelessWidget {
                       _header(context),
                       _body(context),
                       _footer(context),
+                      SizedBox(height: 50),
+                      Text(
+                          'Powered by MaxArt ©',
+                        style: TextStyle(
+                          color: Theme.of(context).dividerColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold
+                        ),
+                      )
                       // const SizedBox(height: 1),
                     ],
                   ),

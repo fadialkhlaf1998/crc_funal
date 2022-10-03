@@ -12,7 +12,7 @@ class Global{
   static String remember_password="non";
   static RxString companyImage = ''.obs;
   static String companyTitle = '';
-  static String vip_phone_number = '+971553451555';
+  static String vip_phone_number = '+971551073649';
   static Company? company;
 
   static save_language(String locale){

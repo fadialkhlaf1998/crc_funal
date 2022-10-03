@@ -86,14 +86,11 @@ class ContactToUs extends StatelessWidget {
               color: Colors.white,
               shape: BoxShape.circle,
               border: Border.all(width: 1,color: Color(0XFF202428),),
-              image:  DecorationImage(
-                fit: BoxFit.contain,
-                image: NetworkImage(Api.imageUrl+Global.companyImage.value.replaceAll("http://127.0.0.1:3004/", Api.url))
-              )
             ),
+            child: SvgPicture.asset('assets/logo/logo_orange.svg'),
           ),
           SizedBox(height: 7),
-          Text('Vip RentalCar',style: Theme.of(context).textTheme.headline2),
+          Text('B2B',style: Theme.of(context).textTheme.headline2),
           SizedBox(height: 80),
           Obx((){
             return GestureDetector(
@@ -131,7 +128,7 @@ class ContactToUs extends StatelessWidget {
                         width: contactUsController.phoneButton.value ? 0 :  150,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: Text('+971 55 345 1555',style: TextStyle(color: Color(0XFF202428),fontSize: 15,fontWeight: FontWeight.bold)),
+                          child: Text('+971 55 107 3649',style: TextStyle(color: Color(0XFF202428),fontSize: 15,fontWeight: FontWeight.bold)),
                         )
                     ),
                   ],
@@ -175,7 +172,7 @@ class ContactToUs extends StatelessWidget {
                         width: contactUsController.whatsappButton.value ? 0 :  150,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: Text('+971 55 345 1555',style: TextStyle(color: Color(0XFF202428),fontSize: 15,fontWeight: FontWeight.bold)),
+                          child: Text('+971 55 107 3649',style: TextStyle(color: Color(0XFF202428),fontSize: 15,fontWeight: FontWeight.bold)),
                         )
                     ),
                   ],
