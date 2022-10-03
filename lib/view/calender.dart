@@ -113,13 +113,16 @@ class MyRangeCalender extends StatelessWidget {
   submit(BuildContext context)async{
 
     if(range.isNotEmpty &&total.value > 0 && company_id != Global.company!.id){
-      loading.value = true;
       DateTime from = getDate(range.value.split("-")[0], pickUp.value);
       DateTime to = getDate(range.value.split("-")[1], dropOff.value);
       print('-------');
       print(from.toString());
       print(to.toString());
-
+      if(from.difference(to).inMilliseconds == 0 && pickUp.value == dropOff.value){
+        App.error_msg(context, "please select difference time");
+        return ;
+      }
+      loading.value = true;
       bool succ = await Api.addOrder(from, to, Global.company!.id, company_id, car_id, total.value);
       if(succ){
         Global.company = await Api.login(Global.company!.username, Global.company!.password);
