@@ -495,6 +495,7 @@ class _AllOrdersState extends State<AllOrders> {
                           Container(
                             width: 30,
                             height: 30,
+                            margin: EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.transparent,
@@ -646,6 +647,7 @@ class _AllOrdersState extends State<AllOrders> {
                           Container(
                             width: 30,
                             height: 30,
+                            margin: EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.transparent,

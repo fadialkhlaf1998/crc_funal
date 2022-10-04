@@ -456,7 +456,7 @@ class _CarsListState extends State<CarsList> {
             height:  MediaQuery.of(context).size.width * 0.15,
             decoration: BoxDecoration(
                //color: Colors.white,
-              // shape: BoxShape.circle,
+              shape: BoxShape.circle,
               //border: Border.all(width: 1,color:Color(0XFF202428).withOpacity(0.2)),
               image: DecorationImage(
                 fit: BoxFit.fitWidth,

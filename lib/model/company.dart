@@ -128,8 +128,8 @@ class Accepted {
     total: double.parse(json["total"].toString()),
     title: json["title"],
     image: json["image"],
-    toCompnayImage: json["from_compnay_image"],
-    fromCompnayImage: json["to_compnay_image"],
+    toCompnayImage: json["to_compnay_image"],
+    fromCompnayImage: json["from_compnay_image"],
     fromCompnayTitle: json["from_compnay_title"],
     toCompnayTitle: json["to_compnay_title"],
   );
