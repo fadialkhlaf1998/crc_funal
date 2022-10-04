@@ -10,6 +10,7 @@ class Global{
   static bool remember_pass=false;
   static LoginInfo? loginInfo;
   static String remember_password="non";
+  static String token="";
   static RxString companyImage = ''.obs;
   static String companyTitle = '';
   static String vip_phone_number = '+971551073649';

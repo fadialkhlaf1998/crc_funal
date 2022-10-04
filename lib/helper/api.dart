@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/model/car.dart';
 import 'package:crc_version_1/model/company.dart';
 import 'package:crc_version_1/model/intro.dart';
@@ -68,10 +69,13 @@ class Api {
     if (response.statusCode == 200) {
       var jsonData = await response.stream.bytesToString();
       var data = jsonDecode(jsonData) as List;
-      return Company.fromJson(data[0]);
+      Company c=  Company.fromJson(data[0]);
+      print(Global.token +"----------HERE--------");
+      updateToken(Global.token,c.sub_admin_id);
+      return c;
     }
     else {
-      return Company(id: -1, username: '', password: '', profileImage: '', coverImage: '', title: '',customerOrders: Orders(rejected: [], pending: [], accepted: []),myOrders: Orders(rejected: [], pending: [], accepted: []));
+      return Company(id: -1, username: '', password: '', profileImage: '', coverImage: '', title: '',customerOrders: Orders(rejected: [], pending: [], accepted: []),myOrders: Orders(rejected: [], pending: [], accepted: []),sub_admin_id: -1);
     }
   }
 
@@ -517,14 +521,15 @@ class Api {
 
   }
 
-  static Future tracker(String fromCompanyId, String toCompanyId)async{
+  static Future tracker(String fromCompanyId, String toCompanyId,int state)async{
     var headers = {
       'Content-Type': 'application/json',
     };
     var request = http.Request('POST', Uri.parse(url + 'api/tracker'));
     request.body = json.encode({
       "_to": toCompanyId,
-      "_from": fromCompanyId
+      "_from": fromCompanyId,
+      "state":state
     });
     request.headers.addAll(headers);
 
@@ -541,7 +546,29 @@ class Api {
 
   }
 
+  static updateToken(String token,int id)async{
 
+    var headers = {
+    'Content-Type': 'application/json',
+    };
+    var request = http.Request('PUT', Uri.parse(url + 'api/token/sub_admin'));
+    request.body = json.encode({
+    "token": token,
+    "id": id
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+    print('Success');
+    return true;
+    }
+    else {
+    print('Field');
+    return false;
+    }
+  }
   static Future<bool> orderState(int state , int id)async{
     var headers = {
       'Content-Type': 'application/json'

@@ -13,6 +13,7 @@ class AllOrdersController extends GetxController{
   RxString rentType = ''.obs;
   RxInt rentStatus = 2.obs;
   RxBool loading = false.obs;
+  RxBool fake = false.obs;
 
   refreshData(){
     Global.company!.myOrders.all.clear();
@@ -38,11 +39,12 @@ class AllOrdersController extends GetxController{
       print(succ);
       if(succ){
 
-        Global.company = await Api.login(Global.company!.username, Global.company!.password);
+        Global.company = await Api.login(Global.loginInfo!.email, Global.loginInfo!.pass);
         print("Global.company!.id");
         print(Global.company!.id);
         // App.sucss_msg(context, App_Localization.of(context).translate('order_state_changes_successfully'));
         // Get.showSnackbar(GetSnackBar(backgroundColor: App.greySettingPage,title: App_Localization.of(context).translate("rent_in"),message: App_Localization.of(context).translate('order_state_changes_successfully'),));
+        refreshData();
         loading.value = false;
       }else{
         loading.value = false;

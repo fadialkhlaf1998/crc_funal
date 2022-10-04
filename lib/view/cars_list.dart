@@ -1214,10 +1214,10 @@ class _CarsListState extends State<CarsList> {
                           onTap: ()async{
                             if(carListController.bookOnWhatsappCheck!.value){
                               await carListController.bookOnWhatsapp(context, index);
-                              carListController.trackerRecord(index);
+                              carListController.trackerRecord(index,0);
                             }else{
                               carListController.bookOnPhone(index);
-                              carListController.trackerRecord(index);
+                              carListController.trackerRecord(index,1);
                             }
                           },
                           child: Container(

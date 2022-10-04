@@ -12,6 +12,7 @@ String companyToJson(List<Company> data) => json.encode(List<dynamic>.from(data.
 class Company {
   Company({
     required this.id,
+    required this.sub_admin_id,
     required this.username,
     required this.password,
     required this.profileImage,
@@ -22,6 +23,7 @@ class Company {
   });
 
   int id;
+  int sub_admin_id;
   String username;
   String password;
   String profileImage;
@@ -32,6 +34,7 @@ class Company {
 
   factory Company.fromJson(Map<String, dynamic> json) => Company(
     id: json["id"] ?? -1,
+    sub_admin_id: json["sub_admin_id"] ?? -1,
     username: json["username"] ?? "",
     password: json["password"] ?? "",
     profileImage: json["profile_image"]  ?? "",

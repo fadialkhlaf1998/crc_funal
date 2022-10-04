@@ -58,6 +58,7 @@ dependencies:
   firebase_core: ^1.23.0
   flutter_local_notifications:
   toggle_switch: ^2.0.1
+  firebase_messaging: ^13.0.4
 
 
 

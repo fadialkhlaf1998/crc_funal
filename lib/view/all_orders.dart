@@ -50,6 +50,7 @@ class _AllOrdersState extends State<AllOrders> {
         body: SafeArea(
           child: Stack(
             children: [
+              allOrdersController.fake.value?Center():Center(),
               BackgroundPage(),
               allOrdersController.loading.value
                   ?Container(
@@ -472,139 +473,146 @@ class _AllOrdersState extends State<AllOrders> {
       child: Container(
         width: Get.width * 0.9,
         padding: EdgeInsets.only(top: 20),
-        child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, index){
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0),
-              child: Container(
-                width: Get.width * 0.9,
-                height: Get.width * 0.9/2.3,
-                // color: Colors.black,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
-                              image: DecorationImage(
-                                  image: NetworkImage(Api.imageUrl+list[index].toCompnayImage),
-                                  fit: BoxFit.contain
-                              )
+        child: RefreshIndicator(
+          onRefresh: ()async{
+            Global.company = await Api.login(Global.loginInfo!.email, Global.loginInfo!.pass);
+            allOrdersController.refreshData();
+            allOrdersController.fake.value = !allOrdersController.fake.value;
+          },
+          child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (BuildContext context, index){
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 0),
+                child: Container(
+                  width: Get.width * 0.9,
+                  height: Get.width * 0.9/2.3,
+                  // color: Colors.black,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.transparent,
+                                image: DecorationImage(
+                                    image: NetworkImage(Api.imageUrl+list[index].toCompnayImage),
+                                    fit: BoxFit.contain
+                                )
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 10,),
-                        Text(list[index].toCompnayTitle,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black),),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        Container(
-                          width: Get.width * 0.9,
-                          height: Get.width * 0.9/2.3 - 50,
-                          decoration: BoxDecoration(
-                            color: MyTheme.isDarkTheme.value?App.greySettingPage:Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex:1,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: Global.lang_code == "en"?BorderRadius.only(bottomLeft: Radius.circular(10),topLeft: Radius.circular(10)):BorderRadius.only(bottomRight: Radius.circular(10),topRight: Radius.circular(10)),
-                                      image: DecorationImage(
-                                          image: NetworkImage(Api.imageUrl+list[index].image),
-                                          fit: BoxFit.cover
-                                      )
-                                  ),
-
+                          SizedBox(width: 10,),
+                          Text(list[index].toCompnayTitle,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black),),
+                        ],
+                      ),
+                      Stack(
+                        children: [
+                          Container(
+                            width: Get.width * 0.9,
+                            height: Get.width * 0.9/2.3 - 50,
+                            decoration: BoxDecoration(
+                              color: MyTheme.isDarkTheme.value?App.greySettingPage:Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3), // changes position of shadow
                                 ),
-                              ),
-                              Expanded(
-                                flex:2,
-                                child: Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(list[index].title,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,),maxLines: 1,),
-                                        Text(list[index].total.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
-                                        Row(
-                                          children: [
-                                            Text(App_Localization.of(context).translate("from")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
-                                            Text(getFormate(list[index].from),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(App_Localization.of(context).translate("to")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
-                                            Text(getFormate(list[index].to),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
-                                          ],
-                                        ),
-                                      ],
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex:1,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: Global.lang_code == "en"?BorderRadius.only(bottomLeft: Radius.circular(10),topLeft: Radius.circular(10)):BorderRadius.only(bottomRight: Radius.circular(10),topRight: Radius.circular(10)),
+                                        image: DecorationImage(
+                                            image: NetworkImage(Api.imageUrl+list[index].image),
+                                            fit: BoxFit.cover
+                                        )
+                                    ),
+
+                                  ),
+                                ),
+                                Expanded(
+                                  flex:2,
+                                  child: Container(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(list[index].title,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,),maxLines: 1,),
+                                          Text(list[index].total.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
+                                          Row(
+                                            children: [
+                                              Text(App_Localization.of(context).translate("from")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
+                                              Text(getFormate(list[index].from),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(App_Localization.of(context).translate("to")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
+                                              Text(getFormate(list[index].to),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        Positioned(
-                            bottom: 7,
-                            right: Global.lang_code=="en"?10:null,
-                            left: Global.lang_code=="ar"?10:null,
-                            child: list[index].state == -1
-                                ?Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.red,
-                                  radius: 8,
-                                  child: Icon(Icons.close,color: Colors.white,size: 14,),
-                                ),
-                                SizedBox(width: 5,),
-                                Text(App_Localization.of(context).translate("rejected"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
-                              ],
-                            )
-                                :list[index].state == 0?Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.orange,
-                                  radius: 8,
-                                  child: Icon(Icons.history_toggle_off_sharp,color: Colors.white,size: 14,),
-                                ),
-                                SizedBox(width: 5,),
-                                Text(App_Localization.of(context).translate("in_review"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
-                              ],
-                            ):Row(
-                              children: [
-                                Icon(Icons.check_circle,color: Colors.green,size: 18,),
-                                SizedBox(width: 5,),
-                                Text(App_Localization.of(context).translate("accepted"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
-                              ],
-                            )
-                        )
-                      ],
-                    )
-                  ],
+                          Positioned(
+                              bottom: 7,
+                              right: Global.lang_code=="en"?10:null,
+                              left: Global.lang_code=="ar"?10:null,
+                              child: list[index].state == -1
+                                  ?Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    radius: 8,
+                                    child: Icon(Icons.close,color: Colors.white,size: 14,),
+                                  ),
+                                  SizedBox(width: 5,),
+                                  Text(App_Localization.of(context).translate("rejected"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                ],
+                              )
+                                  :list[index].state == 0?Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: Colors.orange,
+                                    radius: 8,
+                                    child: Icon(Icons.history_toggle_off_sharp,color: Colors.white,size: 14,),
+                                  ),
+                                  SizedBox(width: 5,),
+                                  Text(App_Localization.of(context).translate("in_review"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                ],
+                              ):Row(
+                                children: [
+                                  Icon(Icons.check_circle,color: Colors.green,size: 18,),
+                                  SizedBox(width: 5,),
+                                  Text(App_Localization.of(context).translate("accepted"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                ],
+                              )
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -615,203 +623,211 @@ class _AllOrdersState extends State<AllOrders> {
       child: Container(
         width: Get.width * 0.9,
         padding: EdgeInsets.only(top: 20),
-        child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, index){
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0),
-              child: Container(
-                width: Get.width * 0.9,
-                height: Get.width * 0.9/2.3,
-                // color: Colors.black,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
-                              image: DecorationImage(
-                                  image: NetworkImage(Api.imageUrl+list[index].fromCompnayImage),
-                                  fit: BoxFit.contain
-                              )
+
+        child: RefreshIndicator(
+          onRefresh: ()async{
+            Global.company = await Api.login(Global.loginInfo!.email, Global.loginInfo!.pass);
+            allOrdersController.refreshData();
+            allOrdersController.fake.value = !allOrdersController.fake.value;
+          },
+          child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (BuildContext context, index){
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 0),
+                child: Container(
+                  width: Get.width * 0.9,
+                  height: Get.width * 0.9/2.3,
+                  // color: Colors.black,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.transparent,
+                                image: DecorationImage(
+                                    image: NetworkImage(Api.imageUrl+list[index].fromCompnayImage),
+                                    fit: BoxFit.contain
+                                )
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 10,),
-                        Text(list[index].fromCompnayTitle,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black),),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        Container(
-                          width: Get.width * 0.9,
-                          height: Get.width * 0.9/2.3 - 50,
-                          decoration: BoxDecoration(
-                            color: MyTheme.isDarkTheme.value?App.greySettingPage:Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex:1,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: Global.lang_code == "en"?BorderRadius.only(bottomLeft: Radius.circular(10),topLeft: Radius.circular(10)):BorderRadius.only(bottomRight: Radius.circular(10),topRight: Radius.circular(10)),
-                                      image: DecorationImage(
-                                          image: NetworkImage(Api.imageUrl+list[index].image),
-                                          fit: BoxFit.cover
-                                      )
-                                  ),
-                                  child: list[index].state == 0?Container(
+                          SizedBox(width: 10,),
+                          Text(list[index].fromCompnayTitle,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black),),
+                        ],
+                      ),
+                      Stack(
+                        children: [
+                          Container(
+                            width: Get.width * 0.9,
+                            height: Get.width * 0.9/2.3 - 50,
+                            decoration: BoxDecoration(
+                              color: MyTheme.isDarkTheme.value?App.greySettingPage:Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex:1,
+                                  child: Container(
                                     decoration: BoxDecoration(
-                                      borderRadius: Global.lang_code == "en"?BorderRadius.only(bottomLeft: Radius.circular(10),topLeft: Radius.circular(10)):BorderRadius.only(bottomRight: Radius.circular(10),topRight: Radius.circular(10)),
-                                      color: Colors.grey.withOpacity(0.5),
+                                        borderRadius: Global.lang_code == "en"?BorderRadius.only(bottomLeft: Radius.circular(10),topLeft: Radius.circular(10)):BorderRadius.only(bottomRight: Radius.circular(10),topRight: Radius.circular(10)),
+                                        image: DecorationImage(
+                                            image: NetworkImage(Api.imageUrl+list[index].image),
+                                            fit: BoxFit.cover
+                                        )
                                     ),
-                                    child:Center(
-                                      child:  Container(
-                                        // height: 40,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Expanded(
-                                              child: GestureDetector(
-                                                onTap: (){
-                                                  allOrdersController.updateState(context,-1,list[index].id);
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
+                                    child: list[index].state == 0?Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: Global.lang_code == "en"?BorderRadius.only(bottomLeft: Radius.circular(10),topLeft: Radius.circular(10)):BorderRadius.only(bottomRight: Radius.circular(10),topRight: Radius.circular(10)),
+                                        color: Colors.grey.withOpacity(0.5),
+                                      ),
+                                      child:Center(
+                                        child:  Container(
+                                          // height: 40,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Expanded(
+                                                child: GestureDetector(
+                                                  onTap: (){
+                                                    allOrdersController.updateState(context,-1,list[index].id);
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
 
-                                                      color: Colors.red.withOpacity(0.4),
-                                                      borderRadius: Global.lang_code == "en"?
-                                                      BorderRadius.only(bottomLeft: Radius.circular(10),topLeft: Radius.circular(10))
-                                                          :BorderRadius.only(topRight: Radius.circular(10),bottomRight: Radius.circular(10))
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      CircleAvatar(
-                                                        backgroundColor: Colors.red,
-                                                        radius: 8,
-                                                        child: Icon(Icons.close,color: Colors.white,size: 14,),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text(App_Localization.of(context).translate("reject"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                                        color: Colors.red.withOpacity(0.4),
+                                                        borderRadius: Global.lang_code == "en"?
+                                                        BorderRadius.only(bottomLeft: Radius.circular(10),topLeft: Radius.circular(10))
+                                                            :BorderRadius.only(topRight: Radius.circular(10),bottomRight: Radius.circular(10))
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        CircleAvatar(
+                                                          backgroundColor: Colors.red,
+                                                          radius: 8,
+                                                          child: Icon(Icons.close,color: Colors.white,size: 14,),
+                                                        ),
+                                                        SizedBox(height: 5,),
+                                                        Text(App_Localization.of(context).translate("reject"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
 
 
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-
-                                            Expanded(
-                                              child: GestureDetector(
-                                                onTap: (){
-                                                  allOrdersController.updateState(context,1,list[index].id);
-                                                },
-                                                child: Container(
-                                                  color: Colors.green.withOpacity(0.4),
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Icon(Icons.check_circle,color: Colors.green,size: 18,),
-                                                      SizedBox(height: 2.7,),
-                                                      Text(App_Localization.of(context).translate("accept"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            )
-                                          ],
+
+                                              Expanded(
+                                                child: GestureDetector(
+                                                  onTap: (){
+                                                    allOrdersController.updateState(context,1,list[index].id);
+                                                  },
+                                                  child: Container(
+                                                    color: Colors.green.withOpacity(0.4),
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        Icon(Icons.check_circle,color: Colors.green,size: 18,),
+                                                        SizedBox(height: 2.7,),
+                                                        Text(App_Localization.of(context).translate("accept"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ):Center(),
-                                ),
-                              ),
-                              Expanded(
-                                flex:2,
-                                child: Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(list[index].title,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,),maxLines: 1,),
-                                        Text(list[index].total.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
-                                        Row(
-                                          children: [
-                                            Text(App_Localization.of(context).translate("from")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
-                                            Text(getFormate(list[index].from),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(App_Localization.of(context).translate("to")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
-                                            Text(getFormate(list[index].to),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                    ):Center(),
                                   ),
                                 ),
-                              )
-                            ],
+                                Expanded(
+                                  flex:2,
+                                  child: Container(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(list[index].title,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,),maxLines: 1,),
+                                          Text(list[index].total.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
+                                          Row(
+                                            children: [
+                                              Text(App_Localization.of(context).translate("from")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
+                                              Text(getFormate(list[index].from),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(App_Localization.of(context).translate("to")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
+                                              Text(getFormate(list[index].to),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 12),maxLines: 1,),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        Positioned(
-                            bottom: 7,
-                            right: Global.lang_code=="en"?10:null,
-                            left: Global.lang_code=="ar"?10:null,
-                            child: list[index].state == -1
-                                ?Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.red,
-                                  radius: 8,
-                                  child: Icon(Icons.close,color: Colors.white,size: 14,),
-                                ),
-                                SizedBox(width: 5,),
-                                Text(App_Localization.of(context).translate("rejected"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
-                              ],
-                            )
-                                :list[index].state == 0?Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.orange,
-                                  radius: 8,
-                                  child: Icon(Icons.history_toggle_off_sharp,color: Colors.white,size: 14,),
-                                ),
-                                SizedBox(width: 5,),
-                                Text(App_Localization.of(context).translate("pending"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
-                              ],
-                            ):Row(
-                              children: [
-                                Icon(Icons.check_circle,color: Colors.green,size: 18,),
-                                SizedBox(width: 5,),
-                                Text(App_Localization.of(context).translate("accepted"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
-                              ],
-                            )
-                        )
-                      ],
-                    )
-                  ],
+                          Positioned(
+                              bottom: 7,
+                              right: Global.lang_code=="en"?10:null,
+                              left: Global.lang_code=="ar"?10:null,
+                              child: list[index].state == -1
+                                  ?Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    radius: 8,
+                                    child: Icon(Icons.close,color: Colors.white,size: 14,),
+                                  ),
+                                  SizedBox(width: 5,),
+                                  Text(App_Localization.of(context).translate("rejected"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                ],
+                              )
+                                  :list[index].state == 0?Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: Colors.orange,
+                                    radius: 8,
+                                    child: Icon(Icons.history_toggle_off_sharp,color: Colors.white,size: 14,),
+                                  ),
+                                  SizedBox(width: 5,),
+                                  Text(App_Localization.of(context).translate("pending"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                ],
+                              ):Row(
+                                children: [
+                                  Icon(Icons.check_circle,color: Colors.green,size: 18,),
+                                  SizedBox(width: 5,),
+                                  Text(App_Localization.of(context).translate("accepted"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                ],
+                              )
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

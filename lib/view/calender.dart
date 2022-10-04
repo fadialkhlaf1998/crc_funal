@@ -126,9 +126,16 @@ class MyRangeCalender extends StatelessWidget {
       }
       // return ;
       loading.value = true;
+      print('*******opopop*******');
+      print(from);
+      print(to);
+      print(Global.company!.id);
+      print(company_id);
+      print(car_id);
+      print(total);
       bool succ = await Api.addOrder(from, to, Global.company!.id, company_id, car_id, total.value);
       if(succ){
-        Global.company = await Api.login(Global.company!.username, Global.company!.password);
+        Global.company = await Api.login(Global.loginInfo!.email, Global.loginInfo!.pass);
         Get.back();
         App.sucss_msg(context, App_Localization.of(context).translate("your_req_placed_succ"));
       }else{

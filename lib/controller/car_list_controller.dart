@@ -331,10 +331,10 @@ class CarListController extends GetxController{
     }
   }
 
-  trackerRecord(index){
+  trackerRecord(index,int state){
     Api.check_internet().then((internet){
       if (internet){
-        Api.tracker(Global.company_id.toString(), myCars[index].companyId.toString());
+        Api.tracker(Global.company_id.toString(), myCars[index].companyId.toString(),state);
       }else{
 
       }
