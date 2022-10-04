@@ -314,7 +314,10 @@ class Home extends StatelessWidget {
                   child: Container(
                     color: Colors.transparent,
                     width: MediaQuery.of(context).size.width * 0.85,
-                    child:Text(App_Localization.of(context).translate('all_models'), style: Theme.of(context).textTheme.headline3),
+                    height: MediaQuery.of(context).size.height * 0.03,
+                    child:
+                    Text(App_Localization.of(context).translate('all_models'),
+                        style: Theme.of(context).textTheme.headline3),
                   ),
                 ),
                 Divider(color: Theme.of(context).dividerColor.withOpacity(0.2),thickness: 1,indent: 30,endIndent: 35,)
@@ -336,10 +339,10 @@ class Home extends StatelessWidget {
                         child: Container(
                           color: Colors.transparent,
                           width: MediaQuery.of(context).size.width * 0.85,
-                          height: MediaQuery.of(context).size.height * 0.04,
+                          height: MediaQuery.of(context).size.height * 0.05,
                           child:Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(homeController.tempModelsList[index].title, style: Theme.of(context).textTheme.headline3),
                             ],

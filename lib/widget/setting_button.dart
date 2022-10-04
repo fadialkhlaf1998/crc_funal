@@ -21,7 +21,7 @@ class SettingButton extends StatelessWidget {
           child: Container(
             color: Colors.transparent,
             width: MediaQuery.of(context).size.width * 0.9,
-            height: 35,
+            height: 40,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
