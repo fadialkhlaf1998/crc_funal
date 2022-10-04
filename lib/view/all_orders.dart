@@ -11,6 +11,7 @@ import 'package:crc_version_1/widget/background_page.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -118,7 +119,7 @@ class _AllOrdersState extends State<AllOrders> {
   _rentInOut(context){
     return Container(
       margin: EdgeInsets.only(top: 15),
-      width: Get.width,
+      width: Get.width * 0.9,
       height: 50,
       child: Row(
         children: [
@@ -130,12 +131,18 @@ class _AllOrdersState extends State<AllOrders> {
             child: AnimatedContainer(
                 duration: Duration(milliseconds: 500),
                 curve: Curves.fastOutSlowIn,
-                width: Get.width * 0.5,
+                width: Get.width * 0.45,
                 height: 50,
                 decoration: BoxDecoration(
                   color: allOrdersController.rentType.value == 'in' ? App.primary :  MyTheme.isDarkTheme.value?App.greySettingPage:Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(25),
+                  borderRadius: Global.lang_code == 'en'
+                      ? BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    topLeft: Radius.circular(15),
+                  )
+                  : BorderRadius.only(
+                    bottomRight: Radius.circular(15),
+                    topRight: Radius.circular(15),
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -150,7 +157,10 @@ class _AllOrdersState extends State<AllOrders> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.car_crash),
+                      SvgPicture.asset(
+                        'assets/icons/rent-in.svg',
+                        color: Theme.of(context).dividerColor,
+                      ),
                       const SizedBox(width: 5),
                       Text(App_Localization.of(context).translate('customers_order'),style: TextStyle(color:  MyTheme.isDarkTheme.value?Colors.white:Colors.black),)
                     ],
@@ -166,12 +176,18 @@ class _AllOrdersState extends State<AllOrders> {
             child: AnimatedContainer(
                 duration: Duration(milliseconds: 500),
                 curve: Curves.fastOutSlowIn,
-                width: Get.width * 0.5,
+                width: Get.width * 0.45,
                 height: 50,
                 decoration: BoxDecoration(
                   color: allOrdersController.rentType.value == 'out' ? App.primary : MyTheme.isDarkTheme.value? App.greySettingPage:Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(25),
+                  borderRadius: Global.lang_code == 'en'
+                      ? BorderRadius.only(
+                    bottomRight: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  )
+                  : BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    topLeft: Radius.circular(15),
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -186,7 +202,11 @@ class _AllOrdersState extends State<AllOrders> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.car_crash),
+                      // Icon(Icons.car_crash),
+                      SvgPicture.asset(
+                          'assets/icons/rent-out.svg',
+                        color: Theme.of(context).dividerColor,
+                      ),
                       const SizedBox(width: 5),
                       Text(App_Localization.of(context).translate('my_order'),style: TextStyle(color:  MyTheme.isDarkTheme.value?Colors.white:Colors.black))
                     ],
