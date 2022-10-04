@@ -20,6 +20,7 @@ class AddPeopleController extends GetxController{
 
   RxList select = [false, false, false,false , false].obs;
   String selectLanguages = '';
+  String selectedPhoneCode = '';
   final ImagePicker _picker = ImagePicker();
   TextEditingController username = TextEditingController();
   TextEditingController mobileNumber = TextEditingController();
@@ -80,7 +81,7 @@ class AddPeopleController extends GetxController{
         userImage.add(file);
       }
       loadingUpload.value = true;
-      Api.addPerson(username.text, userImage.first, mobileNumber.text, selectLanguages, companyID!).then((value){
+      Api.addPerson(username.text, userImage.first, selectedPhoneCode+mobileNumber.text, selectLanguages, companyID!).then((value){
         loadingUpload.value = false;
         //Get.off(()=>PeopleList());
         Get.back();

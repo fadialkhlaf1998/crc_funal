@@ -4,12 +4,16 @@ import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/controller/edit_person_controller.dart';
 import 'package:crc_version_1/controller/people_list_controller.dart';
 import 'package:crc_version_1/helper/api.dart';
+import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/global.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl_phone_field/countries.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:lottie/lottie.dart';
 
 
@@ -28,7 +32,7 @@ class EditPerson extends StatelessWidget {
     return Obx((){
       return Scaffold(
         body: SafeArea(
-          child: Stack(
+          child: editPersonController.initLoading.value?Center(child: CircularProgressIndicator(),):Stack(
             alignment: Alignment.topCenter,
             children: [
               SingleChildScrollView(
@@ -295,8 +299,8 @@ class EditPerson extends StatelessWidget {
       ],
     );
   }
+  _personMobile(context){
 
-  _mobileNumber(context){
     return Column(
       children: [
         GestureDetector(
@@ -313,15 +317,15 @@ class EditPerson extends StatelessWidget {
                 Text(App_Localization.of(context).translate('mobile_number'),style: Theme.of(context).textTheme.bodyText1),
                 Row(
                   children: [
-                   Container(
-                     width: 150,
-                     child: Text(editPersonController.phone!.value,
-                         maxLines: 1,
-                         textAlign: TextAlign.end,
-                         overflow: TextOverflow.ellipsis,
-                         style: TextStyle(fontSize: 15,color: Colors.grey)
-                     ),
-                   ),
+                    Container(
+                      width: 150,
+                      child: Text(editPersonController.phone!.value,
+                          maxLines: 1,
+                          textAlign: TextAlign.end,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 15,color: Colors.grey)
+                      ),
+                    ),
                     SizedBox(width: 5),
                     AnimatedSwitcher(
                       duration: Duration(milliseconds: 500),
@@ -344,38 +348,153 @@ class EditPerson extends StatelessWidget {
                 const SizedBox(height: 15),
                 SizedBox(
                   height: 45,
-                  child: TextField(
-                    maxLength: 10,
-                    onChanged: (value){
-                      editPersonController.getNewPhone(value);
-                    },
+                  child: IntlPhoneField(
+                    textAlign: TextAlign.start,
+                    style: TextStyle(color: Theme.of(context).dividerColor),
+                    controller:  editPersonController.editingNumberController,
+                    cursorColor: Colors.white,
                     keyboardType: TextInputType.number,
-                    controller: editPersonController.editingNumberController,
-                    style:  TextStyle(color: Theme.of(context).dividerColor),
                     decoration: InputDecoration(
-                        counterText: "",
-                        labelText: App_Localization.of(context).translate('enter_new_mobile_number'),
-                        labelStyle: TextStyle(color: Theme.of(context).dividerColor),
-                        suffixIcon: GestureDetector(
-                            onTap: (){
-                              FocusScopeNode currentFocus = FocusScope.of(context);
-                              if (!currentFocus.hasPrimaryFocus) {
-                                currentFocus.unfocus();
-                              }
-                              editPersonController.getNewPhone(editPersonController.editingNumberController!.text);
-                            },
-                            child: Icon(Icons.check,color: Theme.of(context).primaryColor,)
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(width: 1,color: Theme.of(context).primaryColor),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(width: 1,color: Theme.of(context).dividerColor.withOpacity(0.5)),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),)),
+                      errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                      // errorText:   editPersonController.phoneValidate.value  ? App_Localization.of(context).translate('phone_cannot_be_empty') : null,
+                      hintText: App_Localization.of(context).translate('enter_phone_number'),
+                      hintStyle:  TextStyle(
+                        color: App.grey,
+                        fontSize: 14,
+                      ),
+
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color:   Theme.of(context).dividerColor.withOpacity(0.5))
+                      ),
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide(color:    Theme.of(context).dividerColor.withOpacity(0.5))
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color:    Theme.of(context).dividerColor.withOpacity(0.5))
+                      ),
+                    ),
+                    initialCountryCode: 'AE',
+                    disableLengthCheck: true,
+                    dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
+                    dropdownTextStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14
+                    ),
+                    flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),
+                    showDropdownIcon: true,
+                    dropdownIconPosition: IconPosition.trailing,
+                    onChanged: (phone) {
+                      int max = countries.firstWhere((element) => element.code == phone.countryISOCode).maxLength;
+                      if(  editPersonController.editingNumberController!.text.length > max){
+                        editPersonController.editingNumberController!.text =   editPersonController.editingNumberController!.text.substring(0,max);
+                      }
+                      editPersonController.selectedPhoneCode = phone.countryCode;
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Divider(thickness: 1,color: Theme.of(context).dividerColor.withOpacity(0.2),height: 10,)
+      ],
+    );
+  }
+
+  _mobileNumber(context){
+
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: (){
+            editPersonController.editNumber();
+          },
+          child: Container(
+            color: Colors.transparent,
+            height:  40,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(App_Localization.of(context).translate('mobile_number'),style: Theme.of(context).textTheme.bodyText1),
+                Row(
+                  children: [
+                    Container(
+                      width: 150,
+                      child: Text(editPersonController.phone!.value,
+                          maxLines: 1,
+                          textAlign: TextAlign.end,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 15,color: Colors.grey)
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    AnimatedSwitcher(
+                      duration: Duration(milliseconds: 500),
+                      child: !editPersonController.editNumberList.value ? Icon(Icons.arrow_forward_ios,size: 15) :Icon(Icons.keyboard_arrow_down,size: 23),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        AnimatedContainer(
+          curve: Curves.fastOutSlowIn,
+          duration: Duration(milliseconds: 500),
+          height: !editPersonController.editNumberList.value  ? 0 : MediaQuery.of(context).size.height * 0.1,
+          width: MediaQuery.of(context).size.width * 0.7,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 15),
+                SizedBox(
+                  height: 45,
+                  child: IntlPhoneField(
+                    textAlign: TextAlign.start,
+                    // initialValue: PhoneNumber(),
+                    style: TextStyle(color: Theme.of(context).dividerColor),
+                    controller:  editPersonController.editingNumberController,
+                    cursorColor: Colors.white,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                      // errorText:   editPersonController.phoneValidate.value  ? App_Localization.of(context).translate('phone_cannot_be_empty') : null,
+                      hintText: App_Localization.of(context).translate('enter_phone_number'),
+                      hintStyle:  TextStyle(
+                        color: App.grey,
+                        fontSize: 14,
+                      ),
+
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color:   Theme.of(context).dividerColor.withOpacity(0.5))
+                      ),
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide(color:    Theme.of(context).dividerColor.withOpacity(0.5))
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color:    Theme.of(context).dividerColor.withOpacity(0.5))
+                      ),
+                    ),
+                    initialCountryCode: 'AE',
+                    disableLengthCheck: true,
+                    dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
+                    dropdownTextStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14
+                    ),
+                    flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),
+                    showDropdownIcon: true,
+                    dropdownIconPosition: IconPosition.trailing,
+                    onChanged: (phone) {
+                      int max = countries.firstWhere((element) => element.code == phone.countryISOCode).maxLength;
+                      if(  editPersonController.editingNumberController!.text.length > max){
+                        editPersonController.editingNumberController!.text =   editPersonController.editingNumberController!.text.substring(0,max);
+                      }
+                      editPersonController.selectedPhoneCode = phone.countryCode;
+                      editPersonController.phone!.value = editPersonController.selectedPhoneCode + editPersonController.editingNumberController!.text;
+                      print(editPersonController.phone!.value);
+                    },
                   ),
                 ),
               ],

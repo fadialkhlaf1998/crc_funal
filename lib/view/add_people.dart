@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:crc_version_1/app_localization.dart';
 import 'package:crc_version_1/controller/add_people_controller.dart';
+import 'package:crc_version_1/helper/app.dart';
 import 'package:crc_version_1/helper/myTheme.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl_phone_field/countries.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:lottie/lottie.dart';
 
 class AddPeople extends StatelessWidget {
@@ -269,36 +272,79 @@ class AddPeople extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
               height: 40,
-              child: TextFormField(
-                style: Theme.of(context).textTheme.headline3,
+              child:IntlPhoneField(
+                textAlign: TextAlign.start,
+                style: TextStyle(color: Theme.of(context).dividerColor),
                 controller: addPeopleController.mobileNumber,
-                maxLength: 10,
-                validator: (mobile) {
-                  if (mobile!.isEmpty) {
-                    return App_Localization.of(context).translate(
-                        'mobile_number_is_required');
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  counterText: "",
-                  errorStyle: const TextStyle(
-                      color: Colors.red, fontWeight: FontWeight.bold),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1,
-                        color: addPeopleController.phoneValidate.value ? Colors.red : Theme.of(context).dividerColor),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1,
-                          color: addPeopleController.phoneValidate.value ? Colors.red : Theme.of(context).dividerColor)
-                  ),
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  labelText: App_Localization.of(context).translate('mobile_number'),
-                  // hintText: App_Localization.of(context).translate('enter_your_mobile_number'),
-                  hintStyle: Theme.of(context).textTheme.headline4,
-                ),
+                cursorColor: Colors.white,
                 keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                  // errorText:  addPeopleController.phoneValidate.value  ? App_Localization.of(context).translate('phone_cannot_be_empty') : null,
+                  hintText: App_Localization.of(context).translate('enter_phone_number'),
+                  hintStyle:  TextStyle(
+                    color: App.grey,
+                    fontSize: 14,
+                  ),
+
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: addPeopleController.phoneValidate.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+                  ),
+                  border: UnderlineInputBorder(
+                      borderSide: BorderSide(color:  addPeopleController.phoneValidate.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color:  addPeopleController.phoneValidate.value ?  Colors.red : Theme.of(context).dividerColor.withOpacity(0.5))
+                  ),
+                ),
+                initialCountryCode: 'AE',
+                disableLengthCheck: true,
+                dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
+                dropdownTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14
+                ),
+                flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),
+                showDropdownIcon: true,
+                dropdownIconPosition: IconPosition.trailing,
+                onChanged: (phone) {
+                  int max = countries.firstWhere((element) => element.code == phone.countryISOCode).maxLength;
+                  if( addPeopleController.mobileNumber.text.length > max){
+                     addPeopleController.mobileNumber.text =  addPeopleController.mobileNumber.text.substring(0,max);
+                  }
+                  addPeopleController.selectedPhoneCode = phone.countryCode;
+                },
               ),
+              // TextFormField(
+              //   style: Theme.of(context).textTheme.headline3,
+              //   controller: addPeopleController.mobileNumber,
+              //   maxLength: 10,
+              //   validator: (mobile) {
+              //     if (mobile!.isEmpty) {
+              //       return App_Localization.of(context).translate(
+              //           'mobile_number_is_required');
+              //     }
+              //     return null;
+              //   },
+              //   decoration: InputDecoration(
+              //     counterText: "",
+              //     errorStyle: const TextStyle(
+              //         color: Colors.red, fontWeight: FontWeight.bold),
+              //     focusedBorder: OutlineInputBorder(
+              //       borderSide: BorderSide(width: 1,
+              //           color: addPeopleController.phoneValidate.value ? Colors.red : Theme.of(context).dividerColor),
+              //     ),
+              //     enabledBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(width: 1,
+              //             color: addPeopleController.phoneValidate.value ? Colors.red : Theme.of(context).dividerColor)
+              //     ),
+              //     labelStyle: Theme.of(context).textTheme.bodyText2,
+              //     labelText: App_Localization.of(context).translate('mobile_number'),
+              //     // hintText: App_Localization.of(context).translate('enter_your_mobile_number'),
+              //     hintStyle: Theme.of(context).textTheme.headline4,
+              //   ),
+              //   keyboardType: TextInputType.number,
+              // ),
             ),
           ],
         ),

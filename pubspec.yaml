@@ -59,6 +59,7 @@ dependencies:
   flutter_local_notifications:
   toggle_switch: ^2.0.1
   firebase_messaging: ^13.0.4
+  intl_phone_number_input: ^0.7.1
 
 
 

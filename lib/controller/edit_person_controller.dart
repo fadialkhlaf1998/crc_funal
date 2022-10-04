@@ -10,6 +10,7 @@ import 'package:crc_version_1/view/people_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class EditPersonController extends GetxController{
   
@@ -29,9 +30,10 @@ class EditPersonController extends GetxController{
   RxList<File> personImage = <File>[].obs;
   RxInt checkImageChange = 0.obs;
 
-
+  String selectedPhoneCode = '';
   RxList<bool>? languageCheck;
   RxBool loading = false.obs;
+  RxBool initLoading = false.obs;
 
   /// Edit Variable
   RxString? name;
@@ -39,12 +41,18 @@ class EditPersonController extends GetxController{
   RxString? languages;
   RxList<File> newImage = <File>[].obs;
   int personId = -1;
-
+  PhoneNumber? phoneNumber;
 
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
+    initLoading.value = true;
     personIndex.value = peopleListController.currentIndex!.value;
+    print('INIT');
+    print(peopleListController.myPeopleList[personIndex.value].phone);
+
+    phoneNumber =  await PhoneNumber.getRegionInfoFromPhoneNumber(peopleListController.myPeopleList[personIndex.value].phone);
+    // print(phoneNumber!.phoneNumber!+"*-*-*-*-*-*");
     name = peopleListController.myPeopleList[personIndex.value].name.obs;
     phone = peopleListController.myPeopleList[personIndex.value].phone.obs;
     myLanguage = peopleListController.myPeopleList[personIndex.value].languages.split(' / ').obs;
@@ -52,9 +60,12 @@ class EditPersonController extends GetxController{
     personId = peopleListController.myPeopleList[personIndex.value].id;
     personImage.add(File(peopleListController.myPeopleList[personIndex.value].image));
     editingNameController = TextEditingController(text: name!.value);
-    editingNumberController = TextEditingController(text: phone!.value);
+    selectedPhoneCode = phoneNumber!.dialCode!;
+    editingNumberController = TextEditingController(text: phoneNumber!.phoneNumber!.split(selectedPhoneCode)[1]);
     staticLanguages = addPeopleController.language;
     allLanguages = addPeopleController.language;
+
+    print(selectedPhoneCode);
     // if(Global.lang_code == 'en'){
     //
     // }else{
@@ -67,6 +78,7 @@ class EditPersonController extends GetxController{
         languageCheck![i] = true;
       }
     }
+    initLoading.value = false;
   }
 
   editName(){
