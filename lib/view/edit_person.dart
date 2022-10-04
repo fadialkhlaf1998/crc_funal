@@ -299,107 +299,7 @@ class EditPerson extends StatelessWidget {
       ],
     );
   }
-  _personMobile(context){
 
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: (){
-            editPersonController.editNumber();
-          },
-          child: Container(
-            color: Colors.transparent,
-            height:  40,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(App_Localization.of(context).translate('mobile_number'),style: Theme.of(context).textTheme.bodyText1),
-                Row(
-                  children: [
-                    Container(
-                      width: 150,
-                      child: Text(editPersonController.phone!.value,
-                          maxLines: 1,
-                          textAlign: TextAlign.end,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 15,color: Colors.grey)
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    AnimatedSwitcher(
-                      duration: Duration(milliseconds: 500),
-                      child: !editPersonController.editNumberList.value ? Icon(Icons.arrow_forward_ios,size: 15) :Icon(Icons.keyboard_arrow_down,size: 23),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        AnimatedContainer(
-          curve: Curves.fastOutSlowIn,
-          duration: Duration(milliseconds: 500),
-          height: !editPersonController.editNumberList.value  ? 0 : MediaQuery.of(context).size.height * 0.1,
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 15),
-                SizedBox(
-                  height: 45,
-                  child: IntlPhoneField(
-                    textAlign: TextAlign.start,
-                    style: TextStyle(color: Theme.of(context).dividerColor),
-                    controller:  editPersonController.editingNumberController,
-                    cursorColor: Colors.white,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      errorStyle: const TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
-                      // errorText:   editPersonController.phoneValidate.value  ? App_Localization.of(context).translate('phone_cannot_be_empty') : null,
-                      hintText: App_Localization.of(context).translate('enter_phone_number'),
-                      hintStyle:  TextStyle(
-                        color: App.grey,
-                        fontSize: 14,
-                      ),
-
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color:   Theme.of(context).dividerColor.withOpacity(0.5))
-                      ),
-                      border: UnderlineInputBorder(
-                          borderSide: BorderSide(color:    Theme.of(context).dividerColor.withOpacity(0.5))
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color:    Theme.of(context).dividerColor.withOpacity(0.5))
-                      ),
-                    ),
-                    initialCountryCode: 'AE',
-                    disableLengthCheck: true,
-                    dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
-                    dropdownTextStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14
-                    ),
-                    flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),
-                    showDropdownIcon: true,
-                    dropdownIconPosition: IconPosition.trailing,
-                    onChanged: (phone) {
-                      int max = countries.firstWhere((element) => element.code == phone.countryISOCode).maxLength;
-                      if(  editPersonController.editingNumberController!.text.length > max){
-                        editPersonController.editingNumberController!.text =   editPersonController.editingNumberController!.text.substring(0,max);
-                      }
-                      editPersonController.selectedPhoneCode = phone.countryCode;
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Divider(thickness: 1,color: Theme.of(context).dividerColor.withOpacity(0.2),height: 10,)
-      ],
-    );
-  }
 
   _mobileNumber(context){
 
@@ -480,7 +380,7 @@ class EditPerson extends StatelessWidget {
                     disableLengthCheck: true,
                     dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
                     dropdownTextStyle: TextStyle(
-                        color: Colors.white,
+                        color: MyTheme.isDarkTheme.value? Colors.white:App.greySettingPage,
                         fontSize: 14
                     ),
                     flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),

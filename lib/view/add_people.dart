@@ -301,7 +301,7 @@ class AddPeople extends StatelessWidget {
                 disableLengthCheck: true,
                 dropdownIcon: Icon(Icons.arrow_drop_down_outlined,color:  Theme.of(context).dividerColor.withOpacity(0.5)),
                 dropdownTextStyle: TextStyle(
-                    color: Colors.white,
+                    color: MyTheme.isDarkTheme.value? Colors.white:App.greySettingPage,
                     fontSize: 14
                 ),
                 flagsButtonMargin: const EdgeInsets.symmetric(horizontal: 10),
