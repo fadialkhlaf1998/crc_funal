@@ -26,6 +26,7 @@ import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:lottie/lottie.dart';
 
 class CarsList extends StatefulWidget {
@@ -34,7 +35,9 @@ class CarsList extends StatefulWidget {
   IntroController introController = Get.find();
   HomeController homeController = Get.find();
   bool isSearch = false;
-  CarsList(this.isSearch);
+  CarsList(this.isSearch){
+    carListController.initList();
+  }
 
   @override
   State<CarsList> createState() => _CarsListState(this.isSearch);
@@ -384,56 +387,62 @@ class _CarsListState extends State<CarsList> {
                 ? Center(child: Container(child: Lottie.asset('assets/images/Animation.json')))
                 : carListController.myCars.isEmpty
                 ? Center(child: Text(App_Localization.of(context).translate('no_car')))
-                : ListView.builder(
+                : LazyLoadScrollView(
+              onEndOfPage: (){
+                print('------');
+                carListController.addLazyCount();
+              },
+              child: ListView.builder(
               controller: carListController.controllerList,
-                itemCount: carListController.myCars.length,
-                itemBuilder:(context, index){
-                  return  Padding(
-                    padding: EdgeInsets.only(top:index==0&&Global.company_id==-1?MediaQuery.of(context).size.height * 0.07:0),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: Get.width * 0.9,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 10),
-                              Global.company_id == -1 ? LogoContainer(width: 0.2, height: 0.05, logo: 'logo_orange') : _companyInfo(context, index),
-                              const SizedBox(height: 10),
-                              _carInfo(context,index),
-                              const SizedBox(height: 10),
-                              Global.company_id == -1
-                                  ?
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                padding: EdgeInsets.symmetric(horizontal: Get.width * 0.2,vertical: 10),
-                                child: CustomButton(
-                                    width: 0.5,
-                                    height: 40,
-                                    text: App_Localization.of(context).translate('register_to_see_price'),
-                                    onPressed: (){
-                                      Get.off(()=>LogIn());
-                                    },
-                                    color: App.primary,
-                                    borderRadius: 5,
-                                    borderColor: Colors.white,
-                                    borderWidth: 1,
-                                    border: false,
-                                    textStyle: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold
-                                    )
-                                ),
-                              ) : _contactOptions(context,index),
-                            ],
+                  itemCount: carListController.lazyCount.value,
+                  itemBuilder:(context, index){
+                    return  Padding(
+                      padding: EdgeInsets.only(top:index==0&&Global.company_id==-1?MediaQuery.of(context).size.height * 0.07:0),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: Get.width * 0.9,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 10),
+                                Global.company_id == -1 ? LogoContainer(width: 0.2, height: 0.05, logo: 'logo_orange') : _companyInfo(context, index),
+                                const SizedBox(height: 10),
+                                _carInfo(context,index),
+                                const SizedBox(height: 10),
+                                Global.company_id == -1
+                                    ?
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding: EdgeInsets.symmetric(horizontal: Get.width * 0.2,vertical: 10),
+                                  child: CustomButton(
+                                      width: 0.5,
+                                      height: 40,
+                                      text: App_Localization.of(context).translate('register_to_see_price'),
+                                      onPressed: (){
+                                        Get.off(()=>LogIn());
+                                      },
+                                      color: App.primary,
+                                      borderRadius: 5,
+                                      borderColor: Colors.white,
+                                      borderWidth: 1,
+                                      border: false,
+                                      textStyle: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold
+                                      )
+                                  ),
+                                ) : _contactOptions(context,index),
+                              ],
+                            ),
                           ),
-                        ),
-                        Divider(thickness: 1, indent: 20,endIndent: 20,color: Theme.of(context).dividerColor.withOpacity(0.2),height: 25,),
-                      ],
-                    ),
-                  );
-                }
+                          Divider(thickness: 1, indent: 20,endIndent: 20,color: Theme.of(context).dividerColor.withOpacity(0.2),height: 25,),
+                        ],
+                      ),
+                    );
+                  }
             ),
+                ),
           ),
           AnimatedSwitcher(
             duration: Duration(milliseconds: 400),

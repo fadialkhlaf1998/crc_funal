@@ -60,6 +60,27 @@ class CarListController extends GetxController{
   RxInt carIndex = 0.obs;
 
 
+  RxInt lazyCount = 0.obs;
+  initList(){
+    print('cal length: '+myCars.length.toString());
+    if(myCars.length < 10){
+      lazyCount.value = myCars.length;
+    }else{
+      lazyCount.value = 10;
+    }
+    print("length: "+lazyCount.value.toString());
+  }
+
+  addLazyCount(){
+    if(myCars.length <= (lazyCount.value + 10)){
+      lazyCount.value = myCars.length;
+    }else{
+      lazyCount.value += 10;
+    }
+    print(lazyCount.value);
+  }
+
+
   @override
   void onInit() {
     super.onInit();
@@ -118,6 +139,7 @@ class CarListController extends GetxController{
         loading.value = true;
         await Api.search(q).then((value){
           myCars.addAll(value);
+          initList();
         });
         loading.value = false;
       }else{
@@ -159,6 +181,7 @@ class CarListController extends GetxController{
           print('**************');
           print(value.length);
           myCars.value=value;
+          initList();
         });
         loading.value = false;
       }else{
