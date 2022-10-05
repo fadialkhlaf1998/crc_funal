@@ -242,7 +242,7 @@ class Home extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.68,
         child: GridView.builder(
           shrinkWrap: true,
-          padding: EdgeInsets.only(bottom: 30),
+          padding: EdgeInsets.only(bottom: 30+Get.bottomBarHeight),
           itemCount: homeController.tempBrandsList.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
