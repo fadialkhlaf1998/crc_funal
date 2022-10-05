@@ -392,6 +392,7 @@ class _CarsListState extends State<CarsList> {
                 print('------');
                 carListController.addLazyCount();
               },
+              isLoading: false,
               child: ListView.builder(
               controller: carListController.controllerList,
                   itemCount: carListController.lazyCount.value,
