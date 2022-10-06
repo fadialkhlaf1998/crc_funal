@@ -556,10 +556,10 @@ class _AllOrdersState extends State<AllOrders> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(list[index].total.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
-                                              list[index].state == 1 && list[index].current.difference(list[index].logtime).inDays.abs() >=3
-                                                  ?GestureDetector(
+                                              list[index].state == 1 && list[index].current.difference(list[index].logtime.subtract(Duration(days: -4))).inDays.abs() >=3
+                                                  ?list[index].review_count == 0?GestureDetector(
                                                 onTap: (){
-                                                  _showReviewDialog(list[index].fromCompnay,list[index].toCompany,list[index].carId,list[index].id);
+                                                  _showReviewDialog(list[index].fromCompnay,list[index].toCompany,list[index].carId,list[index].id,index);
                                                 },
                                                 child: Container(
                                                 padding: EdgeInsets.all(3),
@@ -576,10 +576,16 @@ class _AllOrdersState extends State<AllOrders> {
                                                     )
                                                 ),
                                                 child: Center(
-                                                    child:Text(App_Localization.of(context).translate("review"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
+                                                    child:Text(App_Localization.of(context).translate("review"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,),maxLines: 1,),
                                                 ),
                                               ),
-                                                  ):Center()
+                                                  ):Container(
+                                                padding: EdgeInsets.all(3),
+
+                                                child: Center(
+                                                  child:Text(App_Localization.of(context).translate("reviewed"),style: TextStyle(color: App.primary,fontWeight: FontWeight.normal,),maxLines: 1,),
+                                                ),
+                                              ):Center()
                                             ],
                                           ),
                                           Row(
@@ -864,20 +870,20 @@ class _AllOrdersState extends State<AllOrders> {
       ),
     );
   }
-  Future<void> _showReviewDialog(int fromCompanyId , int toCompanyId , int carId,int orderId) async {
+  Future<void> _showReviewDialog(int fromCompanyId , int toCompanyId , int carId,int orderId,int index) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(App_Localization.of(context).translate("review"),style: TextStyle(color: Colors.white),),
+          title: Text(App_Localization.of(context).translate("review"),style: TextStyle(color: Colors.white,fontSize: 20),),
           backgroundColor: App.greySettingPage,
           content: SingleChildScrollView(
             child: Obx(() => allOrdersController.reviewloading.value?
                 Center(child: CircularProgressIndicator(),)
                 :ListBody(
               children: <Widget>[
-                Text(App_Localization.of(context).translate("we_need_review"),style: TextStyle(color: Colors.white),),
+                Text(App_Localization.of(context).translate("we_need_review"),style: TextStyle(color: Colors.white,fontSize: 12),),
                 SizedBox(height: 10,),
                 TextField(
                     controller: allOrdersController.review,
@@ -935,7 +941,7 @@ class _AllOrdersState extends State<AllOrders> {
             TextButton(
               child: Text(App_Localization.of(context).translate("send")),
               onPressed: () {
-                allOrdersController.addReview(context,fromCompanyId, toCompanyId, carId,orderId);
+                allOrdersController.addReview(context,fromCompanyId, toCompanyId, carId,orderId,index);
               },
             ),
 

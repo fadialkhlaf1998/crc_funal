@@ -100,9 +100,11 @@ class Accepted {
     required this.toCompnayImage,
     required this.logtime,
     required this.current,
+    required this.review_count,
   });
 
   int id;
+  int review_count;
   DateTime placedAt;
   DateTime from;
   DateTime to;
@@ -131,6 +133,7 @@ class Accepted {
     toCompany: json["to_company"],
     carId: json["car_id"],
     state: json["state"],
+    review_count: json["review_count"],
     total: double.parse(json["total"].toString()),
     title: json["title"],
     image: json["image"],

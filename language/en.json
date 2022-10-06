@@ -155,8 +155,9 @@
   "cannot_reservation" : "You can't reservation from your cars",
 
   "review": "Review",
-  "we_need_review": "Your Review Will Help Us To Improve Our Service",
+  "we_need_review": "Will Help Us To Improve Our Service",
   "send": "Send",
-  "thank_u_review": "Thank You For Your Review"
+  "thank_u_review": "Thank You For Your Review",
+  "reviewed": "Reviewed"
 
 }

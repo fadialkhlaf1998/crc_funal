@@ -63,21 +63,22 @@ class AllOrdersController extends GetxController{
     }
   }
 
-  addReview(BuildContext context,int from , int to , int car,int order_id)async{
-    if(review.text.isEmpty){
-      reviewValidate.value = true;
+  addReview(BuildContext context,int from , int to , int car,int order_id,int index)async{
+    // reviewValidate.value = true;
+    reviewValidate.value = false;
+    reviewloading.value = true;
+    bool succ = await Api.addReview(review.text, rate.value,
+        from, to, car, order_id);
+    reviewloading.value = false;
+    if(succ){
+      App.sucss_msg(context, App_Localization.of(context).translate("thank_u_review"));
+      Global.company!.myOrders.accepted[index].review_count = 1;
+      loading.value = !loading.value;
+      loading.value = !loading.value;
+      refreshData();
+      Get.back();
     }else{
-      reviewValidate.value = false;
-      reviewloading.value = true;
-      bool succ = await Api.addReview(review.text, rate.value,
-          from, to, car, order_id);
-      reviewloading.value = false;
-      if(succ){
-        App.sucss_msg(context, App_Localization.of(context).translate("thank_u_review"));
-        Get.back();
-      }else{
-        App.error_msg(context, App_Localization.of(context).translate("something_went_wrong"));
-      }
+      App.error_msg(context, App_Localization.of(context).translate("something_went_wrong"));
     }
   }
 
