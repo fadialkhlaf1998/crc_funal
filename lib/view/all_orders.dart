@@ -556,7 +556,7 @@ class _AllOrdersState extends State<AllOrders> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(list[index].total.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
-                                              list[index].state == 1 && list[index].current.difference(list[index].logtime.subtract(Duration(days: -4))).inDays.abs() >=3
+                                              list[index].state == 1 && list[index].current.difference(list[index].logtime).inDays.abs() >=3
                                                   ?list[index].review_count == 0?GestureDetector(
                                                 onTap: (){
                                                   _showReviewDialog(list[index].fromCompnay,list[index].toCompany,list[index].carId,list[index].id,index);
