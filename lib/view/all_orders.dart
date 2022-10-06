@@ -11,6 +11,7 @@ import 'package:crc_version_1/widget/background_page.dart';
 import 'package:crc_version_1/widget/logo_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -469,7 +470,7 @@ class _AllOrdersState extends State<AllOrders> {
 
   _carListOut(List<Accepted> list){
     return Flexible(
-      flex: 5,
+      flex: 7,
       child: Container(
         width: Get.width * 0.9,
         padding: EdgeInsets.only(top: 20),
@@ -551,7 +552,36 @@ class _AllOrdersState extends State<AllOrders> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(list[index].title,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,),maxLines: 1,),
-                                          Text(list[index].total.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(list[index].total.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
+                                              list[index].state == 1 && list[index].current.difference(list[index].logtime.subtract(Duration(days: -4))).inDays.abs() >=3
+                                                  ?GestureDetector(
+                                                onTap: (){
+                                                  _showReviewDialog(list[index].fromCompnay,list[index].toCompany,list[index].carId,list[index].id);
+                                                },
+                                                child: Container(
+                                                padding: EdgeInsets.all(3),
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(5),
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        // App.primary_gradient,
+                                                        App.primary,
+                                                        App.primary,
+                                                      ],
+                                                      begin: Alignment.topCenter,
+                                                      end: Alignment.bottomCenter
+                                                    )
+                                                ),
+                                                child: Center(
+                                                    child:Text(App_Localization.of(context).translate("review"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
+                                                ),
+                                              ),
+                                                  ):Center()
+                                            ],
+                                          ),
                                           Row(
                                             children: [
                                               Text(App_Localization.of(context).translate("from")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
@@ -834,7 +864,86 @@ class _AllOrdersState extends State<AllOrders> {
       ),
     );
   }
+  Future<void> _showReviewDialog(int fromCompanyId , int toCompanyId , int carId,int orderId) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(App_Localization.of(context).translate("review"),style: TextStyle(color: Colors.white),),
+          backgroundColor: App.greySettingPage,
+          content: SingleChildScrollView(
+            child: Obx(() => allOrdersController.reviewloading.value?
+                Center(child: CircularProgressIndicator(),)
+                :ListBody(
+              children: <Widget>[
+                Text(App_Localization.of(context).translate("we_need_review"),style: TextStyle(color: Colors.white),),
+                SizedBox(height: 10,),
+                TextField(
+                    controller: allOrdersController.review,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: allOrdersController.reviewValidate.value?Colors.red:Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: allOrdersController.reviewValidate.value?Colors.red:Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: allOrdersController.reviewValidate.value?Colors.red:Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RatingBar.builder(
+                      initialRating: allOrdersController.rate.value.toDouble(),
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: false,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                        allOrdersController.rate.value = rating.toInt();
+                      },
+                    )
+                  ],
+                )
+              ],
+            ),)
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(App_Localization.of(context).translate("close")),
+              onPressed: () {
+                allOrdersController.reviewValidate.value = false;
+                allOrdersController.review.clear();
+                allOrdersController.rate.value = 0;
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(App_Localization.of(context).translate("send")),
+              onPressed: () {
+                allOrdersController.addReview(context,fromCompanyId, toCompanyId, carId,orderId);
+              },
+            ),
 
+          ],
+        );
+      },
+    );
+  }
   _carCard(){
     return Container(
 

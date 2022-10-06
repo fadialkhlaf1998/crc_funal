@@ -593,6 +593,34 @@ class Api {
 
   }
 
+  static Future<bool> addReview(String body , int rate , int from_company_id,int to_company_id,int car_id,int order_id)async{
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse(url+'api/review'));
+    request.body = json.encode({
+      "body": body,
+      "rate": rate,
+      "from_company_id": from_company_id,
+      "to_company_id": to_company_id,
+      "car_id": car_id,
+      "order_id": order_id,
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+      print(response.reasonPhrase);
+      return false;
+    }
+
+  }
+
 
   static Future<bool> addOrder(DateTime from,DateTime to, int from_company,int to_company,int car_id,double total)async{
     var headers = {

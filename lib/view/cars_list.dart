@@ -13,6 +13,7 @@ import 'package:crc_version_1/view/add_car.dart';
 import 'package:crc_version_1/view/add_people.dart';
 import 'package:crc_version_1/view/calender.dart';
 import 'package:crc_version_1/view/login.dart';
+import 'package:crc_version_1/view/searchDelgate.dart';
 import 'package:crc_version_1/view/setting.dart';
 import 'package:crc_version_1/widget/background_page.dart';
 // import 'package:crc_version_1/widget/calender.dart';
@@ -201,31 +202,45 @@ class _CarsListState extends State<CarsList> {
         children: [
 
           SizedBox(width: 5,),
-          GestureDetector(
-            onTap: (){
-              Get.back();
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width*0.4,
-              color: Colors.transparent,
-              child: Row(
-                children: [
-                  SizedBox(
+          Container(
+            width: MediaQuery.of(context).size.width*0.4,
+            color: Colors.transparent,
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    Get.back();
+                  },
+                  child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: Icon(Icons.arrow_back_ios)
+                  ),
+                ),
+                SizedBox(width: 10,),
+                GestureDetector(
+                  onTap: (){
+                    showSearch(
+                      context: context,
+                      delegate: SearchDeligate(searchSuggestion: homeController.searchSuggestion.value),
+                    );
+                  },
+                  child: SizedBox(
                     width: 20,
                     height: 20,
                     child: Icon(Icons.search)
                   ),
-                  const SizedBox(width: 10),
-                  Text(
-                    App_Localization.of(context).translate('search'),
-                    style: TextStyle(
-                        color: Theme.of(context).dividerColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                // const SizedBox(width: 10),
+                // Text(
+                //   App_Localization.of(context).translate('search'),
+                //   style: TextStyle(
+                //       color: Theme.of(context).dividerColor,
+                //       fontSize: 18,
+                //       fontWeight: FontWeight.bold
+                //   ),
+                // ),
+              ],
             ),
           ),
           // VerticalDivider(

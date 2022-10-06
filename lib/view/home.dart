@@ -163,77 +163,12 @@ class Home extends StatelessWidget {
             Text(App_Localization.of(context).translate('search_for_car_rent'),style:TextStyle(color: Theme.of(context).dividerColor,fontSize: 14),)
           ],
         )
-        // TextField(
-        //   onChanged: (value){
-        //     homeController.filterSearchResults(value);
-        //   },
-        //   onTap: (){
-        //     showSearch(
-        //       context: context,
-        //       delegate: SearchDeligate(searchSuggestion: homeController.searchSuggestion.value),
-        //     );
-        //
-        //   },
-        //   style: Theme.of(context).textTheme.bodyText2,
-        //   controller: homeController.editingController,
-        //   decoration: InputDecoration(
-        //     contentPadding: const EdgeInsets.only(bottom: 0),
-        //       labelText: App_Localization.of(context).translate('search_for_car_rent'),
-        //       labelStyle: TextStyle(color: Theme.of(context).dividerColor,fontSize: 14),
-        //       prefixIcon: Icon(Icons.search,color: Theme.of(context).dividerColor,),
-        //       prefixIconColor: Theme.of(context).primaryColor,
-        //       focusedBorder: OutlineInputBorder(
-        //         borderRadius: BorderRadius.circular(10),
-        //         borderSide: BorderSide(width: 1,color: Theme.of(context).primaryColor),
-        //       ),
-        //       border: OutlineInputBorder(
-        //         borderSide: BorderSide(width: 1,color: Theme.of(context).dividerColor.withOpacity(0.5)),
-        //         borderRadius: BorderRadius.circular(10),),
-        //     enabledBorder: OutlineInputBorder(
-        //       borderSide: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.3)),
-        //       borderRadius: BorderRadius.circular(10),
-        //     ),
-        //   ),
-        //
-        // ),
+
       ),
     );
   }
 
-  _searchBar(BuildContext context){
-    return GestureDetector(
-      onTap: (){
-        // final result = await showSearch(
-        //     context: context,
-        //     delegate: SearchTextField(suggestion_list: [], homeController: homeController ));
-      },
-      child:  Container(
-        width: MediaQuery.of(context).size.width  * 0.9,
-        height: 35,
-        decoration: BoxDecoration(
-          color: App.grey.withOpacity(0.3),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        padding: const EdgeInsets.only(right: 5),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () async {
-                print('222222222222222');
-                FocusManager.instance.primaryFocus?.unfocus();
 
-              },
-              icon: const Icon(
-                Icons.search,
-              ),
-            ),
-            Text(App_Localization.of(context).translate('search_here'),style: Theme.of(context).textTheme.headline3)
-          ],
-        ),
-      ),
-    );
-  }
 
   _brandBody(context){
     return Obx((){

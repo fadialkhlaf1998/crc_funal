@@ -98,12 +98,16 @@ class Accepted {
     required this.toCompnayTitle,
     required this.fromCompnayImage,
     required this.toCompnayImage,
+    required this.logtime,
+    required this.current,
   });
 
   int id;
   DateTime placedAt;
   DateTime from;
   DateTime to;
+  DateTime logtime;
+  DateTime current;
   int fromCompnay;
   int toCompany;
   int carId;
@@ -121,6 +125,8 @@ class Accepted {
     placedAt: DateTime.parse(json["placed_at"]),
     from: DateTime.parse(json["_from"]),
     to: DateTime.parse(json["_to"]),
+    logtime: DateTime.parse(json["logtime"]),
+    current: DateTime.parse(json["current"]),
     fromCompnay: json["from_compnay"],
     toCompany: json["to_company"],
     carId: json["car_id"],

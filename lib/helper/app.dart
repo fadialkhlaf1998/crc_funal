@@ -11,6 +11,8 @@ class App {
 
 
   static Color primary = Color(0XFFed4c14);
+  // static Color primary_gradient = Color(0XFFfa8050);
+  static Color primary_gradient = Color(0XFFe36336);
   static Color grey = Color(0XFF5a5b5e);
 
   /// dark mode

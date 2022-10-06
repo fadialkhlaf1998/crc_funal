@@ -12,8 +12,12 @@ class AllOrdersController extends GetxController{
 
   RxString rentType = ''.obs;
   RxInt rentStatus = 2.obs;
+  RxInt rate = 1.obs;
   RxBool loading = false.obs;
   RxBool fake = false.obs;
+  RxBool reviewValidate = false.obs;
+  RxBool reviewloading = false.obs;
+  TextEditingController review = TextEditingController();
 
   refreshData(){
     Global.company!.myOrders.all.clear();
@@ -25,7 +29,9 @@ class AllOrdersController extends GetxController{
     Global.company!.customerOrders.all.addAll(Global.company!.customerOrders.accepted);
     Global.company!.customerOrders.all.addAll(Global.company!.customerOrders.rejected);
     Global.company!.customerOrders.all.addAll(Global.company!.customerOrders.pending);
-
+    rate.value = 1;
+    review.clear();
+    reviewValidate.value = false;
   }
 
   updateState(BuildContext context,int state,int id)async{
@@ -54,6 +60,24 @@ class AllOrdersController extends GetxController{
       Get.to(()=>NoInternet())!.then((value) {
         updateState(context,state,id);
       });
+    }
+  }
+
+  addReview(BuildContext context,int from , int to , int car,int order_id)async{
+    if(review.text.isEmpty){
+      reviewValidate.value = true;
+    }else{
+      reviewValidate.value = false;
+      reviewloading.value = true;
+      bool succ = await Api.addReview(review.text, rate.value,
+          from, to, car, order_id);
+      reviewloading.value = false;
+      if(succ){
+        App.sucss_msg(context, App_Localization.of(context).translate("thank_u_review"));
+        Get.back();
+      }else{
+        App.error_msg(context, App_Localization.of(context).translate("something_went_wrong"));
+      }
     }
   }
 

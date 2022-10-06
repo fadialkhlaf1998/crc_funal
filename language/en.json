@@ -152,6 +152,11 @@
   "available": "Available?",
   "contact_name_cannot_be_empty" : "contact person name cannot be empty",
   "cannot_save_car" : "You cannot save the car with less than three photos",
-  "cannot_reservation" : "You can't reservation from your cars"
+  "cannot_reservation" : "You can't reservation from your cars",
+
+  "review": "Review",
+  "we_need_review": "Your Review Will Help Us To Improve Our Service",
+  "send": "Send",
+  "thank_u_review": "Thank You For Your Review"
 
 }
