@@ -556,7 +556,7 @@ class _AllOrdersState extends State<AllOrders> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(list[index].total.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
-                                              list[index].state == 1 && list[index].current.difference(list[index].logtime.subtract(Duration(days: -4))).inDays.abs() >=3
+                                              list[index].state == 1 && list[index].current.difference(list[index].logtime).inDays.abs() >=3
                                                   ?GestureDetector(
                                                 onTap: (){
                                                   _showReviewDialog(list[index].fromCompnay,list[index].toCompany,list[index].carId,list[index].id);
@@ -626,7 +626,7 @@ class _AllOrdersState extends State<AllOrders> {
                                     child: Icon(Icons.history_toggle_off_sharp,color: Colors.white,size: 14,),
                                   ),
                                   SizedBox(width: 5,),
-                                  Text(App_Localization.of(context).translate("in_review"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
+                                  Text(App_Localization.of(context).translate("in_review"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
                                 ],
                               ):Row(
                                 children: [
@@ -928,7 +928,7 @@ class _AllOrdersState extends State<AllOrders> {
               onPressed: () {
                 allOrdersController.reviewValidate.value = false;
                 allOrdersController.review.clear();
-                allOrdersController.rate.value = 0;
+                allOrdersController.rate.value = 1;
                 Navigator.of(context).pop();
               },
             ),
