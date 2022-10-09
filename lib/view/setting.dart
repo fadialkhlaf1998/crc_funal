@@ -28,7 +28,8 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) => WillPopScope(
     onWillPop: () async{
         settingController.carListController.updateCarList();
-        return true;
+      print('****************');
+          return true;
     },
     child: Obx((){
       SystemChrome.setPreferredOrientations([

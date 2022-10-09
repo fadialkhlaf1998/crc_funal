@@ -60,7 +60,7 @@ class SettingController extends GetxController{
   }
 
   goToCarList(){
-    carListController.updateCarList();
+    // carListController.updateCarList();
     Get.back();
   }
 

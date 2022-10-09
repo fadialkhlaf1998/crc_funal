@@ -56,6 +56,7 @@ class _CarsListState extends State<CarsList> {
       carListController.update_data();
       carListController.fillYearList();
     }
+
   }
 
   @override
@@ -95,7 +96,12 @@ class _CarsListState extends State<CarsList> {
         }
       },
       child: Scaffold(
-        // floatingActionButton: Global.company_id==-1?Center():_floatButton(context),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            carListController.openFiler();
+          },
+          child: SvgPicture.asset("assets/images/filter.svg",color: Colors.white,width: 25),
+        ),
         body:Obx((){
           return  SafeArea(
             child: Stack(
@@ -335,7 +341,7 @@ class _CarsListState extends State<CarsList> {
                   Text(
                     App_Localization.of(context).translate('my_account'),
                     style: TextStyle(
-                        color: carListController.checkFilterOpen.value ? Theme.of(context).primaryColor : Theme.of(context).dividerColor,
+                        color: Theme.of(context).dividerColor,
                         fontSize: 18,
                         fontWeight: FontWeight.bold
                     ),
