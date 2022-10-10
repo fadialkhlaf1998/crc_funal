@@ -230,7 +230,9 @@ class Settings extends StatelessWidget {
               // allOrdersController.rentType.value = 'out';
               Get.to(()=>AllOrders('in'));
             },
-            text: 'orders'),
+            text: 'orders',
+          icon: Icon(Icons.event_note),
+        ),
         // Global.company_id==-1
         //     ? Center()
         //     : SettingButton(
@@ -245,6 +247,7 @@ class Settings extends StatelessWidget {
             onTap: (){
               Get.to(()=> MyCarList());
             },
+            icon: Icon(Icons.directions_car_sharp),
             text: 'car_list'),
         Global.company_id==-1
             ? Center()
@@ -252,6 +255,7 @@ class Settings extends StatelessWidget {
             onTap: (){
               Get.to(()=>PeopleList());
             },
+            icon: Icon(Icons.person),
             text: 'people_list'),
         // Global.company_id==-1
         //     ? Center()
@@ -295,7 +299,13 @@ class Settings extends StatelessWidget {
                           width: settingController.openLanguagesList.value ? 0 : MediaQuery.of(context).size.width * 0.8,
                           duration: Duration(milliseconds: 800),
                           curve: Curves.fastOutSlowIn,
-                          child: Text(App_Localization.of(context).translate('language'),maxLines: 1, style: Theme.of(context).textTheme.bodyText1,)
+                          child: Row(
+                            children: [
+                              Icon(Icons.language),
+                              SizedBox(width: 10,),
+                              Text(App_Localization.of(context).translate('language'),maxLines: 1, style: Theme.of(context).textTheme.bodyText1,),
+                            ],
+                          )
                         ),
                         AnimatedContainer(
                           duration: Duration(milliseconds: 800),
@@ -363,7 +373,8 @@ class Settings extends StatelessWidget {
              onTap: (){
                Get.to(()=>ContactToUs());
              },
-             text: 'connect_to_us'
+             text: 'connect_to_us',
+           icon: Icon(Icons.call),
          ),
         Container(
           width: MediaQuery.of(context).size.width * 0.9,
@@ -371,9 +382,17 @@ class Settings extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MyTheme.isDarkTheme.value ?
-              Text(App_Localization.of(context).translate('light_mode'), style: Theme.of(context).textTheme.bodyText1,)
-              : Text(App_Localization.of(context).translate('dark_mode'), style: Theme.of(context).textTheme.bodyText1,),
+
+              Row(
+                children: [
+                  Icon(Icons.lightbulb),
+                  SizedBox(width: 10,),
+                  MyTheme.isDarkTheme.value ?
+                  Text(App_Localization.of(context).translate('light_mode'), style: Theme.of(context).textTheme.bodyText1,)
+                      : Text(App_Localization.of(context).translate('dark_mode'), style: Theme.of(context).textTheme.bodyText1,),
+
+                ],
+              ),
               Row(
                 children: [
                   MyTheme.isDarkTheme.value ?
@@ -393,7 +412,16 @@ class Settings extends StatelessWidget {
             ],
           ),
         ),
-        // Divider(thickness: 1, indent: 25,endIndent: 25,color: Theme.of(context).dividerColor.withOpacity(0.3),),
+        Divider(thickness: 1, indent: 25,endIndent: 25,color: Theme.of(context).dividerColor.withOpacity(0.3),),
+
+        Global.company_id==-1
+            ? Center()
+            : SettingButton(
+            onTap: (){
+              settingController.logout();
+            },
+            icon: Icon(Icons.logout),
+            text: 'sign_out'),
         // SettingButton(
         //     onTap: (){
         //
@@ -421,21 +449,7 @@ class Settings extends StatelessWidget {
         ),
         child: Center(child: Text(App_Localization.of(context).translate('login'), style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold ,fontSize: 22))),
       ),
-    ):GestureDetector(
-      onTap: (){
-        settingController.logout();
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 25),
-        width: MediaQuery.of(context).size.width * 0.5,
-        height: 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).primaryColor,
-        ),
-        child: Center(child: Text(App_Localization.of(context).translate('sign_out'), style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold ,fontSize: 22))),
-      ),
-    );
+    ):Center();
   }
 
   showAlertDialog(BuildContext context) {

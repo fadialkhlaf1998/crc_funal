@@ -55,7 +55,7 @@ class SearchDeligate extends SearchDelegate<String> {
       ),
 
       textSelectionTheme:  TextSelectionThemeData(
-        cursorColor: App.primary
+        cursorColor: MyTheme.isDarkTheme.value?App.primary:Colors.black
       ),
       hintColor: Colors.white,
       textTheme: TextTheme(

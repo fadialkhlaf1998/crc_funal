@@ -5,11 +5,13 @@ class SettingButton extends StatelessWidget {
 
   VoidCallback onTap;
   String text;
+  Widget icon;
 
 
   SettingButton({
     required this.onTap,
-    required this.text
+    required this.text,
+    required this.icon
   });
 
   @override
@@ -25,7 +27,13 @@ class SettingButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(App_Localization.of(context).translate(text), style: Theme.of(context).textTheme.bodyText1,),
+                Row(
+                  children: [
+                    icon,
+                    SizedBox(width: 10,),
+                    Text(App_Localization.of(context).translate(text), style: Theme.of(context).textTheme.bodyText1,),
+                  ],
+                ),
                 const Icon(Icons.arrow_forward_ios, size: 20),
               ],
             ),

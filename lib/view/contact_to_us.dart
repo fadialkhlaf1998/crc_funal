@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 class ContactToUs extends StatelessWidget {
 
   ContactUsController contactUsController = Get.put(ContactUsController());
+  String phoneNumber = "+971 52 731 0957";
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +129,7 @@ class ContactToUs extends StatelessWidget {
                         width: contactUsController.phoneButton.value ? 0 :  150,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: Text('+971 55 107 3649',style: TextStyle(color: Color(0XFF202428),fontSize: 15,fontWeight: FontWeight.bold)),
+                          child: Text(phoneNumber,style: TextStyle(color: Color(0XFF202428),fontSize: 15,fontWeight: FontWeight.bold)),
                         )
                     ),
                   ],
@@ -172,7 +173,7 @@ class ContactToUs extends StatelessWidget {
                         width: contactUsController.whatsappButton.value ? 0 :  150,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: Text('+971 55 107 3649',style: TextStyle(color: Color(0XFF202428),fontSize: 15,fontWeight: FontWeight.bold)),
+                          child: Text(phoneNumber,style: TextStyle(color: Color(0XFF202428),fontSize: 15,fontWeight: FontWeight.bold)),
                         )
                     ),
                   ],

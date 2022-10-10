@@ -96,12 +96,16 @@ class _CarsListState extends State<CarsList> {
         }
       },
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            carListController.openFiler();
-          },
-          child: SvgPicture.asset("assets/images/filter.svg",color: Colors.white,width: 25),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: (){
+        //     // carListController.openFiler();
+        //     showSearch(
+        //       context: context,
+        //       delegate: SearchDeligate(searchSuggestion: homeController.searchSuggestion.value),
+        //     );
+        //   },
+        //   child: Icon(Icons.search),
+        // ),
         body:Obx((){
           return  SafeArea(
             child: Stack(
@@ -187,7 +191,7 @@ class _CarsListState extends State<CarsList> {
   _appBar(context){
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.07,
+      height: MediaQuery.of(context).size.height * 0.07*2,
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         boxShadow: [
@@ -203,166 +207,149 @@ class _CarsListState extends State<CarsList> {
           bottomRight: Radius.circular(10),
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
         children: [
-
-          SizedBox(width: 5,),
           Container(
-            width: MediaQuery.of(context).size.width*0.4,
-            color: Colors.transparent,
+            height: MediaQuery.of(context).size.height * 0.07,
+            width: Get.width * 0.9,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: (){
-                    Get.back();
-                  },
-                  child: SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: Icon(Icons.arrow_back_ios)
-                  ),
+                    onTap: (){
+                      Get.back();
+                    },
+                    child: Icon(Icons.arrow_back_ios)
                 ),
-                SizedBox(width: 10,),
+                LogoContainer(width: 0.35, height: 0.07, logo: 'logo_orange'),
+                GestureDetector(
+                    onTap: (){
+                      // Get.back();
+                    },
+                    child: Icon(Icons.arrow_back_ios, color: Colors.transparent,)
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.07,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                SizedBox(width: 5,),
                 GestureDetector(
                   onTap: (){
+                    // carListController.openFiler();
                     showSearch(
                       context: context,
                       delegate: SearchDeligate(searchSuggestion: homeController.searchSuggestion.value),
                     );
                   },
-                  child: SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: Icon(Icons.search)
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: Icon(Icons.search,color: Theme.of(context).dividerColor,)
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        App_Localization.of(context).translate('search'),
+                        style: TextStyle(
+                            color: Theme.of(context).dividerColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                // const SizedBox(width: 10),
-                // Text(
-                //   App_Localization.of(context).translate('search'),
-                //   style: TextStyle(
-                //       color: Theme.of(context).dividerColor,
-                //       fontSize: 18,
-                //       fontWeight: FontWeight.bold
+                VerticalDivider(
+                  indent: 20,
+                  endIndent: 20,
+                  thickness: 1,
+                  color: Theme.of(context).dividerColor,
+                  // color: Colors.transparent,
+                ),
+                GestureDetector(
+                  onTap: (){
+                    carListController.openFiler();
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: SvgPicture.asset('assets/images/filter.svg',
+                          color: carListController.checkFilterOpen.value ? Theme.of(context).primaryColor : Theme.of(context).dividerColor,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        App_Localization.of(context).translate('filter'),
+                        style: TextStyle(
+                            color: carListController.checkFilterOpen.value ? Theme.of(context).primaryColor : Theme.of(context).dividerColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                VerticalDivider(
+                  indent: 20,
+                  endIndent: 20,
+                  thickness: 1,
+                  color: Theme.of(context).dividerColor,
+                  // color: Colors.transparent,
+                ),
+                GestureDetector(
+                  onTap: (){
+                    // carListController.openContactList.value = false;
+                    // carListController.openFiler();
+                    Get.to(()=>Settings());
+                  },
+                  child: Container(
+
+                    color: Colors.transparent,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: Icon(Icons.person)
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          App_Localization.of(context).translate('my_account'),
+                          style: TextStyle(
+                              color: Theme.of(context).dividerColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 5,),
+                // Padding(
+                //   padding: const EdgeInsets.only(right: 15,left: 15),
+                //   child: IconButton(
+                //     onPressed: (){
+                //       carListController.openContactList.value = false;
+                //       carListController.checkSortOpen.value = false;
+                //       carListController.checkFilterOpen.value = false;
+                //       Get.to(()=>Settings());
+                //     },
+                //     icon: const Icon(Icons.menu),
                 //   ),
-                // ),
+                // )
               ],
             ),
           ),
-          // VerticalDivider(
-          //   indent: 20,
-          //   endIndent: 20,
-          //   thickness: 1,
-          //   color: Theme.of(context).dividerColor,
-          // ),
-          // GestureDetector(
-          //   onTap: (){
-          //     carListController.openContactList.value = false;
-          //     carListController.openSort();
-          //   },
-          //   child: Container(
-          //     color: Colors.transparent,
-          //     child: Row(
-          //       children: [
-          //         Container(
-          //           width: 18,
-          //           height: 18,
-          //           child: SvgPicture.asset('assets/images/sort.svg',
-          //               color: carListController.checkSortOpen.value ? Theme.of(context).primaryColor : Theme.of(context).dividerColor),
-          //         ),
-          //         const SizedBox(width: 10),
-          //         Text(
-          //           App_Localization.of(context).translate('sort'),
-          //           style: TextStyle(
-          //             color: carListController.checkSortOpen.value ?
-          //             Theme.of(context).primaryColor : Theme.of(context).dividerColor,
-          //             fontWeight: FontWeight.bold,
-          //             fontSize: 18,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // GestureDetector(
-          //   onTap: (){
-          //     carListController.openContactList.value = false;
-          //     carListController.openFiler();
-          //   },
-          //   child: Container(
-          //     color: Colors.transparent,
-          //     child: Row(
-          //       children: [
-          //         SizedBox(
-          //           width: 20,
-          //           height: 20,
-          //           child: SvgPicture.asset('assets/images/filter.svg',
-          //             color: carListController.checkFilterOpen.value ? Theme.of(context).primaryColor : Theme.of(context).dividerColor,
-          //           ),
-          //         ),
-          //         const SizedBox(width: 10),
-          //         Text(
-          //             App_Localization.of(context).translate('filter'),
-          //             style: TextStyle(
-          //               color: carListController.checkFilterOpen.value ? Theme.of(context).primaryColor : Theme.of(context).dividerColor,
-          //               fontSize: 18,
-          //               fontWeight: FontWeight.bold
-          //             ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          VerticalDivider(
-            indent: 20,
-            endIndent: 20,
-            thickness: 1,
-            // color: Theme.of(context).dividerColor,
-            color: Colors.transparent,
-          ),
-          GestureDetector(
-            onTap: (){
-              // carListController.openContactList.value = false;
-              // carListController.openFiler();
-              Get.to(()=>Settings());
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width*0.4,
-              color: Colors.transparent,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: Icon(Icons.person)
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    App_Localization.of(context).translate('my_account'),
-                    style: TextStyle(
-                        color: Theme.of(context).dividerColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(width: 5,),
-          // Padding(
-          //   padding: const EdgeInsets.only(right: 15,left: 15),
-          //   child: IconButton(
-          //     onPressed: (){
-          //       carListController.openContactList.value = false;
-          //       carListController.checkSortOpen.value = false;
-          //       carListController.checkFilterOpen.value = false;
-          //       Get.to(()=>Settings());
-          //     },
-          //     icon: const Icon(Icons.menu),
-          //   ),
-          // )
         ],
       ),
     );
@@ -403,7 +390,7 @@ class _CarsListState extends State<CarsList> {
           Container(
             color: Colors.transparent,
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(top: Global.company_id ==-1 ? 0 : MediaQuery.of(context).size.height * 0.07),
+            padding: EdgeInsets.only(top: Global.company_id ==-1 ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.07*2),
             child:carListController.loading.value
                 ? Center(child: Container(child: Lottie.asset('assets/images/Animation.json')))
                 : carListController.myCars.isEmpty
@@ -695,6 +682,7 @@ class _CarsListState extends State<CarsList> {
       duration: Duration(milliseconds: 800),
       curve: Curves.fastOutSlowIn,
       child: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Column(
           //alignment: Alignment.bottomCenter,
           children: [
@@ -703,10 +691,11 @@ class _CarsListState extends State<CarsList> {
               curve: Curves.fastOutSlowIn,
               height: carListController.checkFilterOpen.value ? MediaQuery.of(context).size.height  * 0.52 : 10,
               child: SingleChildScrollView(
+
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height  * 0.1,),
+                    SizedBox(height: MediaQuery.of(context).size.height  * 0.16,),
                     _yearFilterMenu(context),
                     const SizedBox(height: 10,),
                     _brandFilterMenu(context),
@@ -801,9 +790,10 @@ class _CarsListState extends State<CarsList> {
       duration: const Duration(milliseconds: 800),
       curve: Curves.fastOutSlowIn,
       width: MediaQuery.of(context).size.width * 0.9,
-      height: carListController.yearListOpen.value ? MediaQuery.of(context).size.height * 0.09 : 30,
+      height: carListController.yearListOpen.value ? 80 : 30,
       child: SingleChildScrollView(
-        physics: !carListController.yearListOpen.value ? const NeverScrollableScrollPhysics() :null,
+        physics: NeverScrollableScrollPhysics(),
+        // physics: !carListController.yearListOpen.value ? const NeverScrollableScrollPhysics() :null,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -878,7 +868,7 @@ class _CarsListState extends State<CarsList> {
       duration: Duration(milliseconds: 800),
       curve: Curves.fastOutSlowIn,
       width: MediaQuery.of(context).size.width * 0.9,
-      height: carListController.brandListOpen.value ? MediaQuery.of(context).size.height * 0.09 : 30,
+      height: carListController.brandListOpen.value ? 80 : 30,
       child: SingleChildScrollView(
         physics: !carListController.brandListOpen.value ? const NeverScrollableScrollPhysics() : null,
         child: Column(
@@ -952,7 +942,7 @@ class _CarsListState extends State<CarsList> {
       duration: const Duration(milliseconds: 800),
       curve: Curves.fastOutSlowIn,
       width: MediaQuery.of(context).size.width * 0.9,
-      height: carListController.carModelListOpen.value ? MediaQuery.of(context).size.height * 0.09 : 30,
+      height: carListController.carModelListOpen.value ? 80 : 30,
       child: SingleChildScrollView(
         physics: !carListController.carModelListOpen.value ? const NeverScrollableScrollPhysics() :null,
         child: Column(
@@ -1031,7 +1021,7 @@ class _CarsListState extends State<CarsList> {
       duration: const Duration(milliseconds: 800),
       curve: Curves.fastOutSlowIn,
       width: MediaQuery.of(context).size.width * 0.9,
-      height: carListController.colorListOpen.value ? MediaQuery.of(context).size.height * 0.09 : 30,
+      height: carListController.colorListOpen.value ? 80 : 30,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

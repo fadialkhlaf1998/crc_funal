@@ -10,7 +10,7 @@ class ContactUsController extends GetxController{
 
   RxBool phoneButton = false.obs;
   RxBool whatsappButton = false.obs;
-
+  String phoneNumber = Global.vip_phone_number;
 
   pressPhoneButton(context){
     phoneButton.value = true;
@@ -18,14 +18,14 @@ class ContactUsController extends GetxController{
       if(Platform.isAndroid){
         final Uri launchUri = Uri(
           scheme: 'tel',
-          path: Global.vip_phone_number,
+          path: Global.vip_phone_number.trim(),
         );
         await launch(launchUri.toString());
         Future.delayed(Duration(milliseconds: 400)).then((value) { phoneButton.value = false;});
 
 
       }else if (Platform.isIOS){
-        launch("tel://${Global.vip_phone_number}");
+        launch("tel://${Global.vip_phone_number.trim()}");
         Future.delayed(Duration(milliseconds: 400)).then((value) { phoneButton.value = false;});
       }
 
@@ -37,7 +37,7 @@ class ContactUsController extends GetxController{
     whatsappButton.value = true;
     String message = "";
     Future.delayed(Duration(milliseconds: 700)).then((value) async{
-      await launch("https://api.whatsapp.com/send?phone=${Global.vip_phone_number}=${Uri.parse(message)}");
+      await launch("https://api.whatsapp.com/send?phone=${Global.vip_phone_number.trim()}=${Uri.parse(message)}");
       Future.delayed(Duration(milliseconds: 400)).then((value) { whatsappButton.value = false;});
       // if (Platform.isAndroid){
       //   if(await canLaunch("https://wa.me/${Global.vip_phone_number}/?text=${Uri.parse(message)}")){

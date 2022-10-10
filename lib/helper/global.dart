@@ -13,7 +13,7 @@ class Global{
   static String token="";
   static RxString companyImage = ''.obs;
   static String companyTitle = '';
-  static String vip_phone_number = '+971551073649';
+  static String vip_phone_number = "+971 52 731 0957";
   static Company? company;
 
   static save_language(String locale){
