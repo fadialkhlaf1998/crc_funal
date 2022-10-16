@@ -625,10 +625,9 @@ class Api {
   static Future<bool> addOrder(DateTime from,DateTime to, int from_company,int to_company,int car_id,double total)async{
     var headers = {
       'Content-Type': 'application/json',
-      'Cookie': 'connect.sid=s%3AtbiStyqTq9XZ7-XDXcxL0sULphBSCZUl.mQeHm%2FVsmfYK1J4cYZ4bfnLT%2BbOzYLfIIM0u1VfOkQM'
     };
     //"2020/08/14 4:50"
-    var request = http.Request('POST', Uri.parse('https://www.carrentalclub.ae/api/order'));
+    var request = http.Request('POST', Uri.parse(url+'api/order'));
     request.body = json.encode({
       "_from": from.toString(),
       "_to": to.toString(),
@@ -648,6 +647,29 @@ class Api {
     else {
     print(response.reasonPhrase);
     return false;
+    }
+
+  }
+
+  static Future<bool> delectAccount(int id) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var request = http.Request('DELETE', Uri.parse(url+'api/sub_admin'));
+    request.body = json.encode({
+      "id": id
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+      print(response.reasonPhrase);
+      return false;
     }
 
   }

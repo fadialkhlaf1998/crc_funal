@@ -152,6 +152,11 @@
   "available": "متاح؟",
   "contact_name_cannot_be_empty" : "لا يمكن أن يكون اسم جهة الاتصال فارغًا",
   "cannot_save_car" : "لا يمكنك حفظ السيارة بأقل من ثلاث صور",
-  "cannot_reservation" : "لا يمكنك الحجز من سياراتك"
+  "cannot_reservation" : "لا يمكنك الحجز من سياراتك",
+  "delete_account": "حذف الحساب",
+  "confirm": "تأكيد",
+  "confirm_text": "هل تريد حذف الحساب",
+  "yes": "نعم",
+  "no": "لا"
 
 }

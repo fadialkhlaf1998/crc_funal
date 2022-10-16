@@ -422,6 +422,15 @@ class Settings extends StatelessWidget {
             },
             icon: Icon(Icons.logout),
             text: 'sign_out'),
+
+        Global.company_id==-1
+            ? Center()
+            : SettingButton(
+            onTap: (){
+              settingController.showMyDialog(context);
+            },
+            icon: Icon(Icons.delete),
+            text: 'delete_account'),
         // SettingButton(
         //     onTap: (){
         //

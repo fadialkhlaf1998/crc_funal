@@ -158,6 +158,11 @@
   "we_need_review": "Will Help Us To Improve Our Service",
   "send": "Send",
   "thank_u_review": "Thank You For Your Review",
-  "reviewed": "Reviewed"
+  "reviewed": "Reviewed",
+  "delete_account": "Delete Account",
+  "confirm": "Confirm",
+  "confirm_text": "Do you want to delete account",
+  "yes": "Yes",
+  "no": "No"
 
 }
