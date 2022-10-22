@@ -995,9 +995,10 @@ class _CarsListState extends State<CarsList> {
                                maxLines: 1,
                                overflow: TextOverflow.ellipsis,
                                style: TextStyle(
-                                   color: carListController.modelListCheck![index] == true
-                                       ? Theme.of(context).dividerColor
-                                       : Colors.white,
+                                   // color: carListController.modelListCheck![index] == true
+                                   //     ? Theme.of(context).dividerColor
+                                   //     : Colors.white,
+                                 color: Theme.of(context).dividerColor,
                                    fontSize: 12,
                                    fontWeight: FontWeight.bold),),
                            ),
