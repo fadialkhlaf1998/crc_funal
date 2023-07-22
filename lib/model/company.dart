@@ -101,6 +101,7 @@ class Accepted {
     required this.logtime,
     required this.current,
     required this.review_count,
+    required this.note,
   });
 
   int id;
@@ -121,6 +122,7 @@ class Accepted {
   String toCompnayTitle;
   String fromCompnayImage;
   String toCompnayImage;
+  String note;
 
   factory Accepted.fromJson(Map<String, dynamic> json) => Accepted(
     id: json["id"] ?? -1,
@@ -141,6 +143,7 @@ class Accepted {
     fromCompnayImage: json["from_compnay_image"],
     fromCompnayTitle: json["from_compnay_title"],
     toCompnayTitle: json["to_compnay_title"],
+    note: json["note"]==null?"":json["note"],
   );
 
   Map<String, dynamic> toJson() => {

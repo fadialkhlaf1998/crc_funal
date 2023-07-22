@@ -622,7 +622,7 @@ class Api {
   }
 
 
-  static Future<bool> addOrder(DateTime from,DateTime to, int from_company,int to_company,int car_id,double total)async{
+  static Future<bool> addOrder(DateTime from,DateTime to, int from_company,int to_company,int car_id,double total,String note)async{
     var headers = {
       'Content-Type': 'application/json',
     };
@@ -634,7 +634,8 @@ class Api {
       "from_compnay": from_company,
       "to_company": to_company,
       "car_id": car_id,
-      "total": total
+      "total": total,
+      "note":note
     });
     request.headers.addAll(headers);
 

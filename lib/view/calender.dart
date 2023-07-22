@@ -20,7 +20,7 @@ class MyRangeCalender extends StatelessWidget {
   double day_price;
   RxDouble total = 0.0.obs;
   RxBool loading = false.obs;
-
+  TextEditingController note = TextEditingController();
   MyRangeCalender(this.car_id, this.hr_price, this.day_price,this.company_id);
 
   List<String> hrs = [
@@ -133,7 +133,7 @@ class MyRangeCalender extends StatelessWidget {
       print(company_id);
       print(car_id);
       print(total);
-      bool succ = await Api.addOrder(from, to, Global.company!.id, company_id, car_id, total.value);
+      bool succ = await Api.addOrder(from, to, Global.company!.id, company_id, car_id, total.value,note.text);
       if(succ){
         Global.company = await Api.login(Global.loginInfo!.email, Global.loginInfo!.pass);
         Get.back();
@@ -278,7 +278,11 @@ class MyRangeCalender extends StatelessWidget {
                             GestureDetector(
                               onTap: (){
                                 print(';;;;;;;');
-                                    submit(context);
+                                //todo
+                                // submit(context);
+                                if(total.value>0){
+                                  showAlertDialog(context);
+                                }
                               },
                               child: Container(
                                 width: Get.width * 0.8,
@@ -321,6 +325,58 @@ class MyRangeCalender extends StatelessWidget {
       )),
     );
   }
+
+  showAlertDialog(BuildContext context) {
+
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text(App_Localization.of(context).translate("submit")),
+      onPressed: () {
+        Get.back();
+        submit(context);
+      },
+    );
+// set up the button
+    Widget cancelButton = TextButton(
+      child: Text(App_Localization.of(context).translate("close"),style: TextStyle(color: App.grey),),
+      onPressed: () {
+        Get.back();
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(App_Localization.of(context).translate("total")+": "+total.value.toStringAsFixed(2)),
+      content: Container(
+        height: 80,
+        child: TextField(
+          controller: note,
+          decoration: InputDecoration(
+              labelText: App_Localization.of(context).translate("please_add_your_note"),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: App.primary)
+              )
+          ),
+          keyboardType: TextInputType.number,
+          maxLines: 1, // <-- SEE HERE
+        ),
+      ),
+      actions: [
+        okButton,
+        cancelButton
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
   pickUpDropOffTime(BuildContext context) {
     return Container(
       width: Get.width * 0.9,

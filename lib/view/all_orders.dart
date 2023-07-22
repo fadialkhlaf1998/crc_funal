@@ -803,7 +803,9 @@ class _AllOrdersState extends State<AllOrders> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(list[index].title,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.bold,),maxLines: 1,),
-                                          Text(list[index].total.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
+                                          Text(list[index].total.toStringAsFixed(0)+" "+App_Localization.of(context).translate("aed")
+                                            +(list[index].note.isEmpty?"":" | "+App_Localization.of(context).translate("offer")+" "+list[index].note+App_Localization.of(context).translate("aed"))
+                                            ,style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,),maxLines: 1,),
                                           Row(
                                             children: [
                                               Text(App_Localization.of(context).translate("from")+": ",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,),maxLines: 1,),
@@ -857,7 +859,17 @@ class _AllOrdersState extends State<AllOrders> {
                                   Text(App_Localization.of(context).translate("accepted"),style: TextStyle(color: MyTheme.isDarkTheme.value?Colors.white:Colors.black,fontWeight: FontWeight.normal,fontSize: 11,),maxLines: 1,),
                                 ],
                               )
-                          )
+                          ),
+                          // Positioned(
+                          //     top: 7,
+                          //     right: Global.lang_code=="en"?10:null,
+                          //     left: Global.lang_code=="ar"?10:null,
+                          //     child: list[index].note.isEmpty?Center():GestureDetector(
+                          //         onTap: (){
+                          //           showAlertDialog(context,list[index].fromCompnayTitle,list[index].note);
+                          //         },
+                          //         child: Icon(Icons.notifications_active_outlined,color: App.primary_gradient,))
+                          // ),
                         ],
                       )
                     ],
@@ -870,7 +882,31 @@ class _AllOrdersState extends State<AllOrders> {
       ),
     );
   }
-  Future<void> _showReviewDialog(int fromCompanyId , int toCompanyId , int carId,int orderId,int index) async {
+  showAlertDialog(BuildContext context,String company,String msg) {
+// set up the button
+    Widget cancelButton = TextButton(
+      child: Text(App_Localization.of(context).translate("close"),
+        style: TextStyle(color: App.grey),),
+      onPressed: () {
+        Get.back();
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(
+          company + " " + App_Localization.of(context).translate("say")),
+      content: Column(
+        children: [
+          Text(msg)
+        ],
+      ),
+      actions: [
+        cancelButton
+      ],
+    );
+  }
+
+    Future<void> _showReviewDialog(int fromCompanyId , int toCompanyId , int carId,int orderId,int index) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!

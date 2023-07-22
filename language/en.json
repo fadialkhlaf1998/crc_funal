@@ -163,6 +163,9 @@
   "confirm": "Confirm",
   "confirm_text": "Do you want to delete account",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "please_add_your_note": "Please Add Your Price Per Day",
+  "say": "say",
+  "offer": "Offer"
 
 }
